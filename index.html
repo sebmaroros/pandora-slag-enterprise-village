@@ -3,18 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>PANDORA — SLAG Enterprise Village | Playable RPG Virtual World</title>
+  <title>PANDORA — The AI Agent Village RPG (SLAG Enterprise)</title>
   <style>
-    :root {
-      --gold-primary: #d4af37;
-      --gold-light: #f5cd79;
-      --gold-dark: #aa7c11;
-      --bg-dark: #0f141d;
-      --ui-glass: rgba(18, 24, 38, 0.88);
-      --ui-border: rgba(212, 175, 55, 0.4);
-      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -24,1794 +14,2050 @@
     }
 
     body {
-      font-family: var(--font-stack);
-      background-color: #0b0f17;
+      background-color: #080b11;
       color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       overflow: hidden;
       width: 100vw;
       height: 100vh;
+      display: flex;
+      flex-direction: column;
       position: fixed;
     }
 
-    /* Main Viewport Container */
-    #game-container {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      background: #000;
-      cursor: crosshair;
-    }
-
-    #world-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
+    #game-wrapper {
+      position: relative;
+      flex: 1;
       width: 100%;
       height: 100%;
+      background: #0b0f17;
+      overflow: hidden;
+    }
+
+    #game-canvas {
       display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
 
-    /* Top Navigation HUD */
-    header {
+    /* Top HUD */
+    #top-hud {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 56px;
-      background: linear-gradient(180deg, rgba(12, 17, 26, 0.95), rgba(12, 17, 26, 0.75) 80%, transparent);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      top: 12px;
+      left: 16px;
+      right: 16px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
-      z-index: 50;
-      pointer-events: auto;
-    }
-
-    .brand-group {
-      display: flex;
       align-items: center;
+      pointer-events: none;
+      z-index: 100;
       gap: 12px;
     }
 
-    .brand-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+    .hud-panel {
+      background: rgba(12, 16, 26, 0.92);
+      backdrop-filter: blur(10px);
+      border: 2px solid #d4af37;
+      border-radius: 10px;
+      padding: 8px 16px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: bold;
-      color: #0b0f17;
-      box-shadow: 0 0 14px rgba(212, 175, 55, 0.5);
+      gap: 12px;
+      pointer-events: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.7);
     }
 
-    .brand-titles h1 {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
+    .hud-title {
+      font-size: 14px;
+      font-weight: 800;
       color: #f1f2f6;
       display: flex;
       align-items: center;
       gap: 8px;
+      letter-spacing: 0.5px;
     }
 
-    .brand-tag {
-      font-size: 9px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(212, 175, 55, 0.2);
-      border: 1px solid var(--gold-primary);
-      color: var(--gold-light);
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .brand-titles p {
+    .hud-badge {
+      background: linear-gradient(135deg, #d4af37, #aa820a);
+      color: #111;
       font-size: 10px;
-      color: #a4b0be;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
     }
 
-    .header-actions {
+    .hud-location {
+      font-size: 12px;
+      color: #f5cd79;
+      font-weight: 600;
+      border-left: 1px solid rgba(212, 175, 55, 0.4);
+      padding-left: 10px;
+    }
+
+    .hud-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .hud-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.6);
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hud-btn:hover {
+      background: #d4af37;
+      color: #111;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    }
+
+    /* Picture-in-Picture Live Studio Cam (Top Right when inside building) */
+    #pip-cam {
+      position: absolute;
+      top: 75px;
+      right: 16px;
+      width: 250px;
+      background: rgba(12, 16, 26, 0.95);
+      border: 2px solid #d4af37;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+      z-index: 95;
+      display: none;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+
+    #pip-cam.active {
+      display: flex;
+    }
+
+    .pip-header {
+      background: #1e293b;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 700;
+      color: #e2e8f0;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .pip-live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #10b981;
+    }
+
+    .pip-live-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    .pip-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      cursor: pointer;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .pip-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .pip-img-wrapper:hover .pip-img {
+      transform: scale(1.05);
+    }
+
+    .pip-overlay-btn {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: rgba(0,0,0,0.8);
+      border: 1px solid #d4af37;
+      color: #f5cd79;
+      font-size: 9px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    /* Mini Location Banner */
+    #location-banner {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(12, 16, 26, 0.95);
+      border: 2px solid #d4af37;
+      border-radius: 24px;
+      padding: 8px 24px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #f5cd79;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 90;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.8);
+      letter-spacing: 0.5px;
+    }
+
+    #location-banner.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Classic RPG Dialogue Box (Bottom) */
+    #dialogue-box {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 820px;
+      max-width: 94vw;
+      min-height: 145px;
+      background: linear-gradient(180deg, rgba(20, 26, 38, 0.98), rgba(10, 14, 22, 0.98));
+      border: 3px solid #d4af37;
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: none;
+      gap: 18px;
+      z-index: 150;
+      box-shadow: 0 12px 50px rgba(0,0,0,0.9), 0 0 25px rgba(212, 175, 55, 0.3);
+      animation: dialogPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes dialogPop {
+      from { transform: translateX(-50%) scale(0.94); opacity: 0; }
+      to { transform: translateX(-50%) scale(1); opacity: 1; }
+    }
+
+    #dialogue-box.active {
+      display: flex;
+    }
+
+    .dialogue-portrait {
+      width: 78px;
+      height: 78px;
+      border-radius: 12px;
+      border: 2px solid #d4af37;
+      background: #1e272e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
+      flex-shrink: 0;
+    }
+
+    .dialogue-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dialogue-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: #f5cd79;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      padding-bottom: 5px;
+      margin-bottom: 8px;
+    }
+
+    .dialogue-name span {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .dialogue-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #f1f5f9;
+      flex: 1;
+      margin-bottom: 12px;
+      min-height: 44px;
+    }
+
+    .dialogue-options {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .dialogue-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid #d4af37;
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dialogue-btn:hover {
+      background: #d4af37;
+      color: #000;
+      transform: translateY(-1px);
+    }
+
+    .dialogue-hint {
+      font-size: 10px;
+      color: #d4af37;
+      text-align: right;
+      margin-top: 5px;
+    }
+
+    /* Mini-Map Radar */
+    #minimap-container {
+      position: absolute;
+      top: 75px;
+      left: 16px;
+      background: rgba(12, 16, 26, 0.94);
+      border: 2px solid #d4af37;
+      border-radius: 10px;
+      padding: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+      z-index: 95;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    #minimap-container.active {
+      display: flex;
+    }
+
+    .minimap-title {
+      font-size: 10px;
+      font-weight: 800;
+      color: #f5cd79;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #minimap-canvas {
+      width: 192px;
+      height: 168px;
+      background: #1a251b;
+      border-radius: 4px;
+      display: block;
+    }
+
+    /* 1st-Person Room View Modal */
+    #fp-modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 180;
+      display: none;
+      flex-direction: column;
+      animation: fadeIn 0.25s ease;
+    }
+
+    #fp-modal.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .fp-top-bar {
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 2px solid #d4af37;
+    }
+
+    .fp-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #f5cd79;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .hud-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #f1f2f6;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .hud-btn:hover {
-      background: rgba(212, 175, 55, 0.25);
-      border-color: var(--gold-primary);
+    .fp-close-btn {
+      background: #b91c1c;
+      border: 1px solid #ef4444;
       color: #fff;
-    }
-
-    .hud-btn-gold {
-      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-      border: 1px solid var(--gold-light);
-      color: #0b0f17;
-      font-weight: 700;
-    }
-
-    .hud-btn-gold:hover {
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-      color: #000;
-    }
-
-    /* Controls Guide Overlay (Bottom Left) */
-    .controls-card {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      background: var(--ui-glass);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--ui-border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: #f1f2f6;
-      font-size: 11px;
-      z-index: 40;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      pointer-events: auto;
-      max-width: 280px;
-    }
-
-    .controls-card h4 {
-      color: var(--gold-primary);
+      padding: 6px 14px;
+      border-radius: 6px;
       font-size: 12px;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .key-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 4px 0;
-      color: #a4b0be;
-    }
-
-    .kbd {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
-      padding: 2px 6px;
-      font-size: 10px;
-      font-family: monospace;
-      color: #fff;
-      font-weight: bold;
-    }
-
-    /* Proximity Interaction Prompt (Center-Bottom) */
-    #interaction-prompt {
-      position: absolute;
-      bottom: 85px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: linear-gradient(135deg, rgba(20, 26, 40, 0.95), rgba(30, 40, 60, 0.95));
-      backdrop-filter: blur(12px);
-      border: 2px solid var(--gold-primary);
-      border-radius: 30px;
-      padding: 10px 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      z-index: 60;
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), 0 10px 30px rgba(0,0,0,0.8);
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    #interaction-prompt.visible {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-      pointer-events: auto;
-      cursor: pointer;
-    }
-
-    #interaction-prompt:hover {
-      background: linear-gradient(135deg, rgba(30, 40, 60, 0.98), rgba(45, 60, 90, 0.98));
-      transform: translateX(-50%) translateY(-2px);
-      box-shadow: 0 0 35px rgba(212, 175, 55, 0.8);
-    }
-
-    /* Quick Building Teleport Dock (Bottom Center) */
-    .teleport-dock {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--ui-glass);
-      backdrop-filter: blur(14px);
-      border: 1px solid var(--ui-border);
-      border-radius: 12px;
-      padding: 6px 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 45;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.7);
-      max-width: 90vw;
-      overflow-x: auto;
-    }
-
-    .teleport-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      padding: 5px 8px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.04);
-      color: #ced6e0;
-      cursor: pointer;
-      font-size: 9px;
-      white-space: nowrap;
-      transition: all 0.2s ease;
-      border: 1px solid transparent;
-    }
-
-    .teleport-item:hover {
-      background: rgba(212, 175, 55, 0.25);
-      border-color: var(--gold-primary);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    /* Full-Screen Building Interior View Overlay */
-    #interior-stage {
-      position: fixed;
-      inset: 0;
-      background: #090d14;
-      z-index: 100;
-      display: none;
-      flex-direction: column;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-    }
-
-    #interior-stage.active {
-      display: flex;
-      opacity: 1;
-    }
-
-    .interior-nav {
-      height: 56px;
-      background: rgba(15, 20, 30, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 2px solid var(--gold-primary);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      z-index: 110;
-    }
-
-    .interior-nav-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .interior-nav-title h2 {
-      font-size: 17px;
-      color: #fff;
       font-weight: 700;
+      cursor: pointer;
     }
 
-    .interior-nav-title span {
-      font-size: 11px;
-      color: var(--gold-primary);
-    }
-
-    .interior-viewport {
+    .fp-view-area {
       flex: 1;
       position: relative;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    #interior-canvas {
+    .fp-main-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    }
+
+    .fp-hotspots {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
+      inset: 0;
+      pointer-events: none;
     }
 
-    /* Interior Workstation Detail Modal */
-    #station-modal {
+    .fp-pin {
       position: absolute;
-      right: 24px;
-      top: 24px;
-      bottom: 24px;
-      width: 420px;
-      max-width: 90vw;
-      background: rgba(18, 24, 35, 0.95);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--gold-primary);
-      border-radius: 12px;
-      padding: 20px;
-      z-index: 120;
-      display: none;
-      flex-direction: column;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 25px rgba(212, 175, 55, 0.25);
-      overflow-y: auto;
-      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes slideInRight {
-      from { transform: translateX(30px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    #station-modal.active {
-      display: flex;
-    }
-
-    .station-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-      padding-bottom: 12px;
-      margin-bottom: 14px;
-    }
-
-    .station-header h3 {
-      font-size: 16px;
-      color: var(--gold-light);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .station-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      font-size: 12px;
-      color: #ced6e0;
-      line-height: 1.5;
-    }
-
-    .station-box {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 12px;
-    }
-
-    .station-box h5 {
-      color: var(--gold-primary);
+      transform: translate(-50%, -50%);
+      background: rgba(12, 16, 26, 0.9);
+      border: 2px solid #d4af37;
+      color: #f5cd79;
+      padding: 6px 12px;
+      border-radius: 20px;
       font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 6px;
-    }
-
-    .brief-textarea {
-      width: 100%;
-      height: 80px;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 6px;
-      padding: 8px;
-      color: #fff;
-      font-size: 12px;
-      resize: none;
-      outline: none;
-      margin-top: 6px;
-    }
-
-    .brief-textarea:focus {
-      border-color: var(--gold-primary);
-    }
-
-    /* Founder Approval Center Drawer */
-    #founder-drawer {
-      position: fixed;
-      right: -420px;
-      top: 56px;
-      bottom: 0;
-      width: 400px;
-      background: rgba(16, 21, 31, 0.98);
-      border-left: 2px solid var(--gold-primary);
-      box-shadow: -10px 0 40px rgba(0,0,0,0.8);
-      z-index: 150;
-      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-    }
-
-    #founder-drawer.open {
-      right: 0;
-    }
-
-    /* Close Buttons */
-    .close-icon-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      width: 30px;
-      height: 30px;
-      border-radius: 6px;
+      font-weight: 800;
       cursor: pointer;
+      pointer-events: auto;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      transition: background 0.2s ease;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+      transition: all 0.2s ease;
+      animation: pulsePin 2s infinite;
     }
 
-    .close-icon-btn:hover {
-      background: #e74c3c;
-      border-color: #c0392b;
+    .fp-pin:hover {
+      background: #d4af37;
+      color: #111;
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    @keyframes pulsePin {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+      50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+    }
+
+    /* Screen Transition Fade */
+    #screen-fade {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+      transition: opacity 0.25s ease;
+    }
+
+    #screen-fade.blackout {
+      opacity: 1;
+    }
+
+    /* Virtual Joystick for Mobile */
+    #mobile-controls {
+      position: absolute;
+      bottom: 25px;
+      left: 25px;
+      width: 120px;
+      height: 120px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      border-radius: 50%;
+      display: none;
+      z-index: 80;
+      touch-action: none;
+    }
+
+    #mobile-knob {
+      position: absolute;
+      top: 35px;
+      left: 35px;
+      width: 50px;
+      height: 50px;
+      background: #d4af37;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.7);
+    }
+
+    #mobile-action-btn {
+      position: absolute;
+      bottom: 35px;
+      right: 30px;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4af37, #996515);
+      border: 2px solid #fff;
+      color: #000;
+      font-weight: 900;
+      font-size: 18px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 80;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+
+    @media (max-width: 768px) {
+      #mobile-controls, #mobile-action-btn {
+        display: flex;
+      }
+      .hud-location, .hud-controls-hint {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
+  <div id="game-wrapper">
+    <!-- Main 60 FPS HTML5 Canvas -->
+    <canvas id="game-canvas"></canvas>
 
-  <!-- Top Executive Header -->
-  <header>
-    <div class="brand-group">
-      <div class="brand-icon">∞</div>
-      <div class="brand-titles">
-        <h1>PANDORA <span class="brand-tag">SLAG Enterprise</span></h1>
-        <p>Photorealistic Modern German AI Village • Playable RPG Engine</p>
-      </div>
-    </div>
-
-    <div class="header-actions">
-      <button class="hud-btn" id="view-mode-btn" title="Toggle Clean Village Art vs. Department Interaction Overlay">
-        🗺️ Map: Photorealistic View
-      </button>
-
-      <button class="hud-btn" id="theme-btn" title="Toggle Day / Golden Hour / Night">
-        ☀️ Alpine Day
-      </button>
-
-      <button class="hud-btn" id="sound-btn" title="Toggle Generative Alpine Soundscape">
-        🔇 Sound: Off
-      </button>
-
-      <button class="hud-btn hud-btn-gold" id="founder-btn">
-        👑 Founder Review (<span id="pending-count">3</span>)
-      </button>
-    </div>
-  </header>
-
-  <!-- Main Outside Village RPG Game Viewport -->
-  <div id="game-container">
-    <canvas id="world-canvas"></canvas>
-
-    <!-- Controls Guide Card -->
-    <div class="controls-card">
-      <h4>
-        <span>RPG VILLAGE CONTROLS</span>
-        <span style="font-size:10px; color:#2ed573;">● EXPLORATION ACTIVE</span>
-      </h4>
-      <div class="key-row">
-        <span>Walk / Move</span>
-        <span><span class="kbd">W</span> <span class="kbd">A</span> <span class="kbd">S</span> <span class="kbd">D</span> or <span class="kbd">Arrows</span></span>
-      </div>
-      <div class="key-row">
-        <span>Click-to-Move</span>
-        <span>Click / Tap anywhere</span>
-      </div>
-      <div class="key-row">
-        <span>Enter Building / Interact</span>
-        <span><span class="kbd">E</span> or Walk into doorway</span>
-      </div>
-      <div class="key-row">
-        <span>Companion</span>
-        <span style="color:var(--gold-light);">Chief of Staff follows you</span>
-      </div>
-    </div>
-
-    <!-- Dynamic Proximity Prompt (Walk in front of any building) -->
-    <div id="interaction-prompt">
-      <span id="prompt-icon" style="font-size:18px;">🏛️</span>
-      <span id="prompt-text">Press [E] or Click to Enter Town Hall & Management</span>
-    </div>
-
-    <!-- Bottom Teleport Dock -->
-    <div class="teleport-dock" id="teleport-dock">
-      <!-- Populated via JavaScript -->
-    </div>
-  </div>
-
-  <!-- Building Interior Full-Screen Virtual World Stage -->
-  <div id="interior-stage">
-    <div class="interior-nav">
-      <div class="interior-nav-title">
-        <span id="interior-icon" style="font-size:24px;">🎬</span>
-        <div>
-          <h2 id="interior-title">Multimedia Production Studio</h2>
-          <span id="interior-tag">Tag: Sound, image, video, animation • Director: Jonas Keller</span>
+    <!-- Top HUD Navigation Bar -->
+    <div id="top-hud">
+      <div class="hud-panel">
+        <div class="hud-title">
+          <span>🏰 PANDORA SLAG</span>
+          <span class="hud-badge">RPG Engine</span>
+        </div>
+        <div class="hud-location" id="hud-location">📍 Central Plaza (Kaiserstein-Platz)</div>
+        <div class="hud-controls-hint" style="font-size: 11px; color: #94a3b8;">
+          [WASD/Arrows]: Walk | [SPACE/E]: Enter / Talk | [V]: Studio Cam | [M]: Map
         </div>
       </div>
-      <div style="display:flex; align-items:center; gap:12px;">
-        <span style="font-size:11px; color:#a4b0be;">Walk up to stations or press <span class="kbd">E</span> to interact</span>
-        <button class="hud-btn hud-btn-gold" id="exit-interior-btn">
-          🚪 Exit to Village Plaza
-        </button>
+
+      <div class="hud-btn-group">
+        <button class="hud-btn" id="bell-btn" title="Call All-Hands Meeting at Town Hall">🔔 Ring Bell</button>
+        <button class="hud-btn" id="map-btn">🗺️ Mini-Map [M]</button>
+        <button class="hud-btn" id="cam-btn" style="display: none;">📸 Studio Cam [V]</button>
+        <button class="hud-btn" id="sound-btn">🔊 Sound: On</button>
       </div>
     </div>
 
-    <div class="interior-viewport">
-      <canvas id="interior-canvas"></canvas>
+    <!-- Mini-Map Window -->
+    <div id="minimap-container">
+      <div class="minimap-title">
+        <span>Village Radar</span>
+        <span style="color: #94a3b8;">64x56 Tiles</span>
+      </div>
+      <canvas id="minimap-canvas" width="192" height="168"></canvas>
+    </div>
 
-      <!-- Workstation Interactive Inspection Card -->
-      <div id="station-modal">
-        <div class="station-header">
-          <h3 id="station-title">📹 4K Broadcast Camera Dolly</h3>
-          <button class="close-icon-btn" id="close-station-btn">✕</button>
+    <!-- Picture-in-Picture HD Studio Cam (When inside a building) -->
+    <div id="pip-cam">
+      <div class="pip-header">
+        <div class="pip-live-indicator">
+          <div class="pip-live-dot"></div>
+          <span>LIVE 4K STUDIO CAM</span>
         </div>
-        <div class="station-content" id="station-content">
-          <!-- Populated dynamically per workstation -->
+        <span id="pip-house-name">Multimedia Studio</span>
+      </div>
+      <div class="pip-img-wrapper" id="pip-img-box" title="Click to open Full-Screen 1st-Person Room View">
+        <img src="" id="pip-img" class="pip-img" alt="Studio Live Feed">
+        <div class="pip-overlay-btn">🔍 View Room [V]</div>
+      </div>
+    </div>
+
+    <!-- Location Banner -->
+    <div id="location-banner">Pandora Village Plaza</div>
+
+    <!-- Classic RPG Dialogue Box (Bottom) -->
+    <div id="dialogue-box">
+      <div class="dialogue-portrait" id="dialog-portrait">👤</div>
+      <div class="dialogue-content">
+        <div class="dialogue-name">
+          <span id="dialog-name">Amelia Hart</span>
+          <span id="dialog-role">Director of Strategy & Approvals</span>
+        </div>
+        <div class="dialogue-text" id="dialog-text">
+          "Welcome to the Town Hall, Founder! How may the enterprise serve you today?"
+        </div>
+        <div class="dialogue-options" id="dialog-options">
+          <!-- Dynamic action buttons -->
+        </div>
+        <div class="dialogue-hint">Press [SPACE] or Click an option to proceed</div>
+      </div>
+    </div>
+
+    <!-- 1st-Person Room View Modal -->
+    <div id="fp-modal">
+      <div class="fp-top-bar">
+        <div class="fp-title" id="fp-title">
+          <span>🏛️</span>
+          <span id="fp-title-text">Multimedia Production Studio</span>
+          <span class="hud-badge">4K Ultra HD</span>
+        </div>
+        <button class="fp-close-btn" id="fp-close-btn">🔙 Back to RPG Floor [ESC]</button>
+      </div>
+      <div class="fp-view-area">
+        <img src="" id="fp-img" class="fp-main-img" alt="First Person Interior">
+        <div class="fp-hotspots" id="fp-hotspots">
+          <!-- Interactive Pins -->
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Founder Review Drawer ("Stay in Charge") -->
-  <div id="founder-drawer">
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--ui-border); padding-bottom:12px; margin-bottom:16px;">
-      <h3 style="color:var(--gold-primary); font-size:16px;">👑 Founder Review Queue</h3>
-      <button class="close-icon-btn" id="close-drawer-btn">✕</button>
+    <!-- Mobile Virtual Joystick & Action Key -->
+    <div id="mobile-controls">
+      <div id="mobile-knob"></div>
     </div>
-    <p style="font-size:11px; color:#a4b0be; margin-bottom:14px; line-height:1.4;">
-      Rule #7 Governance: Nothing consequential is published, spent, or released without your personal sign-off.
-    </p>
-    <div id="approval-items" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px;">
-      <!-- Populated dynamically -->
-    </div>
+    <div id="mobile-action-btn">E</div>
+
+    <!-- Screen Transition Curtain -->
+    <div id="screen-fade"></div>
   </div>
 
   <script>
     /* =========================================================================
-       1. DATA ARCHITECTURE: THE 12 BUILDINGS + PANDORA CORE
+       1. WEB AUDIO SYNTHESIZER (Footsteps, Doors, Speech Beeps, Chimes)
        ========================================================================= */
-    const BUILDINGS = [
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function getAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudio();
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        if (type === 'step') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(110 + Math.random() * 25, now);
+          gain.gain.setValueAtTime(0.04, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } else if (type === 'door') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(240, now);
+          osc.frequency.exponentialRampToValueAtTime(560, now + 0.16);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.22);
+        } else if (type === 'talk') {
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(360 + Math.random() * 70, now);
+          gain.gain.setValueAtTime(0.03, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (type === 'bell') {
+          [440, 880, 1320].forEach((freq, i) => {
+            const bellOsc = ctx.createOscillator();
+            const bellGain = ctx.createGain();
+            bellOsc.type = 'sine';
+            bellOsc.frequency.setValueAtTime(freq, now);
+            bellGain.gain.setValueAtTime(0.16 / (i + 1), now);
+            bellGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.0);
+            bellOsc.connect(bellGain);
+            bellGain.connect(ctx.destination);
+            bellOsc.start(now);
+            bellOsc.stop(now + 2.0);
+          });
+        }
+      } catch (e) {}
+    }
+
+    document.getElementById('sound-btn').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('sound-btn').textContent = soundEnabled ? '🔊 Sound: On' : '🔇 Sound: Off';
+    });
+
+    /* =========================================================================
+       2. TILE SYSTEM & COLOR PALETTE
+       ========================================================================= */
+    const TILE = 48; // 48x48 pixels per tile
+
+    const COLORS = {
+      grass: '#417531',
+      grassDark: '#335e25',
+      cobble: '#838e9d',
+      cobbleLight: '#9ba6b6',
+      plaza: '#cbd5e1',
+      water: '#1d6cdb',
+      woodFloor: '#8a685c',
+      woodDark: '#5c4137',
+      timber: '#422815',
+      slateRoof: '#1e293b',
+      flowerRed: '#ef4444',
+      flowerYellow: '#f59e0b',
+      flowerPink: '#ec4899',
+      gold: '#d4af37'
+    };
+
+    /* =========================================================================
+       3. 13 VILLAGE BUILDINGS DIRECTORY (Authentic Roles & Tags)
+       ========================================================================= */
+    const HOUSES = [
       {
         id: 'townhall',
         name: 'Town Hall & Management',
-        german: 'Rathaus & Geschäftsführung',
+        german: 'Rathaus & Führung',
+        tag: 'Strategy, meetings, approvals, chief of staff',
+        tx: 27, ty: 8, tw: 10, th: 6,
+        doorTx: 32, doorTy: 14,
         icon: '🏛️',
         director: 'Amelia Hart',
-        tag: 'Strategy, meetings, chief of staff, project office',
-        doorX: 0.50, doorY: 0.32, // Relative position on the master village map
-        color: '#4a69bd',
-        interiorImg: 'assets/interior_townhall.jpg',
-        stations: [
-          {
-            id: 'strategy_table',
-            name: '🗺️ Circular Strategic Hologram Table',
-            x: 0.50, y: 0.65,
-            desc: 'The executive command table displays real-time multi-agent workflows and inter-department coordination vectors across the village.',
-            actionName: 'Launch Village All-Hands Sync',
-            data: { status: 'Optimal', throughput: '142 Handoffs Today', alignment: '99.4%' }
-          },
-          {
-            id: 'founder_podium',
-            name: '🎙️ Founder Executive Podium',
-            x: 0.16, y: 0.58,
-            desc: 'Issue high-level strategic directives to all 12 directors. The Chief of Staff translates your guidance into department task backlogs.',
-            actionName: 'Broadcast Strategic Directive',
-            isDirective: true
-          },
-          {
-            id: 'amelia_desk',
-            name: '📋 Amelia Hart (Director of Strategy)',
-            x: 0.82, y: 0.62,
-            desc: '"Welcome Founder! All department heads are executing according to the Q4 roadmap. Book layout and M4 local inference are prioritized."',
-            actionName: 'Review Executive Brief'
-          }
+        avatar: '👩‍💼',
+        role: 'Director of Strategy & Approvals',
+        roofColor: '#1e293b',
+        image: 'assets/interior_townhall.jpg',
+        introQuote: '"Welcome Founder! The village operates seamlessly under our strategic oversight. What are your directives?"',
+        briefReply: 'Strategic directive dispatched to all 12 department directors! Meetings scheduled and approval pipelines active.',
+        hotspots: [
+          { name: '🏛️ Grand Council Table', x: '50%', y: '65%', desc: 'Where the Founder, Chief of Staff, and Department Directors convene.' },
+          { name: '🎙️ Founder Podium', x: '30%', y: '45%', desc: 'Central address podium for village-wide announcements.' },
+          { name: '📜 Directive Archive', x: '75%', y: '40%', desc: 'Bound volumes of executive decisions and governance charters.' }
         ]
       },
       {
-        id: 'multimedia',
-        name: 'Multimedia Production',
-        german: 'Medien- & Audioproduktion',
-        icon: '🎬',
-        director: 'Jonas Keller',
-        tag: 'Sound, image, video, animation',
-        doorX: 0.50, doorY: 0.78,
-        color: '#e55039',
-        interiorImg: 'assets/interior_multimedia.jpg',
-        stations: [
-          {
-            id: 'broadcast_cam',
-            name: '📹 4K Broadcast Camera Dolly',
-            x: 0.16, y: 0.68,
-            desc: 'High-end cinema camera recording the cinematic video trailer for "The Autonomous Enterprise". Red tally light indicates active 4K render.',
-            actionName: 'Inspect Video Viewfinder',
-            data: { resolution: '3840x2160', fps: '60 FPS', renderProgress: '84%' }
-          },
-          {
-            id: 'sound_board',
-            name: '🎛️ Sound Mixing Console',
-            x: 0.50, y: 0.70,
-            desc: 'Master audio console mixing alpine soundscapes, narrator voiceovers, and course soundtracks with live LED equalizer visualizers.',
-            actionName: 'Play Master Audio Stem'
-          },
-          {
-            id: 'editing_bay',
-            name: '💻 Jonas Keller (Video Editing Bay)',
-            x: 0.85, y: 0.66,
-            desc: '"Director Jonas Keller here! We just rendered 12 cinematic chapter transition animations using Higgsfield + Claude."',
-            actionName: 'Dispatch Multimedia Brief',
-            isBrief: true
-          }
-        ]
-      },
-      {
-        id: 'publishing',
-        name: 'Publishing & Distribution',
-        german: 'Verlag & Buchvertrieb',
-        icon: '📖',
-        director: 'Elena Roth',
-        tag: 'Online publishing, course releases, shop content',
-        doorX: 0.33, doorY: 0.74,
-        color: '#f39c12',
-        interiorImg: 'assets/interior_publishing.jpg',
-        stations: [
-          {
-            id: 'printing_press',
-            name: '🖨️ High-Speed Digital Printing Press',
-            x: 0.18, y: 0.65,
-            desc: 'Industrial press printing physical book galleys for "The Autonomous Enterprise". Automated roll feed and optical proofing.',
-            actionName: 'Audit Print Run',
-            data: { bookTitle: 'The Autonomous Enterprise', currentChapter: 'Chapter 4', copiesPrinted: '250 Test Run' }
-          },
-          {
-            id: 'book_stacks',
-            name: '📚 Bound Hardcover Gallery Stacks',
-            x: 0.58, y: 0.68,
-            desc: 'Stacks of finished hardcover proof copies with gold foil stamping and cloth-bound spine. Elena Roth has approved the typography layout.',
-            actionName: 'Inspect Book Cover Proof'
-          },
-          {
-            id: 'elena_desk',
-            name: '👩🏼 Elena Roth (Director of Publishing)',
-            x: 0.88, y: 0.70,
-            desc: '"Founder, the book manuscript is looking magnificent! Chapters 1-4 are completely typeset with running headers and margin citations."',
-            actionName: 'Dispatch Publishing Brief',
-            isBrief: true
-          }
-        ]
-      },
-      {
-        id: 'finance',
-        name: 'Finance & Bookkeeping',
-        german: 'Finanzen & Buchhaltung',
-        icon: '🪙',
-        director: 'Daniel Petrescu',
-        tag: 'Accounting, budgets, invoicing, payments',
-        doorX: 0.66, doorY: 0.28,
-        color: '#f1c40f',
-        interiorImg: 'assets/interior_finance.jpg',
-        stations: [
-          {
-            id: 'market_monitors',
-            name: '📊 Bloomberg Financial Trading Desk',
-            x: 0.58, y: 0.66,
-            desc: 'Real-time financial candlestick monitors tracking enterprise cash flow, partner royalty distributions, and inference cost optimizations.',
-            actionName: 'Audit Financial Ledger',
-            data: { cloudApiFees: '$0.00 (M4 Local)', savingsToday: '$148.50', runwayMonths: '38 Months' }
-          },
-          {
-            id: 'stone_vault',
-            name: '🏦 Alpen Finance Steel Vault',
-            x: 0.14, y: 0.55,
-            desc: 'Secure physical and cryptographic vault safeguarding smart contract escrow reserves and enterprise intellectual property deeds.',
-            actionName: 'Inspect Reserves'
-          },
-          {
-            id: 'daniel_desk',
-            name: '👨🏻‍💼 Daniel Petrescu (Director of Finance)',
-            x: 0.82, y: 0.68,
-            desc: '"By executing models locally on your Apple M4 Mac, we completely eliminated monthly token bills. Every euro saved goes into the book launch."',
-            actionName: 'Dispatch Finance Brief',
-            isBrief: true
-          }
-        ]
-      },
-      {
-        id: 'it',
-        name: 'IT & Systems',
-        german: 'IT, Plattform & Infrastruktur',
-        icon: '💻',
-        director: 'Victor Hahn',
-        tag: 'Platform, integrations, automation, security',
-        doorX: 0.76, doorY: 0.35,
-        color: '#00cec9',
-        interiorImg: 'assets/interior_it.jpg',
-        stations: [
-          {
-            id: 'server_racks',
-            name: '🖥️ Eco-Cooled Silent Server Racks',
-            x: 0.68, y: 0.55,
-            desc: 'Liquid-cooled server cabinets glowing with emerald and cyan activity LEDs. Hosting local Ollama inference clusters and encrypted data vaults.',
-            actionName: 'Inspect M4 Cluster Health',
-            data: { localEngine: 'Apple M4 Neural Engine', models: 'Qwen 2.5 32B / Llama 3.3', latency: '18.2 ms/token' }
-          },
-          {
-            id: 'victor_desk',
-            name: '👨🏼‍💻 Victor Hahn (Director of IT)',
-            x: 0.25, y: 0.68,
-            desc: '"Victor Hahn here. All GitHub webhooks, Vercel pipelines, and local Metal memory bridges are fully operational with 0 errors."',
-            actionName: 'Dispatch IT Brief',
-            isBrief: true
-          }
-        ]
-      },
-      {
-        id: 'academy',
-        name: 'Teaching Academy',
-        german: 'Lehr- & Ausbildungsakademie',
-        icon: '🎓',
-        director: 'Dr. Anna Weiss',
-        tag: 'Students, teachers, AI tutors, scheduling, quality',
-        doorX: 0.44, doorY: 0.74,
-        color: '#2980b9',
-        interiorImg: 'assets/interior_academy.jpg',
-        stations: [
-          {
-            id: 'neural_screen',
-            name: '🎓 Interactive Neural Network Blackboard',
-            x: 0.85, y: 0.50,
-            desc: 'Large ultra-wide digital blackboard displaying neural architectures, agentic workflows, and student progression analytics.',
-            actionName: 'Inspect Curriculum Modules',
-            data: { activeStudents: '142 Enrolled', aiTutorAccuracy: '98.9%', modulesCompleted: '24 Modules' }
-          },
-          {
-            id: 'anna_podium',
-            name: '👩🏻‍🏫 Dr. Anna Weiss (Teaching Academy)',
-            x: 0.68, y: 0.62,
-            desc: '"Welcome Founder! The students are currently learning multi-agent orchestration principles based directly on your upcoming book."',
-            actionName: 'Dispatch Academy Brief',
-            isBrief: true
-          }
-        ]
-      },
-      {
-        id: 'product',
-        name: 'Product Development',
-        german: 'Produktentwicklung & Apps',
-        icon: '📦',
-        director: 'Mira Novak',
-        tag: 'Apps, books, curricula, online courses',
-        doorX: 0.83, doorY: 0.68,
-        color: '#27ae60',
-        interiorImg: 'assets/interior_product.jpg',
-        stations: [
-          {
-            id: 'app_stand',
-            name: '📱 App Prototyping & UX Wireframe Station',
-            x: 0.28, y: 0.72,
-            desc: 'Drafting tables with iPad test stands and mobile blueprints for the companion PANDORA Village mobile and desktop apps.',
-            actionName: 'Test Interactive App Prototype',
-            data: { currentSprint: 'Sprint 14', testCoverage: '94.2%', appBuild: 'v1.0.4-rc' }
-          },
-          {
-            id: 'manuscript_board',
-            name: '📑 Book Manuscript Chapter Structure Board',
-            x: 0.82, y: 0.45,
-            desc: 'Full wall pinboard detailing Chapter 1 Heritage, Chapter 2 Design, Chapter 3 Future, and technical appendix diagrams.',
-            actionName: 'Inspect Chapter Outlines'
-          },
-          {
-            id: 'mira_desk',
-            name: '👩🏻‍💻 Mira Novak (Director of Product)',
-            x: 0.55, y: 0.55,
-            desc: '"Director Mira Novak here. We are ensuring every software component and book section is cohesive, practical, and production-ready."',
-            actionName: 'Dispatch Product Brief',
-            isBrief: true
-          }
-        ]
-      },
-      {
-        id: 'core',
-        name: 'Pandora Core & Learning Engine',
-        german: 'Zentraler Kern & KI-Lernmaschine',
-        icon: '✨',
-        director: 'Astra (AI Core)',
-        tag: 'Data, recommendations, progress',
-        doorX: 0.50, doorY: 0.50,
-        color: '#0984e3',
-        interiorImg: 'assets/interior_core.jpg',
-        stations: [
-          {
-            id: 'infinity_sphere',
-            name: '♾️ Central Holographic AI Neural Sphere',
-            x: 0.50, y: 0.45,
-            desc: 'The central cognitive heart of PANDORA. Synthesizes cross-department embeddings, coordinates memory vectors, and aligns village priorities.',
-            actionName: 'Query Enterprise Memory',
-            data: { totalVectors: '34,200 Embeddings', throughput: '4.8M Tokens / Day', modelStatus: 'Unified & Synchronized' }
-          },
-          {
-            id: 'observation_deck',
-            name: '🌐 Circular Timber Observation Walkway',
-            x: 0.25, y: 0.65,
-            desc: 'Overlooks the central reflecting fountain and mountain panorama through the geodesic glass dome.',
-            actionName: 'Run Village Diagnostics'
-          }
-        ]
-      },
-      {
-        id: 'research',
-        name: 'Research & Innovation',
-        german: 'Forschung & Zukunftskonzepte',
-        icon: '🔬',
-        director: 'Felix Ionescu',
-        tag: 'Trends, competitors, ideas, new concepts',
-        doorX: 0.69, doorY: 0.78,
-        color: '#16a085',
-        interiorImg: 'assets/interior_research.jpg',
-        stations: [
-          {
-            id: 'trend_radars',
-            name: '📡 Futuristic Trend Radar Displays',
-            x: 0.15, y: 0.48,
-            desc: 'Monitors scanning arXiv papers, patents, and open-weights releases for breakthroughs applicable to the village and book.',
-            actionName: 'Scan Frontier Papers',
-            data: { papersScanned: '28 this week', patentsPending: '3 Filed', breakthroughScore: '94/100' }
-          },
-          {
-            id: 'felix_desk',
-            name: '👨🏻‍🔬 Felix Ionescu (Director of Research)',
-            x: 0.75, y: 0.65,
-            desc: '"Director Felix Ionescu here. We have confirmed that Apple Silicon M4 unified memory gives us an unbeatable edge for private local inference."',
-            actionName: 'Dispatch Research Brief',
-            isBrief: true
-          }
+        id: 'hr',
+        name: 'HR & Recruitment',
+        german: 'Personal & Talent',
+        tag: 'Hiring, onboarding, talent vetting',
+        tx: 17, ty: 8, tw: 7, th: 5,
+        doorTx: 20, doorTy: 13,
+        icon: '👥',
+        director: 'Sofia Becker',
+        avatar: '👩🏼‍💼',
+        role: 'Director of Talent & HR',
+        roofColor: '#9a3412',
+        image: 'assets/interior_hr.jpg',
+        introQuote: '"Sofia Becker reporting. We are vetting elite technical copywriters to assist with reviewing the final book chapters."',
+        briefReply: 'Onboarding funnel initiated! Candidate portfolios filtered against enterprise agent standards.',
+        hotspots: [
+          { name: '📋 Talent Dossier Board', x: '42%', y: '50%', desc: 'Candidate profiles for AI systems engineers and book editors.' },
+          { name: '🤝 Interview Suite', x: '68%', y: '60%', desc: 'Acoustic private booths for executive partner evaluations.' }
         ]
       },
       {
         id: 'marketing',
         name: 'Marketing & Growth',
         german: 'Marketing & Wachstum',
+        tag: 'Social media, ads, affiliates, launch',
+        tx: 6, ty: 10, tw: 7, th: 5,
+        doorTx: 9, doorTy: 15,
         icon: '📢',
         director: 'Leo Marin',
-        tag: 'Social media, ads, SEO, affiliates',
-        doorX: 0.29, doorY: 0.38,
-        color: '#fd79a8',
-        interiorImg: 'assets/interior_marketing.jpg',
-        stations: [
-          {
-            id: 'mood_board',
-            name: '🎨 Creative Agency Moodboards & Ad Displays',
-            x: 0.15, y: 0.45,
-            desc: 'Creative wall boards testing book cover taglines, viral hooks, and video thumbnails for the book launch.',
-            actionName: 'Review Ad Creatives',
-            data: { monthlyImpressions: '420,000', waitlistLeads: '2,840', averageROAS: '4.8x' }
-          },
-          {
-            id: 'leo_desk',
-            name: '🧔🏽 Leo Marin (Director of Marketing)',
-            x: 0.66, y: 0.65,
-            desc: '"Our Tristen O\'Brien video breakdown is gaining immense traction. The audience wants to see the actual German village in action."',
-            actionName: 'Dispatch Marketing Brief',
-            isBrief: true
-          }
+        avatar: '🧔🏽',
+        role: 'Director of Marketing',
+        roofColor: '#831843',
+        image: 'assets/interior_marketing.jpg',
+        introQuote: '"Leo Marin here! The Tristen OBrien breakdown video campaign is bringing thousands of waitlist readers for the book launch."',
+        briefReply: 'Viral campaign pushed! Multi-channel ads deployed across YouTube, X, and LinkedIn.',
+        hotspots: [
+          { name: '📊 Growth Dashboard', x: '35%', y: '40%', desc: 'Real-time campaign analytics: 48,200 impressions today.' },
+          { name: '🎬 Video Storyboard', x: '65%', y: '55%', desc: 'Book launch teaser trailers and animated promotional reels.' }
         ]
       },
       {
-        id: 'sales',
-        name: 'Sales & Events',
-        german: 'Vertrieb & Veranstaltungen',
-        icon: '📅',
-        director: 'Clara Neumann',
-        tag: 'Strategy calls, webinars, workshops, CRM, follow-ups',
-        doorX: 0.88, doorY: 0.50,
-        color: '#6c5ce7',
-        interiorImg: 'assets/interior_sales.jpg',
-        stations: [
-          {
-            id: 'webinar_booth',
-            name: '🎙️ Live Webinar Broadcast Station',
-            x: 0.65, y: 0.55,
-            desc: 'Sound-isolated studio with studio ring light and CRM deal funnel monitors. Clara Neumann conducts enterprise strategy demos here.',
-            actionName: 'Review Enterprise Pipeline',
-            data: { dealPipeline: '€285,000', upcomingWebinar: 'This Thursday', attendeeCount: '340 Registered' }
-          },
-          {
-            id: 'clara_desk',
-            name: '👩🏻‍💼 Clara Neumann (Director of Sales)',
-            x: 0.25, y: 0.65,
-            desc: '"Enterprise interest in deploying private local agent villages on Apple M4 hardware is exceptionally high."',
-            actionName: 'Dispatch Sales Brief',
-            isBrief: true
-          }
+        id: 'it',
+        name: 'IT & Systems',
+        german: 'IT & Infrastruktur',
+        tag: 'Platform, automation, M4 inference',
+        tx: 40, ty: 8, tw: 7, th: 5,
+        doorTx: 43, doorTy: 13,
+        icon: '💻',
+        director: 'Victor Hahn',
+        avatar: '👨🏼‍💻',
+        role: 'Director of IT & Systems',
+        roofColor: '#0f766e',
+        image: 'assets/interior_it.jpg',
+        introQuote: '"Victor Hahn reporting. Local M4 Apple Silicon inference is operating at 18 ms/token. Zero external cloud API fees incurred today!"',
+        briefReply: 'Local M4 cluster optimized! Unified memory caching enabled for 12 parallel autonomous workflows.',
+        hotspots: [
+          { name: '🖥️ Apple M4 Neural Cluster', x: '45%', y: '48%', desc: 'Liquid-cooled Apple Silicon nodes running local open-weights LLMs.' },
+          { name: '⚡ 10GbE Switch Stack', x: '78%', y: '35%', desc: 'High-speed LAN routing village agent messages with sub-millisecond latency.' }
         ]
       },
       {
         id: 'support',
         name: 'Customer Support',
-        german: 'Kundenbetreuung & Feedback',
+        german: 'Kundenbetreuung',
+        tag: 'Helpdesk, feedback, reader care',
+        tx: 51, ty: 10, tw: 7, th: 5,
+        doorTx: 54, doorTy: 15,
         icon: '🎧',
         director: 'Laura Munteanu',
-        tag: 'Helpdesk, feedback, retention',
-        doorX: 0.91, doorY: 0.44,
-        color: '#a29bfe',
-        interiorImg: 'assets/interior_support.jpg',
-        stations: [
-          {
-            id: 'ticker_board',
-            name: '💬 Student Support & Care Live Ticker',
-            x: 0.85, y: 0.35,
-            desc: 'Real-time satisfaction monitor showing 96% customer happiness and resolution queues for course and book inquiries.',
-            actionName: 'Review Feedback Log',
-            data: { csatScore: '96.4%', avgWaitTime: '3 minutes', resolvedToday: '38 Tickets' }
-          },
-          {
-            id: 'laura_desk',
-            name: '👩🏽 Laura Munteanu (Customer Support)',
-            x: 0.58, y: 0.68,
-            desc: '"Readers are eager for the book release! We are funneling all reader questions into the Product Development backlog."',
-            actionName: 'Dispatch Support Brief',
-            isBrief: true
-          }
+        avatar: '👩🏽',
+        role: 'Director of Customer Support',
+        roofColor: '#3730a3',
+        image: 'assets/interior_support.jpg',
+        introQuote: '"Laura Munteanu here! Student and reader satisfaction is at 96.4%. All incoming questions are resolved within 4 minutes."',
+        briefReply: 'Support protocol refreshed! Automated tier-1 triage handling all reader book inquiries.',
+        hotspots: [
+          { name: '📈 CSAT Satisfaction Gauge', x: '52%', y: '42%', desc: 'Real-time reader satisfaction rating: 96.4% positive.' },
+          { name: '🎧 Agent Helpdesk Pods', x: '28%', y: '58%', desc: 'AI agent customer care representatives resolving student questions.' }
         ]
       },
       {
-        id: 'hr',
-        name: 'HR & Recruitment',
-        german: 'Personal & Talententwicklung',
-        icon: '👥',
-        director: 'Sofia Becker',
-        tag: 'Hiring teachers, onboarding, talent, development',
-        doorX: 0.36, doorY: 0.30,
-        color: '#e67e22',
-        interiorImg: 'assets/interior_hr.jpg',
-        stations: [
-          {
-            id: 'talent_kanban',
-            name: '📋 Interactive Talent Pipeline Kanban Board',
-            x: 0.85, y: 0.45,
-            desc: 'Wall-sized interactive digital board tracking candidate stages: Sourced, Application, Interview, Offer, and Hired.',
-            actionName: 'Inspect Open Roles',
-            data: { openRoles: '3 Positions', candidatesInPipeline: '14 Active', teacherCertifications: '100% Passed' }
-          },
-          {
-            id: 'sofia_desk',
-            name: '👩🏼‍💼 Sofia Becker (Director of HR)',
-            x: 0.25, y: 0.65,
-            desc: '"We are curating elite technical copywriters to help review the final book chapters alongside your team."',
-            actionName: 'Dispatch HR Brief',
-            isBrief: true
-          }
+        id: 'sales',
+        name: 'Sales & Events',
+        german: 'Vertrieb & Webinare',
+        tag: 'Webinars, strategy calls, enterprise CRM',
+        tx: 5, ty: 22, tw: 7, th: 5,
+        doorTx: 8, doorTy: 27,
+        icon: '📅',
+        director: 'Clara Neumann',
+        avatar: '👩🏻‍💼',
+        role: 'Director of Sales & Events',
+        roofColor: '#4c1d95',
+        image: 'assets/interior_sales.jpg',
+        introQuote: '"Clara Neumann here! We have 340 enterprise attendees registered for our upcoming private AI village webinar."',
+        briefReply: 'Webinar broadcast sequence locked! Executive invitees sent calendar invites and whitepapers.',
+        hotspots: [
+          { name: '🎙️ Webinar Broadcast Stage', x: '40%', y: '52%', desc: 'Keynote stage for live enterprise software demonstrations.' },
+          { name: '📊 CRM Pipeline Wall', x: '72%', y: '42%', desc: 'Active enterprise pipeline: €1.42M qualified book pre-orders and licenses.' }
+        ]
+      },
+      {
+        id: 'publishing',
+        name: 'Publishing & Distribution',
+        german: 'Verlag & Buchvertrieb',
+        tag: 'Book layout, typesetting, releases',
+        tx: 16, ty: 22, tw: 8, th: 5,
+        doorTx: 20, doorTy: 27,
+        icon: '📖',
+        director: 'Elena Roth',
+        avatar: '👩🏼',
+        role: 'Director of Publishing & Layout',
+        roofColor: '#78350f',
+        image: 'assets/interior_publishing.jpg',
+        introQuote: '"Founder, look! We have the Heidelberg press running. Chapters 1-4 of The Autonomous Enterprise are fully bound!"',
+        briefReply: 'Press run verified! InDesign layouts aligned, typography proofed, and distribution packing begun.',
+        hotspots: [
+          { name: '🖨️ Heidelberg Speedmaster Press', x: '35%', y: '50%', desc: 'Automated mechanical printing press printing proofs of Chapters 1-4.' },
+          { name: '📚 Bound Proof Stacks', x: '68%', y: '65%', desc: 'Embossed hardcover proof copies ready for Founder inspection.' },
+          { name: '📐 Layout Drafting Light-Table', x: '50%', y: '35%', desc: 'High-precision layout table for inspecting font kerning and margins.' }
+        ]
+      },
+      {
+        id: 'core',
+        name: 'Pandora Core & Learning Engine',
+        german: 'Zentraler Kern & KI-Gehirn',
+        tag: 'Central cognitive brain, shared memory',
+        tx: 28, ty: 20, tw: 8, th: 5,
+        doorTx: 32, doorTy: 25,
+        icon: '✨',
+        director: 'Astra (AI Core)',
+        avatar: '🤖',
+        role: 'Central AI Engine',
+        roofColor: '#1e40af',
+        image: 'assets/interior_core.jpg',
+        introQuote: '"I am Astra, the central cognitive pulse of PANDORA. All 12 departments are synchronized in the collective enterprise memory."',
+        briefReply: 'Vector memory embedded! Departmental context graphs cross-linked and synapsed.',
+        hotspots: [
+          { name: '✨ Quantum Neural Core', x: '50%', y: '45%', desc: 'The pulsating cognitive core unifying all village agent activities.' },
+          { name: '💎 Memory Crystal Matrix', x: '25%', y: '55%', desc: 'Persistent enterprise knowledge base and Founder preference weights.' }
+        ]
+      },
+      {
+        id: 'finance',
+        name: 'Finance & Bookkeeping',
+        german: 'Finanzen & Buchhaltung',
+        tag: 'Budgets, payments, local M4 cost',
+        tx: 40, ty: 22, tw: 8, th: 5,
+        doorTx: 44, doorTy: 27,
+        icon: '🪙',
+        director: 'Daniel Petrescu',
+        avatar: '👨🏻‍💼',
+        role: 'Director of Finance',
+        roofColor: '#854d0e',
+        image: 'assets/interior_finance.jpg',
+        introQuote: '"Daniel Petrescu here. Running models locally on your Mac saved $148.50 today alone. All invoices are cleared."',
+        briefReply: 'Ledger balanced! Mac hardware ROI amortized and royalty escrow verified.',
+        hotspots: [
+          { name: '🏦 Reinforced Steel Vault', x: '32%', y: '45%', desc: 'Secure repository for physical contracts and revenue certificates.' },
+          { name: '📊 Bloomberg Trading Terminals', x: '65%', y: '55%', desc: 'Hardware cost amortizer and real-time ledger accounting.' }
+        ]
+      },
+      {
+        id: 'research',
+        name: 'Research & Innovation',
+        german: 'Forschung & Trends',
+        tag: 'Trends, competitors, citations',
+        tx: 52, ty: 22, tw: 7, th: 5,
+        doorTx: 55, doorTy: 27,
+        icon: '🔬',
+        director: 'Felix Ionescu',
+        avatar: '👨🏻‍🔬',
+        role: 'Director of Research & Innovation',
+        roofColor: '#065f46',
+        image: 'assets/interior_research.jpg',
+        introQuote: '"Felix Ionescu reporting. We are tracking the latest frontier open-weights breakthroughs and citing academic sources for the book."',
+        briefReply: 'Literature review completed! 18 academic papers cataloged with peer-reviewed citations.',
+        hotspots: [
+          { name: '🔬 Electron Analysis Station', x: '45%', y: '52%', desc: 'Benchmarking AI reasoning token distribution and cognitive entropy.' },
+          { name: '📚 Academic Archive Stacks', x: '75%', y: '42%', desc: 'Frontier AI papers from DeepMind, Stanford, and Munich Tech.' }
+        ]
+      },
+      {
+        id: 'academy',
+        name: 'Teaching Academy',
+        german: 'Lehr-Akademie',
+        tag: 'Students, teachers, quality',
+        tx: 13, ty: 38, tw: 8, th: 5,
+        doorTx: 17, doorTy: 43,
+        icon: '🎓',
+        director: 'Dr. Anna Weiss',
+        avatar: '👩🏻‍🏫',
+        role: 'Director of Teaching Academy',
+        roofColor: '#1e3a8a',
+        image: 'assets/interior_academy.jpg',
+        introQuote: '"Greetings Founder! Our 142 students are studying autonomous workflows. The AI tutors are scoring 98.9% accuracy."',
+        briefReply: 'Curriculum lecture unlocked! Interactive homework agent assigned to all student cohorts.',
+        hotspots: [
+          { name: '🎓 Master Lecture Lectern', x: '35%', y: '46%', desc: 'Where Dr. Weiss instructs students on autonomous agent prompting.' },
+          { name: '📝 Student Desk Pods', x: '65%', y: '60%', desc: 'Interactive workstations with live AI agent pair-programming tutors.' }
+        ]
+      },
+      {
+        id: 'multimedia',
+        name: 'Multimedia Production',
+        german: 'Medien- & Videostudio',
+        tag: 'Sound, image, video, animation',
+        tx: 27, ty: 42, tw: 10, th: 5,
+        doorTx: 32, doorTy: 47,
+        icon: '🎬',
+        director: 'Jonas Keller',
+        avatar: '🧔🏻',
+        role: 'Director of Multimedia & Sound',
+        roofColor: '#7f1d1d',
+        image: 'assets/interior_multimedia.jpg',
+        introQuote: '"Director Jonas Keller here! We have the 4K studio cameras rolling and sound tracks mixed for the book launch video."',
+        briefReply: 'Rendering queued! 4K cinematic trailer being rendered with Dolby Atmos sound mix.',
+        hotspots: [
+          { name: '📹 Sony FX9 4K Camera Rig', x: '35%', y: '52%', desc: 'Professional cinema camera rig capturing the author interview.' },
+          { name: '🎛️ Audio Mixing Console', x: '65%', y: '58%', desc: 'Multi-channel audio mixing board for crystal-clear book narration.' }
+        ]
+      },
+      {
+        id: 'product',
+        name: 'Product Development',
+        german: 'Produktentwicklung',
+        tag: 'Apps, books, interactive tools',
+        tx: 43, ty: 38, tw: 8, th: 5,
+        doorTx: 47, doorTy: 43,
+        icon: '📦',
+        director: 'Mira Novak',
+        avatar: '👩🏻‍💻',
+        role: 'Director of Product Development',
+        roofColor: '#14532d',
+        image: 'assets/interior_product.jpg',
+        introQuote: '"Mira Novak here! We have the mobile app wireframes ready and the book manuscript outline pinned to the main drafting board."',
+        briefReply: 'Sprint goals updated! Interactive app prototype compiled for M4 testing.',
+        hotspots: [
+          { name: '📐 Glass Wireframe Board', x: '42%', y: '42%', desc: 'Interactive UX wireframes for the companion village reader app.' },
+          { name: '💻 Prototyping Workstation', x: '70%', y: '55%', desc: 'Compiling React Native components and offline local model hooks.' }
         ]
       }
     ];
 
     /* =========================================================================
-       2. FOUNDER APPROVAL SYSTEM (Rule #7)
+       4. MAP GRIDS & COLLISION GENERATION
        ========================================================================= */
-    let PENDING_APPROVALS = [
-      {
-        id: 'appr-1',
-        title: 'Book Cover Proof: Gold Foil Dust Jacket',
-        dept: 'Publishing & Distribution (Elena Roth)',
-        desc: 'Review the finished foil stamping proofs for the hardcover edition of "The Autonomous Enterprise". Ready for print run upon your approval.',
-        status: 'pending'
-      },
-      {
-        id: 'appr-2',
-        title: 'Apple M4 Local Model Memory Allocation',
-        dept: 'IT & Systems (Victor Hahn)',
-        desc: 'Authorization to lock 24GB of unified memory on your M4 Mac for the 32B model context window during deep book research synthesis.',
-        status: 'pending'
-      },
-      {
-        id: 'appr-3',
-        title: 'Q4 Enterprise Masterclass Curriculum Release',
-        dept: 'Teaching Academy (Dr. Anna Weiss)',
-        desc: 'Masterclass syllabus: "Building Local Autonomous Multi-Agent Enterprises on Apple Silicon". Ready to publish to enrolled students.',
-        status: 'pending'
+    const MAP_W = 64;
+    const MAP_H = 56;
+    let villageGrid = [];
+    let villageCollisions = [];
+    let currentMap = 'village';
+    let currentInterior = null;
+    let activeHouse = null;
+
+    // Animated Smoke Particles from Chimneys
+    const smokeParticles = [];
+    function initSmoke() {
+      HOUSES.forEach(h => {
+        smokeParticles.push({
+          x: (h.tx + h.tw - 1) * TILE + 24,
+          y: h.ty * TILE + 6,
+          particles: []
+        });
+      });
+    }
+
+    function initVillageMap() {
+      villageGrid = Array(MAP_H).fill(0).map(() => Array(MAP_W).fill(0));
+      villageCollisions = Array(MAP_H).fill(0).map(() => Array(MAP_W).fill(0));
+
+      // 1. Central Plaza (Kaiserstein-Platz) around (32, 33)
+      for (let y = 28; y <= 38; y++) {
+        for (let x = 27; x <= 37; x++) {
+          const dx = x - 32;
+          const dy = y - 33;
+          if (dx * dx + dy * dy <= 30) {
+            villageGrid[y][x] = 2; // stone plaza
+          }
+        }
       }
-    ];
+
+      // 2. Radial Cobblestone Roads Connecting to Every House Door
+      HOUSES.forEach(h => {
+        let cx = 32;
+        let cy = 33;
+        while (cx !== h.doorTx || cy !== h.doorTy) {
+          villageGrid[cy][cx] = 1;
+          if (cx < h.doorTx) cx++;
+          else if (cx > h.doorTx) cx--;
+          if (cy < h.doorTy) cy++;
+          else if (cy > h.doorTy) cy--;
+        }
+        villageGrid[h.doorTy][h.doorTx] = 1;
+      });
+
+      // 3. Mark House Walls as Blocked in Collisions
+      HOUSES.forEach(h => {
+        for (let y = h.ty; y < h.ty + h.th; y++) {
+          for (let x = h.tx; x < h.tx + h.tw; x++) {
+            villageCollisions[y][x] = 1;
+          }
+        }
+        // Doorway tile is walkable!
+        villageCollisions[h.doorTy][h.doorTx] = 0;
+      });
+
+      // 4. Central Fountain Collision at (32, 33)
+      villageCollisions[33][32] = 1;
+    }
+
+    /* Generate Interior Room for each House */
+    function generateInteriorMap(house) {
+      const iw = 18;
+      const ih = 14;
+      const grid = Array(ih).fill(0).map(() => Array(iw).fill(4));
+      const col = Array(ih).fill(0).map(() => Array(iw).fill(0));
+
+      // Outer wall boundaries
+      for (let x = 0; x < iw; x++) {
+        col[0][x] = 1;
+        col[ih - 1][x] = 1;
+      }
+      for (let y = 0; y < ih; y++) {
+        col[y][0] = 1;
+        col[y][iw - 1] = 1;
+      }
+
+      // Exit doorway at bottom center (x: 9, y: 13)
+      col[ih - 1][9] = 0;
+
+      // Interior Workstations & Furniture Collisions
+      if (house.id === 'multimedia') {
+        col[4][4] = 1; col[5][4] = 1; // 4K Camera Rig
+        col[4][7] = 1;
+        col[8][9] = 1; col[8][10] = 1; // Audio Mixer
+        col[4][14] = 1; col[5][14] = 1; // Video Editing Bay
+      } else if (house.id === 'publishing') {
+        col[4][3] = 1; col[4][4] = 1; col[5][3] = 1; col[5][4] = 1; // Heidelberg Press
+        for (let x = 3; x <= 14; x++) col[1][x] = 1; // Book Stacks along wall
+        col[7][9] = 1; col[7][10] = 1; // Bound Proof Stacks
+      } else if (house.id === 'townhall') {
+        for (let y = 5; y <= 7; y++) {
+          for (let x = 7; x <= 11; x++) col[y][x] = 1; // Council Table
+        }
+        col[2][9] = 1; // Podium
+      } else if (house.id === 'it') {
+        for (let x = 3; x <= 8; x++) col[2][x] = 1; // M4 Server Racks
+        col[6][8] = 1; col[6][9] = 1; // Sysadmin Desk
+      } else if (house.id === 'finance') {
+        col[1][3] = 1; col[2][3] = 1; // Vault
+        col[5][7] = 1; col[5][8] = 1; col[5][9] = 1; // Trading Desk
+      } else {
+        col[4][6] = 1; col[4][7] = 1; col[4][8] = 1; col[4][9] = 1; // Central Workstation
+      }
+
+      return { grid, col, w: iw, h: ih };
+    }
+
+    initVillageMap();
+    initSmoke();
 
     /* =========================================================================
-       3. RPG ENGINE: GRAPHICS, PLAYER, COMPANION & WORLD INTERACTION
+       5. CHARACTERS: PLAYER, COMPANION & WALKING NPCS
        ========================================================================= */
-    const gameContainer = document.getElementById('game-container');
-    const worldCanvas = document.getElementById('world-canvas');
-    const worldCtx = worldCanvas.getContext('2d');
-
-    const interiorStage = document.getElementById('interior-stage');
-    const interiorCanvas = document.getElementById('interior-canvas');
-    const interiorCtx = interiorCanvas.getContext('2d');
-
-    let currentScene = 'village'; // 'village' or 'interior'
-    let currentBuilding = null;
-    let viewMode = 'base'; // 'base' (photorealistic) or 'diagram' (tactical arrows)
-    let timeOfDay = 'day'; // 'day', 'dusk', 'night'
-    let frameCount = 0;
-
-    // Load Master Images
-    const imgVillageBase = new Image();
-    imgVillageBase.src = 'assets/village_base.jpg';
-
-    const imgVillageDiagram = new Image();
-    imgVillageDiagram.src = 'assets/village_diagram.jpg';
-
-    // Cache Interior Images
-    const interiorImages = {};
-    BUILDINGS.forEach(b => {
-      const img = new Image();
-      img.src = b.interiorImg;
-      interiorImages[b.id] = img;
-    });
-
-    // Player (The Founder) State
     const player = {
-      x: 0.50, // Relative coordinates [0..1]
-      y: 0.60,
-      targetX: 0.50,
-      targetY: 0.60,
-      speed: 0.0035,
-      isMoving: false,
-      facing: 'down',
+      x: 32 * TILE + TILE / 2,
+      y: 34 * TILE + TILE / 2,
+      speed: 4.0,
+      dir: 'down',
       walkFrame: 0,
-      name: 'Founder'
+      isMoving: false,
+      color: '#d4af37',
+      name: 'Founder (You)'
     };
 
-    // Companion (Chief of Staff) State
     const companion = {
-      x: 0.48,
-      y: 0.62,
-      targetX: 0.48,
-      targetY: 0.62,
-      speed: 0.0032,
-      facing: 'down',
+      x: 32 * TILE + TILE / 2,
+      y: 35 * TILE + TILE / 2,
+      speed: 3.8,
+      dir: 'down',
       walkFrame: 0,
+      color: '#2563eb',
       name: 'Chief of Staff'
     };
 
-    // Interior Player State (when inside a room)
-    const interiorPlayer = {
-      x: 0.50,
-      y: 0.85,
-      targetX: 0.50,
-      targetY: 0.85,
-      speed: 0.005,
-      isMoving: false,
-      facing: 'up'
-    };
+    const NPCS = [
+      { name: 'Klaus', role: 'Press Tech', x: 21 * TILE, y: 28 * TILE, homeX: 21 * TILE, homeY: 28 * TILE, vest: true, dir: 'right', avatar: '👷🏼', quote: '"Checking the paper feed on the Heidelberg press for Chapter 3!"' },
+      { name: 'Stefan', role: 'Camera Operator', x: 32 * TILE, y: 45 * TILE, homeX: 32 * TILE, homeY: 45 * TILE, vest: true, dir: 'up', avatar: '👷🏽', quote: '"Director Keller has me rendering 4K camera dollies for the book intro."' },
+      { name: 'Heidi', role: 'Research Analyst', x: 53 * TILE, y: 28 * TILE, homeX: 53 * TILE, homeY: 28 * TILE, vest: true, dir: 'left', avatar: '👷🏻‍♀️', quote: '"Fact-checking technical citations for Chapter 4 with Felix!"' },
+      { name: 'Lukas', role: 'M4 Sysadmin', x: 42 * TILE, y: 15 * TILE, homeX: 42 * TILE, homeY: 15 * TILE, vest: true, dir: 'down', avatar: '👷🏼', quote: '"Monitoring the Apple M4 Neural Engine bridge. All pipelines green!"' },
+      { name: 'Gretchen', role: 'Student Guide', x: 19 * TILE, y: 41 * TILE, homeX: 19 * TILE, homeY: 41 * TILE, vest: false, dir: 'right', avatar: '👩🏻‍🎓', quote: '"Dr. Anna Weiss lecture on autonomous agent teams was incredible!"' }
+    ];
 
-    // Keyboard Input State
-    const keys = { w: false, a: false, s: false, d: false, ArrowUp: false, ArrowLeft: false, ArrowDown: false, ArrowRight: false, e: false };
+    /* =========================================================================
+       6. CONTROLS: KEYBOARD & TOUCH
+       ========================================================================= */
+    const keys = {};
+    window.addEventListener('keydown', e => {
+      keys[e.key.toLowerCase()] = true;
+      keys[e.key] = true;
 
-    window.addEventListener('keydown', (e) => {
-      if (keys.hasOwnProperty(e.key.toLowerCase())) keys[e.key.toLowerCase()] = true;
-      if (keys.hasOwnProperty(e.key)) keys[e.key] = true;
-
-      if (e.key === 'e' || e.key === 'E' || e.key === ' ') {
-        handleInteractAction();
+      if (e.key === ' ' || e.key === 'e' || e.key === 'E' || e.key === 'Enter') {
+        handleActionPress();
+      }
+      if (e.key === 'v' || e.key === 'V') {
+        toggleRoomView();
+      }
+      if (e.key === 'm' || e.key === 'M') {
+        toggleMiniMap();
       }
       if (e.key === 'Escape') {
-        if (currentScene === 'interior') exitInterior();
-        closeStationModal();
+        if (isFpOpen) closeRoomView();
+        else if (isDialogueOpen) closeDialogue();
       }
     });
 
-    window.addEventListener('keyup', (e) => {
-      if (keys.hasOwnProperty(e.key.toLowerCase())) keys[e.key.toLowerCase()] = false;
-      if (keys.hasOwnProperty(e.key)) keys[e.key] = false;
+    window.addEventListener('keyup', e => {
+      keys[e.key.toLowerCase()] = false;
+      keys[e.key] = false;
     });
 
-    // Canvas Resize
-    function resizeCanvases() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+    // Touch Virtual Joystick
+    const mobileKnob = document.getElementById('mobile-knob');
+    const mobileControls = document.getElementById('mobile-controls');
+    let touchStartX = 0, touchStartY = 0, touchingJoystick = false;
 
-      worldCanvas.width = w * window.devicePixelRatio;
-      worldCanvas.height = h * window.devicePixelRatio;
-      worldCanvas.style.width = w + 'px';
-      worldCanvas.style.height = h + 'px';
-      worldCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-      interiorCanvas.width = w * window.devicePixelRatio;
-      interiorCanvas.height = h * window.devicePixelRatio;
-      interiorCanvas.style.width = w + 'px';
-      interiorCanvas.style.height = h + 'px';
-      interiorCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
-    window.addEventListener('resize', resizeCanvases);
-    resizeCanvases();
-
-    // Mouse Click-to-Move
-    worldCanvas.addEventListener('click', (e) => {
-      const rect = worldCanvas.getBoundingClientRect();
-      const clickX = (e.clientX - rect.left) / rect.width;
-      const clickY = (e.clientY - rect.top) / rect.height;
-
-      player.targetX = Math.max(0.08, Math.min(0.92, clickX));
-      player.targetY = Math.max(0.18, Math.min(0.90, clickY));
-      playFootstepSound();
+    mobileControls.addEventListener('touchstart', e => {
+      touchingJoystick = true;
+      const t = e.touches[0];
+      const rect = mobileControls.getBoundingClientRect();
+      touchStartX = rect.left + rect.width / 2;
+      touchStartY = rect.top + rect.height / 2;
     });
 
-    interiorCanvas.addEventListener('click', (e) => {
-      const rect = interiorCanvas.getBoundingClientRect();
-      const clickX = (e.clientX - rect.left) / rect.width;
-      const clickY = (e.clientY - rect.top) / rect.height;
+    window.addEventListener('touchmove', e => {
+      if (!touchingJoystick) return;
+      const t = e.touches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+      const dist = Math.hypot(dx, dy);
+      const maxDist = 35;
+      const angle = Math.atan2(dy, dx);
+      const clampedDist = Math.min(dist, maxDist);
 
-      interiorPlayer.targetX = Math.max(0.10, Math.min(0.90, clickX));
-      interiorPlayer.targetY = Math.max(0.40, Math.min(0.92, clickY));
-      playFootstepSound();
+      mobileKnob.style.transform = `translate(${Math.cos(angle) * clampedDist}px, ${Math.sin(angle) * clampedDist}px)`;
+
+      keys['w'] = dy < -10;
+      keys['s'] = dy > 10;
+      keys['a'] = dx < -10;
+      keys['d'] = dx > 10;
     });
 
-    // Check Nearest Building or Workstation
-    function getNearestBuilding() {
-      let nearest = null;
-      let minDist = 0.085; // Proximity threshold
+    window.addEventListener('touchend', () => {
+      touchingJoystick = false;
+      mobileKnob.style.transform = 'translate(0px, 0px)';
+      keys['w'] = false; keys['s'] = false; keys['a'] = false; keys['d'] = false;
+    });
 
-      BUILDINGS.forEach(b => {
-        const dx = player.x - b.doorX;
-        const dy = player.y - b.doorY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < minDist) {
-          minDist = dist;
-          nearest = b;
-        }
-      });
-      return nearest;
-    }
-
-    function getNearestStation() {
-      if (!currentBuilding || !currentBuilding.stations) return null;
-      let nearest = null;
-      let minDist = 0.12;
-
-      currentBuilding.stations.forEach(s => {
-        const dx = interiorPlayer.x - s.x;
-        const dy = interiorPlayer.y - s.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < minDist) {
-          minDist = dist;
-          nearest = s;
-        }
-      });
-      return nearest;
-    }
-
-    function handleInteractAction() {
-      if (currentScene === 'village') {
-        const b = getNearestBuilding();
-        if (b) {
-          enterBuilding(b);
-        }
-      } else if (currentScene === 'interior') {
-        const s = getNearestStation();
-        if (s) {
-          openStationModal(s);
-        }
-      }
-    }
+    document.getElementById('mobile-action-btn').addEventListener('click', handleActionPress);
 
     /* =========================================================================
-       4. SEAMLESS BUILDING ENTRY & INTERIOR EXPLORATION
+       7. COLLISION & MOVEMENT LOGIC
        ========================================================================= */
-    const promptEl = document.getElementById('interaction-prompt');
-    const promptIconEl = document.getElementById('prompt-icon');
-    const promptTextEl = document.getElementById('prompt-text');
+    function isWalkable(px, py) {
+      const radius = 14;
+      const points = [
+        { x: px - radius, y: py - radius },
+        { x: px + radius, y: py - radius },
+        { x: px - radius, y: py + radius },
+        { x: px + radius, y: py + radius }
+      ];
 
-    function enterBuilding(b) {
-      currentBuilding = b;
-      currentScene = 'interior';
-      interiorPlayer.x = 0.50;
-      interiorPlayer.y = 0.88;
-      interiorPlayer.targetX = 0.50;
-      interiorPlayer.targetY = 0.88;
-
-      document.getElementById('interior-icon').textContent = b.icon;
-      document.getElementById('interior-title').textContent = `${b.name} (${b.german})`;
-      document.getElementById('interior-tag').textContent = `Tag: ${b.tag} • Director: ${b.director}`;
-
-      interiorStage.classList.add('active');
-      playDoorSound();
-      promptEl.classList.remove('visible');
-    }
-
-    function exitInterior() {
-      currentScene = 'village';
-      interiorStage.classList.remove('active');
-      playDoorSound();
-    }
-
-    document.getElementById('exit-interior-btn').addEventListener('click', exitInterior);
-    promptEl.addEventListener('click', handleInteractAction);
-
-    /* =========================================================================
-       5. INTERACTIVE WORKSTATION MODAL & ACTIONS
-       ========================================================================= */
-    const stationModal = document.getElementById('station-modal');
-    const stationTitleEl = document.getElementById('station-title');
-    const stationContentEl = document.getElementById('station-content');
-    const closeStationBtn = document.getElementById('close-station-btn');
-
-    function openStationModal(station) {
-      stationTitleEl.textContent = station.name;
-      let html = `<p>${station.desc}</p>`;
-
-      if (station.data) {
-        html += `<div class="station-box"><h5>Live Operational Metrics</h5>`;
-        for (const [k, v] of Object.entries(station.data)) {
-          html += `<div style="display:flex; justify-content:space-between; margin:4px 0;"><span style="color:#a4b0be;">${k}:</span><span style="color:var(--gold-light); font-weight:600;">${v}</span></div>`;
+      if (currentMap === 'village') {
+        for (const pt of points) {
+          const tx = Math.floor(pt.x / TILE);
+          const ty = Math.floor(pt.y / TILE);
+          if (tx < 0 || tx >= MAP_W || ty < 0 || ty >= MAP_H) return false;
+          if (villageCollisions[ty][tx] === 1) return false;
         }
-        html += `</div>`;
-      }
-
-      if (station.isBrief) {
-        html += `
-          <div class="station-box">
-            <h5>Dispatch Brief to ${currentBuilding.director}</h5>
-            <textarea class="brief-textarea" id="station-brief-input" placeholder="Type instructions for this department..."></textarea>
-            <button class="hud-btn hud-btn-gold" style="width:100%; margin-top:8px; justify-content:center;" onclick="submitBriefFromStation()">
-              🚀 Dispatch to Department Backlog
-            </button>
-          </div>
-        `;
-      } else if (station.isDirective) {
-        html += `
-          <div class="station-box">
-            <h5>Village-Wide Executive Directive</h5>
-            <textarea class="brief-textarea" id="directive-input" placeholder="Type a company-wide priority announcement..."></textarea>
-            <button class="hud-btn hud-btn-gold" style="width:100%; margin-top:8px; justify-content:center;" onclick="broadcastDirective()">
-              📢 Broadcast to All 12 Directors
-            </button>
-          </div>
-        `;
       } else {
-        html += `
-          <button class="hud-btn hud-btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="executeStationAction('${station.actionName}')">
-            ⚡ ${station.actionName}
-          </button>
-        `;
+        const room = currentInterior;
+        for (const pt of points) {
+          const tx = Math.floor(pt.x / TILE);
+          const ty = Math.floor(pt.y / TILE);
+          if (tx < 0 || tx >= room.w || ty < 0 || ty >= room.h) return false;
+          if (room.col[ty][tx] === 1) return false;
+        }
       }
-
-      stationContentEl.innerHTML = html;
-      stationModal.classList.add('active');
-      playChimeSound();
+      return true;
     }
 
-    function closeStationModal() {
-      stationModal.classList.remove('active');
+    /* Screen Fade & Banner */
+    const screenFade = document.getElementById('screen-fade');
+    const locationBanner = document.getElementById('location-banner');
+    const hudLocation = document.getElementById('hud-location');
+    const pipCam = document.getElementById('pip-cam');
+    const pipImg = document.getElementById('pip-img');
+    const pipHouseName = document.getElementById('pip-house-name');
+    const camBtn = document.getElementById('cam-btn');
+
+    function showBanner(text) {
+      locationBanner.textContent = text;
+      locationBanner.classList.add('show');
+      setTimeout(() => locationBanner.classList.remove('show'), 2400);
     }
-    closeStationBtn.addEventListener('click', closeStationModal);
 
-    window.submitBriefFromStation = function() {
-      const text = document.getElementById('station-brief-input').value.trim();
-      if (!text) return;
-      alert(`✓ Brief dispatched to ${currentBuilding.director} (${currentBuilding.name})!\nWorkers have been assigned.`);
-      closeStationModal();
-    };
+    function enterHouse(house) {
+      screenFade.classList.add('blackout');
+      playSound('door');
 
-    window.broadcastDirective = function() {
-      const text = document.getElementById('directive-input').value.trim();
-      if (!text) return;
-      alert(`📢 Executive Directive broadcasted to all 12 Directors!\nChief of Staff has updated the master village backlog.`);
-      closeStationModal();
-    };
+      setTimeout(() => {
+        currentMap = house.id;
+        activeHouse = house;
+        currentInterior = generateInteriorMap(house);
 
-    window.executeStationAction = function(name) {
-      alert(`⚡ Executed: ${name}\nStatus: Verified and synced with Pandora Core.`);
-    };
+        // Position player at entrance inside room
+        player.x = 9 * TILE + TILE / 2;
+        player.y = 12 * TILE + TILE / 2;
+        player.dir = 'up';
+
+        companion.x = player.x;
+        companion.y = player.y + TILE;
+        companion.dir = 'up';
+
+        hudLocation.textContent = `📍 ${house.name} (${house.german})`;
+        showBanner(`${house.name} (${house.german})`);
+
+        // Show Picture-in-Picture Studio Cam
+        pipImg.src = house.image;
+        pipHouseName.textContent = house.name;
+        pipCam.classList.add('active');
+        camBtn.style.display = 'flex';
+
+        screenFade.classList.remove('blackout');
+      }, 250);
+    }
+
+    function exitToVillage() {
+      if (!activeHouse) return;
+      screenFade.classList.add('blackout');
+      playSound('door');
+
+      setTimeout(() => {
+        currentMap = 'village';
+
+        // Position player outside the front door
+        player.x = activeHouse.doorTx * TILE + TILE / 2;
+        player.y = (activeHouse.doorTy + 1) * TILE + TILE / 2;
+        player.dir = 'down';
+
+        companion.x = player.x;
+        companion.y = player.y + TILE;
+        companion.dir = 'down';
+
+        hudLocation.textContent = '📍 Central Plaza (Kaiserstein-Platz)';
+        showBanner('Pandora Village Plaza');
+
+        pipCam.classList.remove('active');
+        camBtn.style.display = 'none';
+        activeHouse = null;
+        screenFade.classList.remove('blackout');
+      }, 250);
+    }
+
+    /* Town Hall Cathedral Bell */
+    function ringTownBell() {
+      playSound('bell');
+      showBanner('🔔 Town Bell Rang! All-Hands Council Meeting at Rathaus!');
+
+      NPCS.forEach((npc, i) => {
+        setTimeout(() => {
+          npc.x = (30 + (i % 5)) * TILE;
+          npc.y = 15 * TILE;
+        }, i * 250);
+      });
+    }
+
+    document.getElementById('bell-btn').addEventListener('click', ringTownBell);
 
     /* =========================================================================
-       6. GAME LOOP & RENDERING: OUTSIDE VILLAGE & INSIDE ROOMS
+       8. 1ST-PERSON ROOM VIEWER (Photorealistic Fullscreen View)
        ========================================================================= */
-    function updatePhysics() {
-      frameCount++;
+    const fpModal = document.getElementById('fp-modal');
+    const fpImg = document.getElementById('fp-img');
+    const fpTitleText = document.getElementById('fp-title-text');
+    const fpHotspots = document.getElementById('fp-hotspots');
+    let isFpOpen = false;
 
-      // Keyboard movement handling for Village
-      if (currentScene === 'village') {
-        let dx = 0;
-        let dy = 0;
-        if (keys.w || keys.arrowup) dy -= 1;
-        if (keys.s || keys.arrowdown) dy += 1;
-        if (keys.a || keys.arrowleft) dx -= 1;
-        if (keys.d || keys.arrowright) dx += 1;
+    function openRoomView() {
+      if (!activeHouse) return;
+      isFpOpen = true;
+      fpImg.src = activeHouse.image;
+      fpTitleText.textContent = `${activeHouse.name} — Studio Feed`;
 
-        if (dx !== 0 || dy !== 0) {
-          const len = Math.sqrt(dx * dx + dy * dy);
-          player.x += (dx / len) * player.speed;
-          player.y += (dy / len) * player.speed;
-          player.targetX = player.x;
-          player.targetY = player.y;
-          player.isMoving = true;
-          player.walkFrame++;
-
-          if (Math.abs(dx) > Math.abs(dy)) player.facing = dx > 0 ? 'right' : 'left';
-          else player.facing = dy > 0 ? 'down' : 'up';
-        } else if (player.isMoving && Math.hypot(player.targetX - player.x, player.targetY - player.y) > 0.005) {
-          // Click-to-move interpolation
-          const tdx = player.targetX - player.x;
-          const tdy = player.targetY - player.y;
-          const dist = Math.sqrt(tdx * tdx + tdy * tdy);
-          player.x += (tdx / dist) * player.speed;
-          player.y += (tdy / dist) * player.speed;
-          player.walkFrame++;
-          if (Math.abs(tdx) > Math.abs(tdy)) player.facing = tdx > 0 ? 'right' : 'left';
-          else player.facing = tdy > 0 ? 'down' : 'up';
-        } else {
-          player.isMoving = false;
-        }
-
-        // Clamp inside village boundaries
-        player.x = Math.max(0.08, Math.min(0.92, player.x));
-        player.y = Math.max(0.18, Math.min(0.90, player.y));
-
-        // Companion follows smoothly behind Player
-        const cdx = player.x - companion.x;
-        const cdy = (player.y + 0.03) - companion.y;
-        const cDist = Math.hypot(cdx, cdy);
-        if (cDist > 0.04) {
-          companion.x += (cdx / cDist) * companion.speed;
-          companion.y += (cdy / cDist) * companion.speed;
-          companion.walkFrame++;
-          companion.facing = player.facing;
-        }
-
-        // Proximity detection to buildings
-        const nearB = getNearestBuilding();
-        if (nearB) {
-          promptIconEl.textContent = nearB.icon;
-          promptTextEl.textContent = `Press [E] or Click to Enter ${nearB.name}`;
-          promptEl.classList.add('visible');
-        } else {
-          promptEl.classList.remove('visible');
-        }
-
-      } else if (currentScene === 'interior') {
-        // Interior Room Movement
-        let idx = 0;
-        let idy = 0;
-        if (keys.w || keys.arrowup) idy -= 1;
-        if (keys.s || keys.arrowdown) idy += 1;
-        if (keys.a || keys.arrowleft) idx -= 1;
-        if (keys.d || keys.arrowright) idx += 1;
-
-        if (idx !== 0 || idy !== 0) {
-          const len = Math.sqrt(idx * idx + idy * idy);
-          interiorPlayer.x += (idx / len) * interiorPlayer.speed;
-          interiorPlayer.y += (idy / len) * interiorPlayer.speed;
-          interiorPlayer.targetX = interiorPlayer.x;
-          interiorPlayer.targetY = interiorPlayer.y;
-          interiorPlayer.isMoving = true;
-        } else if (Math.hypot(interiorPlayer.targetX - interiorPlayer.x, interiorPlayer.targetY - interiorPlayer.y) > 0.005) {
-          const tdx = interiorPlayer.targetX - interiorPlayer.x;
-          const tdy = interiorPlayer.targetY - interiorPlayer.y;
-          const dist = Math.sqrt(tdx * tdx + tdy * tdy);
-          interiorPlayer.x += (tdx / dist) * interiorPlayer.speed;
-          interiorPlayer.y += (tdy / dist) * interiorPlayer.speed;
-          interiorPlayer.isMoving = true;
-        } else {
-          interiorPlayer.isMoving = false;
-        }
-
-        interiorPlayer.x = Math.max(0.10, Math.min(0.90, interiorPlayer.x));
-        interiorPlayer.y = Math.max(0.40, Math.min(0.92, interiorPlayer.y));
-      }
-    }
-
-    // Render Outside Village Master Scene
-    function renderVillageScene() {
-      const w = worldCanvas.clientWidth;
-      const h = worldCanvas.clientHeight;
-      worldCtx.clearRect(0, 0, w, h);
-
-      // 1. Draw Master Photorealistic Village Image (Full High-Res Backdrop)
-      const baseImg = viewMode === 'base' ? imgVillageBase : imgVillageDiagram;
-      if (baseImg.complete && baseImg.naturalWidth > 0) {
-        worldCtx.drawImage(baseImg, 0, 0, w, h);
-      }
-
-      // 2. Day/Dusk/Night Atmospheric Lighting Filter
-      if (timeOfDay === 'dusk') {
-        worldCtx.fillStyle = 'rgba(230, 126, 34, 0.22)';
-        worldCtx.fillRect(0, 0, w, h);
-      } else if (timeOfDay === 'night') {
-        worldCtx.fillStyle = 'rgba(11, 19, 43, 0.65)';
-        worldCtx.fillRect(0, 0, w, h);
-
-        // Warm glowing lights at building entrances
-        BUILDINGS.forEach(b => {
-          const bx = b.doorX * w;
-          const by = b.doorY * h;
-          const glow = worldCtx.createRadialGradient(bx, by, 5, bx, by, 60);
-          glow.addColorStop(0, 'rgba(241, 196, 15, 0.6)');
-          glow.addColorStop(1, 'rgba(241, 196, 15, 0)');
-          worldCtx.fillStyle = glow;
-          worldCtx.beginPath();
-          worldCtx.arc(bx, by, 60, 0, Math.PI * 2);
-          worldCtx.fill();
+      // Render interactive hotspot pins
+      fpHotspots.innerHTML = '';
+      if (activeHouse.hotspots) {
+        activeHouse.hotspots.forEach(hp => {
+          const pin = document.createElement('div');
+          pin.className = 'fp-pin';
+          pin.style.left = hp.x;
+          pin.style.top = hp.y;
+          pin.innerHTML = `<span>📍</span> <span>${hp.name}</span>`;
+          pin.onclick = () => {
+            playSound('talk');
+            openDialogue({
+              name: hp.name,
+              role: activeHouse.name,
+              avatar: '🔍',
+              text: hp.desc,
+              director: false
+            });
+          };
+          fpHotspots.appendChild(pin);
         });
       }
 
-      // 3. Animated Energy Workflow Pulses along the roads
-      BUILDINGS.forEach((b, i) => {
-        const startX = 0.50 * w;
-        const startY = 0.50 * h;
-        const endX = b.doorX * w;
-        const endY = b.doorY * h;
+      fpModal.classList.add('active');
+    }
 
-        const pulse = (frameCount * 0.015 + i * 0.3) % 1;
-        const px = startX + (endX - startX) * pulse;
-        const py = startY + (endY - startY) * pulse;
+    function closeRoomView() {
+      isFpOpen = false;
+      fpModal.classList.remove('active');
+    }
 
-        worldCtx.fillStyle = b.color;
-        worldCtx.shadowColor = b.color;
-        worldCtx.shadowBlur = 10;
-        worldCtx.beginPath();
-        worldCtx.arc(px, py, 4, 0, Math.PI * 2);
-        worldCtx.fill();
-        worldCtx.shadowBlur = 0;
+    function toggleRoomView() {
+      if (isFpOpen) closeRoomView();
+      else if (activeHouse) openRoomView();
+    }
 
-        // Glowing Entrance Portals on Cobblestones
-        worldCtx.strokeStyle = b.color;
-        worldCtx.lineWidth = 2;
-        worldCtx.beginPath();
-        worldCtx.ellipse(endX, endY, 18 + Math.sin(frameCount * 0.1) * 3, 9, 0, 0, Math.PI * 2);
-        worldCtx.stroke();
+    document.getElementById('fp-close-btn').addEventListener('click', closeRoomView);
+    document.getElementById('pip-img-box').addEventListener('click', openRoomView);
+    camBtn.addEventListener('click', openRoomView);
+
+    /* =========================================================================
+       9. MINI-MAP RADAR
+       ========================================================================= */
+    const minimapContainer = document.getElementById('minimap-container');
+    const minimapCanvas = document.getElementById('minimap-canvas');
+    const mmCtx = minimapCanvas.getContext('2d');
+    let isMapOpen = false;
+
+    function toggleMiniMap() {
+      isMapOpen = !isMapOpen;
+      minimapContainer.classList.toggle('active', isMapOpen);
+    }
+    document.getElementById('map-btn').addEventListener('click', toggleMiniMap);
+
+    function renderMiniMap() {
+      if (!isMapOpen) return;
+      mmCtx.fillStyle = '#1e293b';
+      mmCtx.fillRect(0, 0, minimapCanvas.width, minimapCanvas.height);
+
+      const scaleX = minimapCanvas.width / (MAP_W * TILE);
+      const scaleY = minimapCanvas.height / (MAP_H * TILE);
+
+      // Houses
+      HOUSES.forEach(h => {
+        mmCtx.fillStyle = h.roofColor;
+        mmCtx.fillRect(h.tx * TILE * scaleX, h.ty * TILE * scaleY, h.tw * TILE * scaleX, h.th * TILE * scaleY);
       });
 
-      // 4. Draw Animated Walking Characters
-      drawCharacter(worldCtx, companion.x * w, companion.y * h, companion.facing, companion.walkFrame, '#2980b9', '📋 Chief of Staff');
-      drawCharacter(worldCtx, player.x * w, player.y * h, player.facing, player.walkFrame, '#d4af37', '👑 Founder (You)');
+      // NPCs
+      mmCtx.fillStyle = '#f59e0b';
+      NPCS.forEach(n => {
+        mmCtx.fillRect(n.x * scaleX - 1, n.y * scaleY - 1, 3, 3);
+      });
 
-      // 5. Environmental Wind Particles (Cherry Blossom Petals & Light Dust)
-      for (let p = 0; p < 25; p++) {
-        const px = ((p * 73 + frameCount * 1.5) % w);
-        const py = ((p * 97 + Math.sin(frameCount * 0.05 + p) * 30) % h);
-        worldCtx.fillStyle = timeOfDay === 'night' ? 'rgba(100, 200, 255, 0.4)' : 'rgba(255, 182, 193, 0.6)';
-        worldCtx.beginPath();
-        worldCtx.arc(px, py, 2.5, 0, Math.PI * 2);
-        worldCtx.fill();
+      // Companion
+      mmCtx.fillStyle = '#3b82f6';
+      mmCtx.fillRect(companion.x * scaleX - 2, companion.y * scaleY - 2, 4, 4);
+
+      // Player
+      mmCtx.fillStyle = '#d4af37';
+      mmCtx.beginPath();
+      mmCtx.arc(player.x * scaleX, player.y * scaleY, 4, 0, Math.PI * 2);
+      mmCtx.fill();
+    }
+
+    /* =========================================================================
+       10. RPG DIALOGUE SYSTEM
+       ========================================================================= */
+    const dialogueBox = document.getElementById('dialogue-box');
+    const dialogPortrait = document.getElementById('dialog-portrait');
+    const dialogName = document.getElementById('dialog-name');
+    const dialogRole = document.getElementById('dialog-role');
+    const dialogText = document.getElementById('dialog-text');
+    const dialogOptions = document.getElementById('dialog-options');
+    let isDialogueOpen = false;
+
+    function openDialogue(char) {
+      isDialogueOpen = true;
+      playSound('talk');
+
+      dialogPortrait.textContent = char.avatar || '👤';
+      dialogName.textContent = char.name;
+      dialogRole.textContent = char.role || 'Villager';
+      dialogText.textContent = char.introQuote || char.quote || char.text || '"Hello Founder! How can I assist you today?"';
+
+      dialogOptions.innerHTML = '';
+
+      if (char.director) {
+        // Operational Actions
+        const opt1 = document.createElement('button');
+        opt1.className = 'dialogue-btn';
+        opt1.innerHTML = '<span>📋</span> <span>Review Active Operations</span>';
+        opt1.onclick = () => {
+          playSound('talk');
+          dialogText.textContent = `Department Scope: "${char.tag}". Everything is on track for the book release and M4 local operations.`;
+        };
+        dialogOptions.appendChild(opt1);
+
+        const opt2 = document.createElement('button');
+        opt2.className = 'dialogue-btn';
+        opt2.innerHTML = '<span>🚀</span> <span>Issue Production Directive</span>';
+        opt2.onclick = () => {
+          playSound('talk');
+          dialogText.textContent = char.briefReply || `Directive acknowledged! "${char.director}" has dispatched the team.`;
+        };
+        dialogOptions.appendChild(opt2);
+
+        const opt3 = document.createElement('button');
+        opt3.className = 'dialogue-btn';
+        opt3.innerHTML = '<span>📸</span> <span>View 1st-Person Room [V]</span>';
+        opt3.onclick = () => {
+          closeDialogue();
+          openRoomView();
+        };
+        dialogOptions.appendChild(opt3);
+      }
+
+      const closeOpt = document.createElement('button');
+      closeOpt.className = 'dialogue-btn';
+      closeOpt.innerHTML = '<span>👋</span> <span>Dismiss</span>';
+      closeOpt.onclick = closeDialogue;
+      dialogOptions.appendChild(closeOpt);
+
+      dialogueBox.classList.add('active');
+    }
+
+    function closeDialogue() {
+      isDialogueOpen = false;
+      dialogueBox.classList.remove('active');
+    }
+
+    function handleActionPress() {
+      if (isFpOpen) {
+        closeRoomView();
+        return;
+      }
+      if (isDialogueOpen) {
+        closeDialogue();
+        return;
+      }
+
+      if (currentMap === 'village') {
+        const ptx = Math.floor(player.x / TILE);
+        const pty = Math.floor(player.y / TILE);
+
+        // Check if near a door
+        for (const h of HOUSES) {
+          if (Math.abs(ptx - h.doorTx) <= 1 && Math.abs(pty - h.doorTy) <= 1) {
+            enterHouse(h);
+            return;
+          }
+        }
+
+        // Check if near an NPC
+        for (const npc of NPCS) {
+          if (Math.hypot(player.x - npc.x, player.y - npc.y) < TILE * 1.5) {
+            openDialogue(npc);
+            return;
+          }
+        }
+      } else {
+        // Inside House
+        const ptx = Math.floor(player.x / TILE);
+        const pty = Math.floor(player.y / TILE);
+
+        // Check exit doorway
+        if (pty >= currentInterior.h - 2 && Math.abs(ptx - 9) <= 1) {
+          exitToVillage();
+          return;
+        }
+
+        // Talk to Director
+        if (activeHouse) {
+          openDialogue(activeHouse);
+          return;
+        }
       }
     }
 
-    // Render Building Interior Scene
-    function renderInteriorScene() {
-      if (!currentBuilding) return;
-      const w = interiorCanvas.clientWidth;
-      const h = interiorCanvas.clientHeight;
-      interiorCtx.clearRect(0, 0, w, h);
+    /* =========================================================================
+       11. ENGINE UPDATE & RENDER LOOP
+       ========================================================================= */
+    const canvas = document.getElementById('game-canvas');
+    const ctx = canvas.getContext('2d');
+    let stepTimer = 0;
 
-      // 1. Draw High-Res 8K Photorealistic Room Background
-      const img = interiorImages[currentBuilding.id];
-      if (img && img.complete && img.naturalWidth > 0) {
-        interiorCtx.drawImage(img, 0, 0, w, h);
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function update() {
+      if (isDialogueOpen || isFpOpen) return;
+
+      let dx = 0;
+      let dy = 0;
+
+      if (keys.w || keys.arrowup) dy -= 1;
+      if (keys.s || keys.arrowdown) dy += 1;
+      if (keys.a || keys.arrowleft) dx -= 1;
+      if (keys.d || keys.arrowright) dx += 1;
+
+      if (dx !== 0 || dy !== 0) {
+        const len = Math.hypot(dx, dy);
+        const moveX = (dx / len) * player.speed;
+        const moveY = (dy / len) * player.speed;
+
+        if (isWalkable(player.x + moveX, player.y)) player.x += moveX;
+        if (isWalkable(player.x, player.y + moveY)) player.y += moveY;
+
+        player.isMoving = true;
+        player.walkFrame++;
+
+        if (Math.abs(dx) > Math.abs(dy)) player.dir = dx > 0 ? 'right' : 'left';
+        else player.dir = dy > 0 ? 'down' : 'up';
+
+        stepTimer++;
+        if (stepTimer % 18 === 0) playSound('step');
+
+        // Check auto-entry when stepping right on door tile
+        if (currentMap === 'village') {
+          const ptx = Math.floor(player.x / TILE);
+          const pty = Math.floor(player.y / TILE);
+          for (const h of HOUSES) {
+            if (ptx === h.doorTx && pty === h.doorTy) {
+              enterHouse(h);
+              break;
+            }
+          }
+        } else {
+          const ptx = Math.floor(player.x / TILE);
+          const pty = Math.floor(player.y / TILE);
+          if (pty >= currentInterior.h - 1 && ptx === 9) {
+            exitToVillage();
+          }
+        }
+      } else {
+        player.isMoving = false;
       }
 
-      // 2. Draw Interactive Workstation Hotspots
-      if (currentBuilding.stations) {
-        currentBuilding.stations.forEach(s => {
-          const sx = s.x * w;
-          const sy = s.y * h;
+      // Companion AI (Follows behind player)
+      const cdx = player.x - companion.x;
+      const cdy = player.y - companion.y;
+      const dist = Math.hypot(cdx, cdy);
+      if (dist > TILE * 1.1) {
+        companion.x += (cdx / dist) * companion.speed;
+        companion.y += (cdy / dist) * companion.speed;
+        companion.dir = player.dir;
+        companion.walkFrame++;
+      }
 
-          // Glowing animated ring around station
-          const pulse = Math.sin(frameCount * 0.08) * 4;
-          interiorCtx.fillStyle = 'rgba(212, 175, 55, 0.25)';
-          interiorCtx.strokeStyle = 'var(--gold-primary)';
-          interiorCtx.lineWidth = 2;
-          interiorCtx.beginPath();
-          interiorCtx.arc(sx, sy, 24 + pulse, 0, Math.PI * 2);
-          interiorCtx.fill();
-          interiorCtx.stroke();
+      // Ambient NPC wander in Village
+      if (currentMap === 'village' && Math.random() < 0.03) {
+        const npc = NPCS[Math.floor(Math.random() * NPCS.length)];
+        const rx = (Math.random() - 0.5) * TILE;
+        const ry = (Math.random() - 0.5) * TILE;
+        if (Math.hypot(npc.x + rx - npc.homeX, npc.y + ry - npc.homeY) < TILE * 3) {
+          if (isWalkable(npc.x + rx, npc.y + ry)) {
+            npc.x += rx;
+            npc.y += ry;
+          }
+        }
+      }
 
-          // Station Label Tag
-          interiorCtx.fillStyle = 'rgba(15, 20, 30, 0.9)';
-          interiorCtx.strokeStyle = 'rgba(212, 175, 55, 0.5)';
-          interiorCtx.lineWidth = 1;
-          const textW = interiorCtx.measureText(s.name).width + 20;
-          interiorCtx.beginPath();
-          interiorCtx.roundRect(sx - textW / 2, sy - 40, textW, 22, 6);
-          interiorCtx.fill();
-          interiorCtx.stroke();
-
-          interiorCtx.fillStyle = '#fff';
-          interiorCtx.font = 'bold 11px sans-serif';
-          interiorCtx.textAlign = 'center';
-          interiorCtx.fillText(s.name, sx, sy - 25);
+      // Chimney Smoke Simulation
+      if (currentMap === 'village') {
+        smokeParticles.forEach(sp => {
+          if (Math.random() < 0.05) {
+            sp.particles.push({ x: sp.x, y: sp.y, r: 3 + Math.random() * 3, alpha: 0.6, vy: 0.4 + Math.random() * 0.3 });
+          }
+          sp.particles.forEach((p, idx) => {
+            p.y -= p.vy;
+            p.x += Math.sin(p.y * 0.05) * 0.2;
+            p.r += 0.08;
+            p.alpha -= 0.005;
+            if (p.alpha <= 0) sp.particles.splice(idx, 1);
+          });
         });
       }
+    }
 
-      // 3. Draw Player and Companion walking inside the room
-      drawCharacter(interiorCtx, (interiorPlayer.x - 0.03) * w, interiorPlayer.y * h, interiorPlayer.facing, frameCount, '#2980b9', 'Chief of Staff');
-      drawCharacter(interiorCtx, interiorPlayer.x * w, interiorPlayer.y * h, interiorPlayer.facing, frameCount, '#d4af37', '👑 Founder');
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Proximity check to station
-      const nearStation = getNearestStation();
-      if (nearStation) {
-        interiorCtx.fillStyle = 'rgba(15, 20, 30, 0.95)';
-        interiorCtx.strokeStyle = 'var(--gold-primary)';
-        interiorCtx.lineWidth = 2;
-        interiorCtx.beginPath();
-        interiorCtx.roundRect(w / 2 - 160, h - 80, 320, 38, 20);
-        interiorCtx.fill();
-        interiorCtx.stroke();
+      // Camera Centered on Player
+      const camX = Math.round(canvas.width / 2 - player.x);
+      const camY = Math.round(canvas.height / 2 - player.y);
 
-        interiorCtx.fillStyle = '#fff';
-        interiorCtx.font = 'bold 12px sans-serif';
-        interiorCtx.textAlign = 'center';
-        interiorCtx.fillText(`Press [E] or Click to Inspect: ${nearStation.name}`, w / 2, h - 56);
+      ctx.save();
+      ctx.translate(camX, camY);
+
+      if (currentMap === 'village') {
+        renderVillageExterior();
+      } else {
+        renderHouseInterior();
+      }
+
+      ctx.restore();
+
+      renderMiniMap();
+      requestAnimationFrame(render);
+    }
+
+    /* RENDER: VILLAGE EXTERIOR */
+    function renderVillageExterior() {
+      const time = Date.now() * 0.002;
+
+      // 1. Terrain Ground Tiles
+      for (let y = 0; y < MAP_H; y++) {
+        for (let x = 0; x < MAP_W; x++) {
+          const tile = villageGrid[y][x];
+          const px = x * TILE;
+          const py = y * TILE;
+
+          if (tile === 0) {
+            // Lush Grass
+            ctx.fillStyle = (x + y) % 2 === 0 ? COLORS.grass : COLORS.grassDark;
+            ctx.fillRect(px, py, TILE, TILE);
+
+            // Swaying wildflowers
+            if ((x * 19 + y * 31) % 11 === 0) {
+              const sway = Math.sin(time + x) * 1.5;
+              ctx.fillStyle = COLORS.flowerRed;
+              ctx.fillRect(px + 12 + sway, py + 14, 4, 4);
+              ctx.fillStyle = COLORS.flowerYellow;
+              ctx.fillRect(px + 26 - sway, py + 26, 4, 4);
+            }
+          } else if (tile === 1) {
+            // Paved Cobblestone Path
+            ctx.fillStyle = (x + y) % 2 === 0 ? COLORS.cobble : COLORS.cobbleLight;
+            ctx.fillRect(px, py, TILE, TILE);
+            ctx.strokeStyle = '#5a6575';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(px + 2, py + 2, TILE - 4, TILE - 4);
+          } else if (tile === 2) {
+            // Central Kaiserstein Plaza
+            ctx.fillStyle = COLORS.plaza;
+            ctx.fillRect(px, py, TILE, TILE);
+            ctx.strokeStyle = '#d4af37';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(px + 4, py + 4, TILE - 8, TILE - 8);
+          }
+        }
+      }
+
+      // 2. Central Stone Water Fountain with Ripples at (32, 33)
+      const fx = 32 * TILE + TILE / 2;
+      const fy = 33 * TILE + TILE / 2;
+      ctx.fillStyle = '#64748b';
+      ctx.beginPath();
+      ctx.arc(fx, fy, TILE * 1.8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Water Basin
+      ctx.fillStyle = COLORS.water;
+      ctx.beginPath();
+      ctx.arc(fx, fy, TILE * 1.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Water ripple rings
+      const rippleR = ((Date.now() * 0.02) % (TILE * 1.3));
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(fx, fy, rippleR, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Center Spout
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(fx, fy, 8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 3. Render Houses with German Fachwerk & Slate Gables
+      HOUSES.forEach(h => {
+        const hx = h.tx * TILE;
+        const hy = h.ty * TILE;
+        const hw = h.tw * TILE;
+        const hh = h.th * TILE;
+
+        // Shadow
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.fillRect(hx - 8, hy + hh - 10, hw + 16, 20);
+
+        // White Plaster Walls
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(hx, hy + 26, hw, hh - 26);
+
+        // Dark Timber Beams (Vertical & Horizontal)
+        ctx.fillStyle = COLORS.timber;
+        ctx.fillRect(hx, hy + 26, 8, hh - 26);
+        ctx.fillRect(hx + hw - 8, hy + 26, 8, hh - 26);
+        ctx.fillRect(hx, hy + hh - 8, hw, 8);
+        ctx.fillRect(hx, hy + 26, hw, 8);
+
+        // Diagonal X-bracing Fachwerk
+        ctx.strokeStyle = COLORS.timber;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(hx + 8, hy + 32);
+        ctx.lineTo(hx + hw - 8, hy + hh - 8);
+        ctx.moveTo(hx + hw - 8, hy + 32);
+        ctx.lineTo(hx + 8, hy + hh - 8);
+        ctx.stroke();
+
+        // Slate / Clay Gabled Roof
+        ctx.fillStyle = h.roofColor;
+        ctx.beginPath();
+        ctx.moveTo(hx - 10, hy + 26);
+        ctx.lineTo(hx + hw / 2, hy - 22);
+        ctx.lineTo(hx + hw + 10, hy + 26);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = '#d4af37';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Chimney
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(hx + hw - 36, hy - 16, 14, 22);
+        ctx.strokeStyle = '#334155';
+        ctx.strokeRect(hx + hw - 36, hy - 16, 14, 22);
+
+        // Doorway
+        const dx = h.doorTx * TILE;
+        const dy = h.doorTy * TILE;
+        ctx.fillStyle = '#3e2723';
+        ctx.fillRect(dx + 6, dy + 2, TILE - 12, TILE - 2);
+
+        // Golden Doorstep Glow
+        ctx.fillStyle = 'rgba(212, 175, 55, 0.5)';
+        ctx.fillRect(dx + 4, dy + TILE - 8, TILE - 8, 10);
+
+        // Flower window boxes with red geraniums
+        ctx.fillStyle = '#4a2e18';
+        ctx.fillRect(hx + 14, hy + hh - 24, 36, 7);
+        ctx.fillStyle = COLORS.flowerRed;
+        for (let fl = 0; fl < 4; fl++) {
+          ctx.beginPath();
+          ctx.arc(hx + 18 + fl * 9, hy + hh - 26, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Hanging House Signboard
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
+        ctx.strokeStyle = '#d4af37';
+        ctx.lineWidth = 1;
+        const signW = Math.max(100, h.name.length * 6.5);
+        ctx.beginPath();
+        ctx.roundRect(hx + hw / 2 - signW / 2, hy - 40, signW, 20, 5);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${h.icon} ${h.name}`, hx + hw / 2, hy - 26);
+      });
+
+      // 4. Chimney Smoke Particles
+      smokeParticles.forEach(sp => {
+        sp.particles.forEach(p => {
+          ctx.fillStyle = `rgba(226, 232, 240, ${p.alpha})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      });
+
+      // 5. Walking NPCs
+      NPCS.forEach(npc => {
+        drawSprite(npc.x, npc.y, npc.dir, npc.vest ? '#f59e0b' : '#3b82f6', npc.avatar, npc.name);
+      });
+
+      // 6. Companion & Player
+      drawSprite(companion.x, companion.y, companion.dir, companion.color, '📋', companion.name);
+      drawSprite(player.x, player.y, player.dir, player.color, '👑', player.name);
+
+      // 7. Doorway Prompt Indicator
+      const ptx = Math.floor(player.x / TILE);
+      const pty = Math.floor(player.y / TILE);
+      for (const h of HOUSES) {
+        if (Math.abs(ptx - h.doorTx) <= 1 && Math.abs(pty - h.doorTy) <= 1) {
+          ctx.fillStyle = 'rgba(15, 20, 30, 0.95)';
+          ctx.strokeStyle = '#d4af37';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.roundRect(player.x - 110, player.y - 68, 220, 26, 8);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#f5cd79';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(`Press [SPACE] or Walk In: Enter ${h.name}`, player.x, player.y - 51);
+          break;
+        }
       }
     }
 
-    // RPG Character Sprite Rendering (Smooth Directional Character)
-    function drawCharacter(ctx, x, y, facing, walkFrame, color, name) {
+    /* RENDER: HOUSE INTERIOR */
+    function renderHouseInterior() {
+      const room = currentInterior;
+      if (!room || !activeHouse) return;
+
+      // 1. Flooring & Walls
+      for (let y = 0; y < room.h; y++) {
+        for (let x = 0; x < room.w; x++) {
+          const px = x * TILE;
+          const py = y * TILE;
+
+          if (room.col[y][x] === 1 && (x === 0 || x === room.w - 1 || y === 0 || y === room.h - 1)) {
+            // Perimeter Wall
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(px, py, TILE, TILE);
+            ctx.fillStyle = COLORS.timber;
+            ctx.fillRect(px, py, TILE, 8);
+          } else {
+            // Wood Parquet Floor
+            ctx.fillStyle = (x + y) % 2 === 0 ? COLORS.woodFloor : COLORS.woodDark;
+            ctx.fillRect(px, py, TILE, TILE);
+            ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(px, py, TILE, TILE);
+          }
+        }
+      }
+
+      // Exit Mat at bottom doorway
+      ctx.fillStyle = '#b91c1c';
+      ctx.fillRect(9 * TILE, (room.h - 1) * TILE, TILE, TILE);
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('EXIT', 9 * TILE + TILE / 2, (room.h - 1) * TILE + 28);
+
+      // 2. Department Workstations & Equipment
+      renderInteriorEquipment(activeHouse);
+
+      // 3. Department Director
+      const dirX = 9 * TILE + TILE / 2;
+      const dirY = 5 * TILE + TILE / 2;
+      drawSprite(dirX, dirY, 'down', '#8b5cf6', activeHouse.avatar, `${activeHouse.director} (Director)`);
+
+      // 4. Companion & Player
+      drawSprite(companion.x, companion.y, companion.dir, companion.color, '📋', companion.name);
+      drawSprite(player.x, player.y, player.dir, player.color, '👑', player.name);
+
+      // Talk Prompt
+      const distToDir = Math.hypot(player.x - dirX, player.y - dirY);
+      if (distToDir < TILE * 2) {
+        ctx.fillStyle = 'rgba(15, 20, 30, 0.95)';
+        ctx.strokeStyle = '#d4af37';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(player.x - 110, player.y - 68, 220, 26, 8);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#f5cd79';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(`Press [SPACE] or Click: Talk to ${activeHouse.director}`, player.x, player.y - 51);
+      }
+    }
+
+    /* Render Equipment Furniture inside Rooms */
+    function renderInteriorEquipment(house) {
+      if (house.id === 'multimedia') {
+        drawEquipment(4, 4, 2, 2, '#0f172a', '📹 Sony 4K Rig');
+        drawEquipment(4, 7, 2, 2, '#0f172a', '📹 Camera 2');
+        drawEquipment(8, 9, 3, 2, '#1e293b', '🎛️ Audio Mixer');
+        drawEquipment(4, 13, 2, 3, '#0f172a', '🖥️ Video Editing Bay');
+      } else if (house.id === 'publishing') {
+        drawEquipment(4, 3, 3, 3, '#0f172a', '🖨️ Heidelberg Press');
+        drawEquipment(7, 8, 3, 2, '#78350f', '📚 Bound Proofs');
+      } else if (house.id === 'townhall') {
+        drawEquipment(5, 7, 5, 3, '#4c1d95', '🏛️ Council Table');
+        drawEquipment(2, 9, 2, 1, '#d4af37', '🎙️ Podium');
+      } else if (house.id === 'it') {
+        drawEquipment(2, 3, 6, 2, '#042f2e', '🖥️ Apple M4 Racks');
+        drawEquipment(6, 8, 3, 2, '#0f172a', '💻 Dev Terminals');
+      } else if (house.id === 'finance') {
+        drawEquipment(1, 2, 2, 2, '#64748b', '🏦 Safe Vault');
+        drawEquipment(5, 7, 4, 2, '#0f172a', '📊 Trading Desk');
+      } else {
+        drawEquipment(4, 6, 4, 2, '#1e293b', `💼 ${house.name} Hub`);
+      }
+    }
+
+    function drawEquipment(tx, ty, tw, th, color, label) {
+      const px = tx * TILE;
+      const py = ty * TILE;
+      const pw = tw * TILE;
+      const ph = th * TILE;
+
+      ctx.fillStyle = color;
+      ctx.fillRect(px, py, pw, ph);
+      ctx.strokeStyle = '#d4af37';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(px, py, pw, ph);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, px + pw / 2, py + ph / 2 + 4);
+    }
+
+    /* SPRITE RENDERING */
+    function drawSprite(x, y, dir, color, icon, name) {
       ctx.save();
       ctx.translate(x, y);
 
-      // Drop shadow on ground
+      // Shadow
       ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
       ctx.beginPath();
       ctx.ellipse(0, 16, 12, 6, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Walking bob
-      const bob = Math.sin(walkFrame * 0.25) * 3;
+      // Walking Bob
+      const bob = player.isMoving ? Math.sin(player.walkFrame * 0.3) * 3 : 0;
 
-      // Legs
-      const legSpread = Math.sin(walkFrame * 0.25) * 6;
-      ctx.strokeStyle = '#1e272e';
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(-4, 4);
-      ctx.lineTo(-4 - legSpread, 14);
-      ctx.moveTo(4, 4);
-      ctx.lineTo(4 + legSpread, 14);
-      ctx.stroke();
-
-      // Body (Tailored Alpine Coat)
+      // Body / Coat
       ctx.fillStyle = color;
       ctx.beginPath();
-      ctx.roundRect(-8, -12 + bob, 16, 18, 4);
+      ctx.roundRect(-10, -10 + bob, 20, 22, 5);
       ctx.fill();
-
-      // Belt / Trim
-      ctx.fillStyle = '#111';
-      ctx.fillRect(-8, -2 + bob, 16, 3);
+      ctx.strokeStyle = '#111';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
 
       // Head
-      ctx.fillStyle = '#ffdfba';
+      ctx.fillStyle = '#fed7aa';
       ctx.beginPath();
-      ctx.arc(0, -18 + bob, 7, 0, Math.PI * 2);
+      ctx.arc(0, -16 + bob, 9, 0, Math.PI * 2);
       ctx.fill();
 
-      // Hair
-      ctx.fillStyle = '#3e2723';
-      ctx.beginPath();
-      ctx.arc(0, -20 + bob, 7, Math.PI, Math.PI * 2);
-      ctx.fill();
+      // Icon / Hat
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(icon, 0, -26 + bob);
 
-      // Floating Name Badge
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+      // Name Tag
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
       ctx.strokeStyle = color;
       ctx.lineWidth = 1;
-      const nw = ctx.measureText(name).width + 12;
+      const nw = ctx.measureText(name).width + 14;
       ctx.beginPath();
-      ctx.roundRect(-nw / 2, -38 + bob, nw, 14, 4);
+      ctx.roundRect(-nw / 2, 22, nw, 16, 4);
       ctx.fill();
       ctx.stroke();
 
       ctx.fillStyle = '#fff';
       ctx.font = 'bold 9px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(name, 0, -27 + bob);
+      ctx.fillText(name, 0, 33);
 
       ctx.restore();
     }
 
-    // Main Engine Tick
-    function mainGameLoop() {
-      updatePhysics();
-
-      if (currentScene === 'village') {
-        renderVillageScene();
-      } else {
-        renderInteriorScene();
-      }
-
-      requestAnimationFrame(mainGameLoop);
+    // Main Engine Tick (60 FPS)
+    function gameLoop() {
+      update();
+      render();
     }
-    requestAnimationFrame(mainGameLoop);
-
-    /* =========================================================================
-       7. UI INTERACTION & FOUNDER CONTROLS
-       ========================================================================= */
-    // Populate Teleport Dock
-    const teleDock = document.getElementById('teleport-dock');
-    BUILDINGS.forEach(b => {
-      const item = document.createElement('div');
-      item.className = 'teleport-item';
-      item.innerHTML = `<span>${b.icon}</span><span>${b.name.split(' ')[0]}</span>`;
-      item.addEventListener('click', () => {
-        enterBuilding(b);
-      });
-      teleDock.appendChild(item);
-    });
-
-    // View Mode Toggle (Base Photorealistic Art vs Tactical Diagram)
-    const viewModeBtn = document.getElementById('view-mode-btn');
-    viewModeBtn.addEventListener('click', () => {
-      viewMode = viewMode === 'base' ? 'diagram' : 'base';
-      viewModeBtn.innerHTML = viewMode === 'base' ? '🗺️ Map: Photorealistic View' : '🧭 Map: Tactical Handoff Overlay';
-    });
-
-    // Time of Day Toggle
-    const themeBtn = document.getElementById('theme-btn');
-    themeBtn.addEventListener('click', () => {
-      if (timeOfDay === 'day') {
-        timeOfDay = 'dusk';
-        themeBtn.innerHTML = '🌅 Golden Hour';
-      } else if (timeOfDay === 'dusk') {
-        timeOfDay = 'night';
-        themeBtn.innerHTML = '🌙 Bavarian Night';
-      } else {
-        timeOfDay = 'day';
-        themeBtn.innerHTML = '☀️ Alpine Day';
-      }
-    });
-
-    // Founder Approval Queue
-    const founderBtn = document.getElementById('founder-btn');
-    const founderDrawer = document.getElementById('founder-drawer');
-    const closeDrawerBtn = document.getElementById('close-drawer-btn');
-    const approvalItemsEl = document.getElementById('approval-items');
-
-    function renderApprovals() {
-      approvalItemsEl.innerHTML = '';
-      const pending = PENDING_APPROVALS.filter(a => a.status === 'pending');
-      document.getElementById('pending-count').textContent = pending.length;
-
-      if (pending.length === 0) {
-        approvalItemsEl.innerHTML = '<div style="color:#2ed573; text-align:center; padding:30px;">✓ All department decisions have been approved!</div>';
-        return;
-      }
-
-      pending.forEach(appr => {
-        const card = document.createElement('div');
-        card.style.cssText = 'background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.3); border-radius:8px; padding:12px;';
-        card.innerHTML = `
-          <h4 style="color:#f1f2f6; font-size:13px; margin-bottom:4px;">${appr.title}</h4>
-          <span style="color:var(--gold-primary); font-size:10px; display:block; margin-bottom:6px;">Dept: ${appr.dept}</span>
-          <p style="font-size:11px; color:#a4b0be; line-height:1.4; margin-bottom:10px;">${appr.desc}</p>
-          <div style="display:flex; gap:8px;">
-            <button class="hud-btn hud-btn-gold" style="flex:1; justify-content:center;" onclick="approveAction('${appr.id}')">✓ Approve</button>
-            <button class="hud-btn" style="flex:1; justify-content:center;" onclick="reviseAction('${appr.id}')">✎ Request Changes</button>
-          </div>
-        `;
-        approvalItemsEl.appendChild(card);
-      });
-    }
-
-    window.approveAction = function(id) {
-      const a = PENDING_APPROVALS.find(x => x.id === id);
-      if (a) {
-        a.status = 'approved';
-        renderApprovals();
-        alert(`✓ Founder Approved: "${a.title}"!\nDepartment has proceeded with execution.`);
-      }
-    };
-
-    window.reviseAction = function(id) {
-      const a = PENDING_APPROVALS.find(x => x.id === id);
-      if (a) {
-        a.status = 'revision';
-        renderApprovals();
-        alert(`✎ Changes requested for: "${a.title}". Sent back to director.`);
-      }
-    };
-
-    founderBtn.addEventListener('click', () => {
-      renderApprovals();
-      founderDrawer.classList.toggle('open');
-    });
-    closeDrawerBtn.addEventListener('click', () => {
-      founderDrawer.classList.remove('open');
-    });
-
-    /* =========================================================================
-       8. SOUND SYNTHESIS (Web Audio API)
-       ========================================================================= */
-    let audioCtx = null;
-    let isSoundActive = false;
-
-    function getAudioCtx() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      return audioCtx;
-    }
-
-    function playFootstepSound() {
-      if (!isSoundActive) return;
-      const ctx = getAudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(120 + Math.random() * 30, ctx.currentTime);
-      gain.gain.setValueAtTime(0.04, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.08);
-    }
-
-    function playDoorSound() {
-      if (!isSoundActive) return;
-      const ctx = getAudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(320, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(580, ctx.currentTime + 0.2);
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.25);
-    }
-
-    function playChimeSound() {
-      if (!isSoundActive) return;
-      const ctx = getAudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(1320, ctx.currentTime + 0.15);
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.3);
-    }
-
-    document.getElementById('sound-btn').addEventListener('click', () => {
-      getAudioCtx();
-      isSoundActive = !isSoundActive;
-      document.getElementById('sound-btn').innerHTML = isSoundActive ? '🔊 Sound: On' : '🔇 Sound: Off';
-    });
+    setInterval(gameLoop, 1000 / 60);
 
   </script>
 </body>
