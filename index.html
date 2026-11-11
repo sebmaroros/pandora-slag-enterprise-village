@@ -2,26 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PANDORA — SLAG Enterprise Village (Deutsches KI-Dorf)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PANDORA — SLAG Enterprise Village | Playable RPG Virtual World</title>
   <style>
     :root {
-      --bg-sky-day: #87ceeb;
-      --bg-sky-dusk: #e07a5f;
-      --bg-sky-night: #0b132b;
-      --text-main: #2b2d42;
-      --text-muted: #6c757d;
-      --accent-gold: #d4af37;
-      --wood-dark: #3e2723;
-      --wood-warm: #6d4c41;
-      --timber-frame: #4a2e18;
-      --slate-roof: #2c3e50;
-      --alpine-green: #2d5a27;
-      --alpine-meadow: #4a7c39;
-      --cobblestone: #d5dbdb;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --card-border: rgba(212, 175, 55, 0.4);
-      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --gold-primary: #d4af37;
+      --gold-light: #f5cd79;
+      --gold-dark: #aa7c11;
+      --bg-dark: #0f141d;
+      --ui-glass: rgba(18, 24, 38, 0.88);
+      --ui-border: rgba(212, 175, 55, 0.4);
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     * {
@@ -29,158 +20,29 @@
       margin: 0;
       padding: 0;
       user-select: none;
+      -webkit-user-select: none;
     }
 
     body {
-      font-family: var(--font-family);
-      background-color: #1a252f;
-      color: #333;
+      font-family: var(--font-stack);
+      background-color: #0b0f17;
+      color: #fff;
       overflow: hidden;
       width: 100vw;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
+      position: fixed;
     }
 
-    /* Top Navigation Bar */
-    header {
-      height: 60px;
-      background: rgba(25, 30, 40, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 2px solid #c59b27;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      z-index: 100;
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    .brand-section {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #d4af37, #aa7c11);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
-    }
-
-    .brand-text h1 {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: #f1f2f6;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .brand-text p {
-      font-size: 11px;
-      color: #a4b0be;
-      letter-spacing: 0.5px;
-    }
-
-    .brand-badge {
-      font-size: 9px;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: rgba(212, 175, 55, 0.2);
-      border: 1px solid #d4af37;
-      color: #f5cd79;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .nav-controls {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #f1f2f6;
-      padding: 7px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .btn:hover {
-      background: rgba(212, 175, 55, 0.25);
-      border-color: #d4af37;
-      color: #fff;
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, #d4af37, #996515);
-      border: 1px solid #f5cd79;
-      color: #1a1a1a;
-      font-weight: 700;
-    }
-
-    .btn-gold:hover {
-      background: linear-gradient(135deg, #f5cd79, #b8860b);
-      box-shadow: 0 0 14px rgba(212, 175, 55, 0.6);
-      color: #000;
-    }
-
-    .status-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 5px 12px;
-      border-radius: 20px;
-      border: 1px solid #2ed573;
-      font-size: 11px;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #2ed573;
-      box-shadow: 0 0 8px #2ed573;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; transform: scale(1.2); }
-      100% { opacity: 0.6; }
-    }
-
-    /* Main Village Canvas Container */
-    #village-container {
-      position: relative;
-      flex: 1;
+    /* Main Viewport Container */
+    #game-container {
+      position: absolute;
+      inset: 0;
       overflow: hidden;
-      cursor: grab;
-      background: #111;
+      background: #000;
+      cursor: crosshair;
     }
 
-    #village-container:active {
-      cursor: grabbing;
-    }
-
-    #village-canvas {
+    #world-canvas {
       position: absolute;
       top: 0;
       left: 0;
@@ -189,622 +51,430 @@
       display: block;
     }
 
-    /* Floating UI Elements on Top of Canvas */
-    .village-hud {
+    /* Top Navigation HUD */
+    header {
       position: absolute;
-      top: 16px;
-      left: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      pointer-events: none;
-      z-index: 10;
-    }
-
-    .hud-card {
-      background: rgba(25, 30, 42, 0.88);
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: linear-gradient(180deg, rgba(12, 17, 26, 0.95), rgba(12, 17, 26, 0.75) 80%, transparent);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 8px;
-      padding: 12px 16px;
-      color: #fff;
-      font-size: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 50;
       pointer-events: auto;
-      min-width: 260px;
     }
 
-    .hud-card h4 {
-      color: #d4af37;
-      font-size: 13px;
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #0b0f17;
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.5);
+    }
+
+    .brand-titles h1 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      color: #f1f2f6;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-tag {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .brand-titles p {
+      font-size: 10px;
+      color: #a4b0be;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hud-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #f1f2f6;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .hud-btn:hover {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: var(--gold-primary);
+      color: #fff;
+    }
+
+    .hud-btn-gold {
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+      border: 1px solid var(--gold-light);
+      color: #0b0f17;
+      font-weight: 700;
+    }
+
+    .hud-btn-gold:hover {
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+      color: #000;
+    }
+
+    /* Controls Guide Overlay (Bottom Left) */
+    .controls-card {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--ui-glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--ui-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #f1f2f6;
+      font-size: 11px;
+      z-index: 40;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      pointer-events: auto;
+      max-width: 280px;
+    }
+
+    .controls-card h4 {
+      color: var(--gold-primary);
+      font-size: 12px;
       margin-bottom: 6px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .hud-row {
+    .key-row {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       margin: 4px 0;
       color: #a4b0be;
     }
 
-    .hud-row span:last-child {
-      color: #f1f2f6;
-      font-weight: 600;
+    .kbd {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-family: monospace;
+      color: #fff;
+      font-weight: bold;
     }
 
-    /* Live Village Activity Ticker */
-    .live-ticker {
+    /* Proximity Interaction Prompt (Center-Bottom) */
+    #interaction-prompt {
       position: absolute;
-      bottom: 84px;
+      bottom: 85px;
       left: 50%;
-      transform: translateX(-50%);
-      background: rgba(20, 24, 33, 0.9);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      transform: translateX(-50%) translateY(20px);
+      background: linear-gradient(135deg, rgba(20, 26, 40, 0.95), rgba(30, 40, 60, 0.95));
+      backdrop-filter: blur(12px);
+      border: 2px solid var(--gold-primary);
       border-radius: 30px;
-      padding: 6px 20px;
+      padding: 10px 24px;
       display: flex;
       align-items: center;
       gap: 12px;
-      color: #e4e7eb;
-      font-size: 12px;
-      z-index: 15;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 60;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), 0 10px 30px rgba(0,0,0,0.8);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #interaction-prompt.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
       pointer-events: auto;
+      cursor: pointer;
     }
 
-    .ticker-icon {
-      color: #2ed573;
-      animation: pulse 1.5s infinite;
+    #interaction-prompt:hover {
+      background: linear-gradient(135deg, rgba(30, 40, 60, 0.98), rgba(45, 60, 90, 0.98));
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 0 35px rgba(212, 175, 55, 0.8);
     }
 
-    /* Bottom Quick Selector Bar */
-    .bottom-dock {
+    /* Quick Building Teleport Dock (Bottom Center) */
+    .teleport-dock {
       position: absolute;
       bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(20, 24, 33, 0.92);
+      background: var(--ui-glass);
       backdrop-filter: blur(14px);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      border-radius: 14px;
-      padding: 8px 14px;
+      border: 1px solid var(--ui-border);
+      border-radius: 12px;
+      padding: 6px 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      z-index: 20;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      max-width: 95vw;
+      gap: 6px;
+      z-index: 45;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.7);
+      max-width: 90vw;
       overflow-x: auto;
     }
 
-    .dock-item {
+    .teleport-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid transparent;
+      gap: 2px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
       color: #ced6e0;
       cursor: pointer;
-      font-size: 10px;
+      font-size: 9px;
       white-space: nowrap;
       transition: all 0.2s ease;
+      border: 1px solid transparent;
     }
 
-    .dock-item:hover, .dock-item.active {
+    .teleport-item:hover {
       background: rgba(212, 175, 55, 0.25);
-      border-color: #d4af37;
+      border-color: var(--gold-primary);
       color: #fff;
       transform: translateY(-2px);
     }
 
-    .dock-icon {
-      font-size: 16px;
-    }
-
-    /* Building Interior Full Modal */
-    #interior-modal {
+    /* Full-Screen Building Interior View Overlay */
+    #interior-stage {
       position: fixed;
       inset: 0;
-      background: rgba(10, 14, 22, 0.85);
-      backdrop-filter: blur(16px);
-      z-index: 200;
+      background: #090d14;
+      z-index: 100;
       display: none;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
       opacity: 0;
-      transition: opacity 0.3s ease;
-      padding: 24px;
+      transition: opacity 0.35s ease;
     }
 
-    #interior-modal.active {
+    #interior-stage.active {
       display: flex;
       opacity: 1;
     }
 
-    .modal-shell {
-      background: #1e2430;
-      border: 2px solid #d4af37;
-      border-radius: 16px;
-      width: 1100px;
-      max-width: 96vw;
-      height: 90vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.3);
-      animation: modalSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes modalSlide {
-      from { transform: scale(0.95) translateY(20px); opacity: 0; }
-      to { transform: scale(1) translateY(0); opacity: 1; }
-    }
-
-    .modal-header {
-      background: linear-gradient(90deg, #151922, #242c3d);
-      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 16px 24px;
+    .interior-nav {
+      height: 56px;
+      background: rgba(15, 20, 30, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--gold-primary);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 0 24px;
+      z-index: 110;
+    }
+
+    .interior-nav-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .interior-nav-title h2 {
+      font-size: 17px;
       color: #fff;
-    }
-
-    .modal-title-group {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .modal-icon-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: rgba(212, 175, 55, 0.2);
-      border: 1px solid #d4af37;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      color: #f5cd79;
-    }
-
-    .modal-title h2 {
-      font-size: 19px;
       font-weight: 700;
-      color: #f1f2f6;
     }
 
-    .modal-title span {
-      font-size: 12px;
-      color: #d4af37;
-      font-weight: 500;
+    .interior-nav-title span {
+      font-size: 11px;
+      color: var(--gold-primary);
     }
 
-    .close-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
+    .interior-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
     }
 
-    .close-btn:hover {
-      background: #e74c3c;
-      border-color: #c0392b;
-    }
-
-    .modal-body {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      overflow: hidden;
-    }
-
-    /* Left side: Interactive Visual Room Interior */
-    .interior-scene {
-      background: linear-gradient(180deg, #18202c, #0f141c);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 24px;
-    }
-
-    .room-stage {
-      flex: 1;
-      background: #141a24;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: 12px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .room-canvas-wrapper {
-      flex: 1;
-      position: relative;
-    }
-
-    #room-canvas {
+    #interior-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       display: block;
     }
 
-    .room-overlay-banner {
+    /* Interior Workstation Detail Modal */
+    #station-modal {
       position: absolute;
-      top: 14px;
-      left: 14px;
-      background: rgba(10, 14, 20, 0.75);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 11px;
-      color: #f5cd79;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      backdrop-filter: blur(4px);
-    }
-
-    .room-metrics {
-      height: 60px;
-      background: rgba(15, 20, 28, 0.95);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 0 16px;
-    }
-
-    .metric-item {
-      text-align: center;
-    }
-
-    .metric-value {
-      font-size: 16px;
-      font-weight: 700;
-      color: #d4af37;
-    }
-
-    .metric-label {
-      font-size: 10px;
-      color: #a4b0be;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* Right side: Director Dossier, Tasks, Dispatch Brief */
-    .interior-sidebar {
-      background: #1a212d;
-      overflow-y: auto;
+      right: 24px;
+      top: 24px;
+      bottom: 24px;
+      width: 420px;
+      max-width: 90vw;
+      background: rgba(18, 24, 35, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--gold-primary);
+      border-radius: 12px;
       padding: 20px;
+      z-index: 120;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 25px rgba(212, 175, 55, 0.25);
+      overflow-y: auto;
+      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    #station-modal.active {
+      display: flex;
+    }
+
+    .station-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .station-header h3 {
+      font-size: 16px;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .station-content {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 18px;
-    }
-
-    .director-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 10px;
-      padding: 14px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .director-avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 2px solid #d4af37;
-      background: #2f3542;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-    }
-
-    .director-info h3 {
-      font-size: 15px;
-      font-weight: 700;
-      color: #f1f2f6;
-    }
-
-    .director-info p {
-      font-size: 11px;
-      color: #d4af37;
-      margin-top: 2px;
-    }
-
-    .director-quote {
-      font-size: 11px;
-      color: #a4b0be;
-      font-style: italic;
-      margin-top: 4px;
-      line-height: 1.4;
-    }
-
-    .panel-section {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 14px;
-    }
-
-    .section-title {
+      gap: 14px;
       font-size: 12px;
-      font-weight: 700;
-      color: #d4af37;
+      color: #ced6e0;
+      line-height: 1.5;
+    }
+
+    .station-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .station-box h5 {
+      color: var(--gold-primary);
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      margin-bottom: 6px;
     }
 
-    .task-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .task-item {
-      background: rgba(0, 0, 0, 0.3);
-      border-left: 3px solid #2ed573;
-      padding: 8px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      color: #e4e7eb;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .task-item.pending {
-      border-left-color: #ffa502;
-    }
-
-    .task-name {
-      font-weight: 600;
-    }
-
-    .task-meta {
-      display: flex;
-      justify-content: space-between;
-      color: #747d8c;
-      font-size: 10px;
-    }
-
-    /* Brief Dispatch Form */
-    .dispatch-form {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .dispatch-textarea {
+    .brief-textarea {
       width: 100%;
-      height: 70px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      height: 80px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 6px;
       padding: 8px;
       color: #fff;
       font-size: 12px;
       resize: none;
       outline: none;
+      margin-top: 6px;
     }
 
-    .dispatch-textarea:focus {
-      border-color: #d4af37;
+    .brief-textarea:focus {
+      border-color: var(--gold-primary);
     }
 
-    /* Deliverables Shelf */
-    .deliverable-chip {
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 6px;
-      padding: 7px 10px;
-      font-size: 11px;
-      color: #f1f2f6;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      margin-bottom: 6px;
-      transition: background 0.2s ease;
-    }
-
-    .deliverable-chip:hover {
-      background: rgba(212, 175, 55, 0.25);
-    }
-
-    /* Founder Approval Drawer */
+    /* Founder Approval Center Drawer */
     #founder-drawer {
       position: fixed;
       right: -420px;
-      top: 60px;
+      top: 56px;
       bottom: 0;
       width: 400px;
-      background: #18202c;
-      border-left: 2px solid #d4af37;
-      box-shadow: -8px 0 30px rgba(0,0,0,0.6);
+      background: rgba(16, 21, 31, 0.98);
+      border-left: 2px solid var(--gold-primary);
+      box-shadow: -10px 0 40px rgba(0,0,0,0.8);
       z-index: 150;
       transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
       padding: 20px;
-      color: #fff;
     }
 
     #founder-drawer.open {
       right: 0;
     }
 
-    .drawer-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-      padding-bottom: 14px;
-      margin-bottom: 16px;
-    }
-
-    .drawer-header h3 {
-      color: #d4af37;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .approval-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 12px;
-      font-size: 12px;
-    }
-
-    .approval-card h5 {
-      font-size: 13px;
-      color: #f1f2f6;
-      margin-bottom: 4px;
-    }
-
-    .approval-card p {
-      color: #a4b0be;
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-
-    .approval-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-approve {
-      flex: 1;
-      background: #2ed573;
-      color: #141a24;
-      font-weight: 700;
-      border: none;
-      padding: 6px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .btn-revise {
-      flex: 1;
+    /* Close Buttons */
+    .close-icon-btn {
       background: rgba(255, 255, 255, 0.1);
-      color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 6px;
-      border-radius: 4px;
+      color: #fff;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
       cursor: pointer;
-    }
-
-    /* All-Hands Town Hall Modal */
-    #allhands-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 14, 22, 0.88);
-      backdrop-filter: blur(14px);
-      z-index: 210;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 14px;
+      transition: background 0.2s ease;
     }
 
-    #allhands-modal.active {
-      display: flex;
-    }
-
-    .allhands-shell {
-      background: #1c2432;
-      border: 2px solid #d4af37;
-      border-radius: 14px;
-      width: 850px;
-      max-width: 95vw;
-      padding: 24px;
-      color: #fff;
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .directors-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin: 20px 0;
-      overflow-y: auto;
-      max-height: 50vh;
-      padding-right: 4px;
-    }
-
-    .director-badge-mini {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(212, 175, 55, 0.25);
-      border-radius: 8px;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-    }
-
-    .director-badge-mini .mini-avatar {
-      font-size: 20px;
-    }
-
-    .director-badge-mini h4 {
-      font-size: 12px;
-      color: #f1f2f6;
-    }
-
-    .director-badge-mini span {
-      color: #d4af37;
-      font-size: 10px;
-    }
-
-    /* Custom Scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(0,0,0,0.2);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(212, 175, 55, 0.4);
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #d4af37;
+    .close-icon-btn:hover {
+      background: #e74c3c;
+      border-color: #c0392b;
     }
   </style>
 </head>
@@ -812,235 +482,161 @@
 
   <!-- Top Executive Header -->
   <header>
-    <div class="brand-section">
-      <div class="brand-logo">∞</div>
-      <div class="brand-text">
-        <h1>PANDORA <span class="brand-badge">SLAG Enterprise</span></h1>
-        <p>Modern German AI Agent Village • Real-time Production Hub</p>
+    <div class="brand-group">
+      <div class="brand-icon">∞</div>
+      <div class="brand-titles">
+        <h1>PANDORA <span class="brand-tag">SLAG Enterprise</span></h1>
+        <p>Photorealistic Modern German AI Village • Playable RPG Engine</p>
       </div>
     </div>
 
-    <div class="nav-controls">
-      <div class="status-pill">
-        <div class="status-dot"></div>
-        <span id="m4-status-label">Apple M4 Local Inference: Active (Ollama)</span>
-      </div>
-
-      <button class="btn" id="theme-btn" title="Toggle Day / Golden Hour / Night">
-        <span id="theme-icon">☀️</span> <span id="theme-label">Alpine Day</span>
+    <div class="header-actions">
+      <button class="hud-btn" id="view-mode-btn" title="Toggle Clean Village Art vs. Department Interaction Overlay">
+        🗺️ Map: Photorealistic View
       </button>
 
-      <button class="btn" id="sound-btn" title="Toggle Alpine Village Ambience (Synthesized Web Audio)">
-        <span id="sound-icon">🔇</span> Sound: Off
+      <button class="hud-btn" id="theme-btn" title="Toggle Day / Golden Hour / Night">
+        ☀️ Alpine Day
       </button>
 
-      <button class="btn" id="allhands-btn">
-        🏛️ Town Hall All-Hands
+      <button class="hud-btn" id="sound-btn" title="Toggle Generative Alpine Soundscape">
+        🔇 Sound: Off
       </button>
 
-      <button class="btn btn-gold" id="founder-btn">
+      <button class="hud-btn hud-btn-gold" id="founder-btn">
         👑 Founder Review (<span id="pending-count">3</span>)
       </button>
     </div>
   </header>
 
-  <!-- Interactive Village Canvas Viewport -->
-  <div id="village-container">
-    <canvas id="village-canvas"></canvas>
+  <!-- Main Outside Village RPG Game Viewport -->
+  <div id="game-container">
+    <canvas id="world-canvas"></canvas>
 
-    <!-- Top Left HUD: Village Vital Metrics -->
-    <div class="village-hud">
-      <div class="hud-card">
-        <h4>
-          <span>PANDORA VILLAGE STATUS</span>
-          <span style="font-size:10px; color:#2ed573;">● OPERATIONAL</span>
-        </h4>
-        <div class="hud-row">
-          <span>Active Departments:</span>
-          <span>12 + Core</span>
-        </div>
-        <div class="hud-row">
-          <span>Active Agents Walking:</span>
-          <span id="agent-count-label">16 Agents</span>
-        </div>
-        <div class="hud-row">
-          <span>Current Priority:</span>
-          <span style="color:#f5cd79;">Book Layout & App Dev</span>
-        </div>
-        <div class="hud-row">
-          <span>Local M4 Inference Savings:</span>
-          <span style="color:#2ed573;">$148.50 today ($0 API)</span>
-        </div>
-        <div class="hud-row">
-          <span>Weather / Season:</span>
-          <span id="weather-label">Clear Alpine Sky • 18°C</span>
-        </div>
+    <!-- Controls Guide Card -->
+    <div class="controls-card">
+      <h4>
+        <span>RPG VILLAGE CONTROLS</span>
+        <span style="font-size:10px; color:#2ed573;">● EXPLORATION ACTIVE</span>
+      </h4>
+      <div class="key-row">
+        <span>Walk / Move</span>
+        <span><span class="kbd">W</span> <span class="kbd">A</span> <span class="kbd">S</span> <span class="kbd">D</span> or <span class="kbd">Arrows</span></span>
+      </div>
+      <div class="key-row">
+        <span>Click-to-Move</span>
+        <span>Click / Tap anywhere</span>
+      </div>
+      <div class="key-row">
+        <span>Enter Building / Interact</span>
+        <span><span class="kbd">E</span> or Walk into doorway</span>
+      </div>
+      <div class="key-row">
+        <span>Companion</span>
+        <span style="color:var(--gold-light);">Chief of Staff follows you</span>
       </div>
     </div>
 
-    <!-- Live Event Ticker -->
-    <div class="live-ticker">
-      <span class="ticker-icon">⚡</span>
-      <span id="ticker-text">Elena Roth (Publishing) completed page layout proof for Chapter 3. Handoff to Multimedia...</span>
+    <!-- Dynamic Proximity Prompt (Walk in front of any building) -->
+    <div id="interaction-prompt">
+      <span id="prompt-icon" style="font-size:18px;">🏛️</span>
+      <span id="prompt-text">Press [E] or Click to Enter Town Hall & Management</span>
     </div>
 
-    <!-- Bottom Quick Department Navigation Bar -->
-    <div class="bottom-dock" id="bottom-dock">
-      <!-- Injected via JavaScript -->
+    <!-- Bottom Teleport Dock -->
+    <div class="teleport-dock" id="teleport-dock">
+      <!-- Populated via JavaScript -->
     </div>
   </div>
 
-  <!-- Building Interior Full Modal View -->
-  <div id="interior-modal">
-    <div class="modal-shell">
-      <div class="modal-header">
-        <div class="modal-title-group">
-          <div class="modal-icon-badge" id="modal-dept-icon">🏛️</div>
-          <div class="modal-title">
-            <h2 id="modal-dept-name">Town Hall & Management</h2>
-            <span id="modal-dept-german">Rathaus & Geschäftsführung</span>
-          </div>
+  <!-- Building Interior Full-Screen Virtual World Stage -->
+  <div id="interior-stage">
+    <div class="interior-nav">
+      <div class="interior-nav-title">
+        <span id="interior-icon" style="font-size:24px;">🎬</span>
+        <div>
+          <h2 id="interior-title">Multimedia Production Studio</h2>
+          <span id="interior-tag">Tag: Sound, image, video, animation • Director: Jonas Keller</span>
         </div>
-        <button class="close-btn" id="close-modal-btn">✕</button>
       </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size:11px; color:#a4b0be;">Walk up to stations or press <span class="kbd">E</span> to interact</span>
+        <button class="hud-btn hud-btn-gold" id="exit-interior-btn">
+          🚪 Exit to Village Plaza
+        </button>
+      </div>
+    </div>
 
-      <div class="modal-body">
-        <!-- Left Stage: Animated 2.5D Room Cutaway & Active Production -->
-        <div class="interior-scene">
-          <div class="room-stage">
-            <div class="room-canvas-wrapper">
-              <canvas id="room-canvas"></canvas>
-              <div class="room-overlay-banner">
-                <span id="room-status-badge">● LIVE ACTIVITY: Operational</span>
-              </div>
-            </div>
-            <div class="room-metrics" id="room-metrics-bar">
-              <!-- Dynamically populated per building -->
-            </div>
-          </div>
+    <div class="interior-viewport">
+      <canvas id="interior-canvas"></canvas>
+
+      <!-- Workstation Interactive Inspection Card -->
+      <div id="station-modal">
+        <div class="station-header">
+          <h3 id="station-title">📹 4K Broadcast Camera Dolly</h3>
+          <button class="close-icon-btn" id="close-station-btn">✕</button>
         </div>
-
-        <!-- Right Panel: Director Dossier, Tasks & Brief Intake -->
-        <div class="interior-sidebar">
-          <!-- Director Card -->
-          <div class="director-card">
-            <div class="director-avatar" id="modal-director-avatar">👩‍💼</div>
-            <div class="director-info">
-              <h3 id="modal-director-name">Amelia Hart</h3>
-              <p id="modal-director-role">Director of Strategy & Operations</p>
-              <div class="director-quote" id="modal-director-quote">"All roads lead to Town Hall. We turn the founder's vision into structured department agendas."</div>
-            </div>
-          </div>
-
-          <!-- Active Task Queue -->
-          <div class="panel-section">
-            <div class="section-title">
-              <span>Active Department Tasks</span>
-              <span id="task-badge" style="color:#2ed573; font-size:10px;">3 In Progress</span>
-            </div>
-            <div class="task-list" id="modal-task-list">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-
-          <!-- Dispatch Brief to this Building -->
-          <div class="panel-section">
-            <div class="section-title">
-              <span>Dispatch Brief to Director</span>
-            </div>
-            <div class="dispatch-form">
-              <textarea class="dispatch-textarea" id="brief-input" placeholder="Type a task or production brief for this department..."></textarea>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <select id="brief-urgency" style="background:#111; color:#fff; border:1px solid #444; border-radius:4px; padding:4px 8px; font-size:11px;">
-                  <option value="normal">Normal Priority</option>
-                  <option value="urgent">Urgent</option>
-                  <option value="founder">👑 Founder Directive</option>
-                </select>
-                <button class="btn btn-gold" id="send-brief-btn" style="padding:6px 14px;">Dispatch Brief</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Generated Deliverables Archive -->
-          <div class="panel-section">
-            <div class="section-title">
-              <span>Latest Deliverables</span>
-            </div>
-            <div id="modal-deliverables-list">
-              <!-- Populated dynamically -->
-            </div>
-          </div>
+        <div class="station-content" id="station-content">
+          <!-- Populated dynamically per workstation -->
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Founder Approval Drawer ("Stay in Charge") -->
+  <!-- Founder Review Drawer ("Stay in Charge") -->
   <div id="founder-drawer">
-    <div class="drawer-header">
-      <h3>👑 Founder Review Queue</h3>
-      <button class="close-btn" id="close-drawer-btn">✕</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--ui-border); padding-bottom:12px; margin-bottom:16px;">
+      <h3 style="color:var(--gold-primary); font-size:16px;">👑 Founder Review Queue</h3>
+      <button class="close-icon-btn" id="close-drawer-btn">✕</button>
     </div>
-    <p style="font-size:11px; color:#a4b0be; margin-bottom:14px;">
-      In accordance with Village Rule #7, nothing consequential is finalized, spent, or published without your explicit confirmation.
+    <p style="font-size:11px; color:#a4b0be; margin-bottom:14px; line-height:1.4;">
+      Rule #7 Governance: Nothing consequential is published, spent, or released without your personal sign-off.
     </p>
-    <div id="approvals-container" style="flex:1; overflow-y:auto;">
+    <div id="approval-items" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px;">
       <!-- Populated dynamically -->
-    </div>
-  </div>
-
-  <!-- Town Hall All-Hands Meeting Modal -->
-  <div id="allhands-modal">
-    <div class="allhands-shell">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(212, 175, 55, 0.3); padding-bottom:12px;">
-        <h2 style="color:#d4af37; font-size:18px;">🏛️ Town Hall All-Hands Council Meeting</h2>
-        <button class="close-btn" id="close-allhands-btn">✕</button>
-      </div>
-      <p style="font-size:12px; color:#ced6e0; margin-top:10px;">
-        All 12 Department Directors + Astra (Pandora Core) assembled in the Rathaus timber chamber to sync cross-department workflows:
-      </p>
-
-      <div class="directors-grid" id="allhands-grid">
-        <!-- Injected via JavaScript -->
-      </div>
-
-      <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(212,175,55,0.3); border-radius:8px; padding:12px; font-size:12px; color:#e4e7eb; margin-top:auto;">
-        <strong style="color:#d4af37;">Chief of Staff Summary:</strong> "All departments report on-schedule progress. The Book Typesetting pipeline is currently handing off proofs from Product Dev to Publishing & Multimedia. Local M4 inference pipeline operating at 100% efficiency."
-      </div>
     </div>
   </div>
 
   <script>
     /* =========================================================================
-       1. DATA ARCHITECTURE: THE 12 DEPARTMENTS + PANDORA CORE
+       1. DATA ARCHITECTURE: THE 12 BUILDINGS + PANDORA CORE
        ========================================================================= */
-    const DEPARTMENTS = [
+    const BUILDINGS = [
       {
         id: 'townhall',
         name: 'Town Hall & Management',
         german: 'Rathaus & Geschäftsführung',
         icon: '🏛️',
         director: 'Amelia Hart',
-        avatar: '👩‍💼',
-        role: 'Director of Strategy, Meetings & Approvals',
-        tag: 'Strategy • Coordination • Approvals',
+        tag: 'Strategy, meetings, chief of staff, project office',
+        doorX: 0.50, doorY: 0.32, // Relative position on the master village map
         color: '#4a69bd',
-        quote: 'Strategy turns ambition into disciplined execution. The founder gives direction; we orchestrate the village.',
-        metrics: [
-          { label: 'Strategic Alignment', value: '99.4%' },
-          { label: 'Weekly Meetings', value: '4 Held' },
-          { label: 'Approval Turnaround', value: '18 min' }
-        ],
-        tasks: [
-          { name: 'Prepare Executive Brief for Founder & Partner', status: 'In Progress', time: '10m ago' },
-          { name: 'Coordinate Q4 Production Roadmap Hand-offs', status: 'In Progress', time: '45m ago' },
-          { name: 'Audit Department Memory Files & Prompts', status: 'Completed', time: '2h ago' }
-        ],
-        deliverables: [
-          { title: 'Weekly Executive Briefing.pdf', date: 'Today, 09:30' },
-          { title: 'Multi-Agent Handoff Matrix.md', date: 'Yesterday' }
-        ],
-        interiorType: 'townhall'
+        interiorImg: 'assets/interior_townhall.jpg',
+        stations: [
+          {
+            id: 'strategy_table',
+            name: '🗺️ Circular Strategic Hologram Table',
+            x: 0.50, y: 0.65,
+            desc: 'The executive command table displays real-time multi-agent workflows and inter-department coordination vectors across the village.',
+            actionName: 'Launch Village All-Hands Sync',
+            data: { status: 'Optimal', throughput: '142 Handoffs Today', alignment: '99.4%' }
+          },
+          {
+            id: 'founder_podium',
+            name: '🎙️ Founder Executive Podium',
+            x: 0.16, y: 0.58,
+            desc: 'Issue high-level strategic directives to all 12 directors. The Chief of Staff translates your guidance into department task backlogs.',
+            actionName: 'Broadcast Strategic Directive',
+            isDirective: true
+          },
+          {
+            id: 'amelia_desk',
+            name: '📋 Amelia Hart (Director of Strategy)',
+            x: 0.82, y: 0.62,
+            desc: '"Welcome Founder! All department heads are executing according to the Q4 roadmap. Book layout and M4 local inference are prioritized."',
+            actionName: 'Review Executive Brief'
+          }
+        ]
       },
       {
         id: 'multimedia',
@@ -1048,26 +644,35 @@
         german: 'Medien- & Audioproduktion',
         icon: '🎬',
         director: 'Jonas Keller',
-        avatar: '🧔🏻',
-        role: 'Director of Sound, Video & Visual Design',
-        tag: 'Sound • Video • Design',
+        tag: 'Sound, image, video, animation',
+        doorX: 0.50, doorY: 0.78,
         color: '#e55039',
-        quote: 'Every frame and every sound frequency tells the story of our enterprise and book.',
-        metrics: [
-          { label: 'Active Renders', value: '2 Videos' },
-          { label: 'Audio Tracks Mixed', value: '14' },
-          { label: 'Cover Art Variants', value: '8 Formats' }
-        ],
-        tasks: [
-          { name: 'Rendering 4K Book Cinematic Teaser (Higgsfield)', status: 'In Progress', time: '5m ago' },
-          { name: 'Mastering Ambient Audio for Teaching Academy', status: 'In Progress', time: '20m ago' },
-          { name: 'Exporting 3D Vector Diagrams for Chapter 4', status: 'Completed', time: '1h ago' }
-        ],
-        deliverables: [
-          { title: 'Book_Trailer_Cinematic_v3.mp4', date: 'Today, 11:05' },
-          { title: 'Chapter_Illustrations_Pack.zip', date: 'Today, 08:45' }
-        ],
-        interiorType: 'multimedia'
+        interiorImg: 'assets/interior_multimedia.jpg',
+        stations: [
+          {
+            id: 'broadcast_cam',
+            name: '📹 4K Broadcast Camera Dolly',
+            x: 0.16, y: 0.68,
+            desc: 'High-end cinema camera recording the cinematic video trailer for "The Autonomous Enterprise". Red tally light indicates active 4K render.',
+            actionName: 'Inspect Video Viewfinder',
+            data: { resolution: '3840x2160', fps: '60 FPS', renderProgress: '84%' }
+          },
+          {
+            id: 'sound_board',
+            name: '🎛️ Sound Mixing Console',
+            x: 0.50, y: 0.70,
+            desc: 'Master audio console mixing alpine soundscapes, narrator voiceovers, and course soundtracks with live LED equalizer visualizers.',
+            actionName: 'Play Master Audio Stem'
+          },
+          {
+            id: 'editing_bay',
+            name: '💻 Jonas Keller (Video Editing Bay)',
+            x: 0.85, y: 0.66,
+            desc: '"Director Jonas Keller here! We just rendered 12 cinematic chapter transition animations using Higgsfield + Claude."',
+            actionName: 'Dispatch Multimedia Brief',
+            isBrief: true
+          }
+        ]
       },
       {
         id: 'publishing',
@@ -1075,26 +680,35 @@
         german: 'Verlag & Buchvertrieb',
         icon: '📖',
         director: 'Elena Roth',
-        avatar: '👩🏼',
-        role: 'Director of Book Layout, Releases & Shop',
-        tag: 'Courses • Releases • Shop',
+        tag: 'Online publishing, course releases, shop content',
+        doorX: 0.33, doorY: 0.74,
         color: '#f39c12',
-        quote: 'A book must feel immortal in the hand—precise typography, elegant margins, flawless binding.',
-        metrics: [
-          { label: 'Chapters Typeset', value: '7 / 10' },
-          { label: 'Print Proofs Checked', value: '42 Pages' },
-          { label: 'EPUB Validation', value: '100% Passed' }
-        ],
-        tasks: [
-          { name: 'Typesetting Chapter 4: Multi-Agent Choreography', status: 'In Progress', time: '12m ago' },
-          { name: 'Proofing Hardcover Dust Jacket Foil Stamping', status: 'Pending Founder', time: '35m ago' },
-          { name: 'Generating Distribution Metadata for Global ISBNs', status: 'Completed', time: '3h ago' }
-        ],
-        deliverables: [
-          { title: 'The_Autonomous_Enterprise_Galley_Proof.pdf', date: 'Today, 10:15' },
-          { title: 'Hardcover_DustJacket_PrintReady.cmyk', date: 'Yesterday' }
-        ],
-        interiorType: 'publishing'
+        interiorImg: 'assets/interior_publishing.jpg',
+        stations: [
+          {
+            id: 'printing_press',
+            name: '🖨️ High-Speed Digital Printing Press',
+            x: 0.18, y: 0.65,
+            desc: 'Industrial press printing physical book galleys for "The Autonomous Enterprise". Automated roll feed and optical proofing.',
+            actionName: 'Audit Print Run',
+            data: { bookTitle: 'The Autonomous Enterprise', currentChapter: 'Chapter 4', copiesPrinted: '250 Test Run' }
+          },
+          {
+            id: 'book_stacks',
+            name: '📚 Bound Hardcover Gallery Stacks',
+            x: 0.58, y: 0.68,
+            desc: 'Stacks of finished hardcover proof copies with gold foil stamping and cloth-bound spine. Elena Roth has approved the typography layout.',
+            actionName: 'Inspect Book Cover Proof'
+          },
+          {
+            id: 'elena_desk',
+            name: '👩🏼 Elena Roth (Director of Publishing)',
+            x: 0.88, y: 0.70,
+            desc: '"Founder, the book manuscript is looking magnificent! Chapters 1-4 are completely typeset with running headers and margin citations."',
+            actionName: 'Dispatch Publishing Brief',
+            isBrief: true
+          }
+        ]
       },
       {
         id: 'finance',
@@ -1102,53 +716,35 @@
         german: 'Finanzen & Buchhaltung',
         icon: '🪙',
         director: 'Daniel Petrescu',
-        avatar: '👨🏻‍💼',
-        role: 'Director of Budgets, Invoicing & Payments',
-        tag: 'Budgets • Invoicing • Payments',
+        tag: 'Accounting, budgets, invoicing, payments',
+        doorX: 0.66, doorY: 0.28,
         color: '#f1c40f',
-        quote: 'Fiscal discipline empowers freedom. Running on local M4 hardware saves thousands in token fees.',
-        metrics: [
-          { label: 'Token Cloud Cost', value: '$0.00 (Local M4)' },
-          { label: 'Operating Runway', value: '38 Months' },
-          { label: 'Invoices Cleared', value: '100%' }
-        ],
-        tasks: [
-          { name: 'Auditing Local Inference Savings vs. Cloud API', status: 'In Progress', time: '8m ago' },
-          { name: 'Compiling Monthly Partner Royalty Allocation', status: 'In Progress', time: '50m ago' },
-          { name: 'Verifying Book Production Print Run Quotes', status: 'Completed', time: '4h ago' }
-        ],
-        deliverables: [
-          { title: 'Q4_Financial_Ledger_SLAG.xlsx', date: 'Today, 09:00' },
-          { title: 'Local_M4_Cost_Advantage_Report.pdf', date: 'Yesterday' }
-        ],
-        interiorType: 'finance'
-      },
-      {
-        id: 'academy',
-        name: 'Teaching Academy',
-        german: 'Lehr- & Ausbildungsakademie',
-        icon: '🎓',
-        director: 'Dr. Anna Weiss',
-        avatar: '👩🏻‍🏫',
-        role: 'Director of Students, Teachers & Quality',
-        tag: 'Students • Teachers • Quality',
-        color: '#2980b9',
-        quote: 'Knowledge is transformed into capability through deliberate practice and continuous feedback.',
-        metrics: [
-          { label: 'Enrolled Cohort', value: '142 Students' },
-          { label: 'AI Tutor Accuracy', value: '98.9%' },
-          { label: 'Curriculum Modules', value: '24 Ready' }
-        ],
-        tasks: [
-          { name: 'Evaluating AI Tutor Dynamic Roleplay Prompts', status: 'In Progress', time: '15m ago' },
-          { name: 'Structuring Workshop: Local Agent Villages on M4', status: 'In Progress', time: '1h ago' },
-          { name: 'Student Feedback Quality Review Round 3', status: 'Completed', time: '2h ago' }
-        ],
-        deliverables: [
-          { title: 'AI_Village_Masterclass_Syllabus.pdf', date: 'Today, 11:00' },
-          { title: 'Tutor_Prompt_Evaluation_Rubric.md', date: 'Yesterday' }
-        ],
-        interiorType: 'academy'
+        interiorImg: 'assets/interior_finance.jpg',
+        stations: [
+          {
+            id: 'market_monitors',
+            name: '📊 Bloomberg Financial Trading Desk',
+            x: 0.58, y: 0.66,
+            desc: 'Real-time financial candlestick monitors tracking enterprise cash flow, partner royalty distributions, and inference cost optimizations.',
+            actionName: 'Audit Financial Ledger',
+            data: { cloudApiFees: '$0.00 (M4 Local)', savingsToday: '$148.50', runwayMonths: '38 Months' }
+          },
+          {
+            id: 'stone_vault',
+            name: '🏦 Alpen Finance Steel Vault',
+            x: 0.14, y: 0.55,
+            desc: 'Secure physical and cryptographic vault safeguarding smart contract escrow reserves and enterprise intellectual property deeds.',
+            actionName: 'Inspect Reserves'
+          },
+          {
+            id: 'daniel_desk',
+            name: '👨🏻‍💼 Daniel Petrescu (Director of Finance)',
+            x: 0.82, y: 0.68,
+            desc: '"By executing models locally on your Apple M4 Mac, we completely eliminated monthly token bills. Every euro saved goes into the book launch."',
+            actionName: 'Dispatch Finance Brief',
+            isBrief: true
+          }
+        ]
       },
       {
         id: 'it',
@@ -1156,161 +752,57 @@
         german: 'IT, Plattform & Infrastruktur',
         icon: '💻',
         director: 'Victor Hahn',
-        avatar: '👨🏼‍💻',
-        role: 'Director of Platform, Automation & Security',
-        tag: 'Platform • Automation • Security',
+        tag: 'Platform, integrations, automation, security',
+        doorX: 0.76, doorY: 0.35,
         color: '#00cec9',
-        quote: 'Clean pipelines, zero security leaks, and ultra-low latency local neural execution.',
-        metrics: [
-          { label: 'Local M4 Latency', value: '18 ms/token' },
-          { label: 'Git Sync Status', value: 'Clean • 0 Errors' },
-          { label: 'Uptime', value: '99.99%' }
-        ],
-        tasks: [
-          { name: 'Optimizing Ollama Qwen 2.5 32B Memory Footprint', status: 'In Progress', time: '3m ago' },
-          { name: 'Setting up Automated Vercel & Cloudflare Webhooks', status: 'In Progress', time: '25m ago' },
-          { name: 'Vault Security & API Stand-in Proxy Verification', status: 'Completed', time: '3h ago' }
-        ],
-        deliverables: [
-          { title: 'Local_Inference_Cluster_Config.json', date: 'Today, 10:45' },
-          { title: 'Security_Audit_Report.md', date: 'Yesterday' }
-        ],
-        interiorType: 'it'
+        interiorImg: 'assets/interior_it.jpg',
+        stations: [
+          {
+            id: 'server_racks',
+            name: '🖥️ Eco-Cooled Silent Server Racks',
+            x: 0.68, y: 0.55,
+            desc: 'Liquid-cooled server cabinets glowing with emerald and cyan activity LEDs. Hosting local Ollama inference clusters and encrypted data vaults.',
+            actionName: 'Inspect M4 Cluster Health',
+            data: { localEngine: 'Apple M4 Neural Engine', models: 'Qwen 2.5 32B / Llama 3.3', latency: '18.2 ms/token' }
+          },
+          {
+            id: 'victor_desk',
+            name: '👨🏼‍💻 Victor Hahn (Director of IT)',
+            x: 0.25, y: 0.68,
+            desc: '"Victor Hahn here. All GitHub webhooks, Vercel pipelines, and local Metal memory bridges are fully operational with 0 errors."',
+            actionName: 'Dispatch IT Brief',
+            isBrief: true
+          }
+        ]
       },
       {
-        id: 'hr',
-        name: 'HR & Recruitment',
-        german: 'Personal & Talententwicklung',
-        icon: '👥',
-        director: 'Sofia Becker',
-        avatar: '👩🏼‍💼',
-        role: 'Director of Hiring, Onboarding & Teacher Growth',
-        tag: 'Hiring • Onboarding • Teacher Development',
-        color: '#e67e22',
-        quote: 'Talent is the catalyst. We scout elite domain specialists and ensure every agent worker has clear instructions.',
-        metrics: [
-          { label: 'Active Roles', value: '3 Open' },
-          { label: 'Onboarded Agents', value: '18 Configured' },
-          { label: 'Staff Satisfaction', value: '97%' }
-        ],
-        tasks: [
-          { name: 'Drafting System Prompt for Technical Copy Editor', status: 'In Progress', time: '18m ago' },
-          { name: 'Conducting Skill Gap Analysis for Village App', status: 'In Progress', time: '40m ago' },
-          { name: 'Finalizing Teacher Development Workshop Schedule', status: 'Completed', time: '5h ago' }
-        ],
-        deliverables: [
-          { title: 'Senior_Editor_Agent_Prompt_Dossier.md', date: 'Today, 08:30' },
-          { title: 'Village_Staff_Competency_Matrix.pdf', date: '2 days ago' }
-        ],
-        interiorType: 'hr'
-      },
-      {
-        id: 'marketing',
-        name: 'Marketing & Growth',
-        german: 'Marketing & Wachstum',
-        icon: '📢',
-        director: 'Leo Marin',
-        avatar: '🧔🏽',
-        role: 'Director of Social Media, Ads & Affiliates',
-        tag: 'Social Media • Ads • Affiliates',
-        color: '#fd79a8',
-        quote: 'Attention is earned through substance. We showcase the real power of autonomous agent villages.',
-        metrics: [
-          { label: 'Monthly Reach', value: '420K Impressions' },
-          { label: 'Waitlist Signups', value: '2,840' },
-          { label: 'Ad ROAS', value: '4.8x' }
-        ],
-        tasks: [
-          { name: 'A/B Testing Hook Headlines for Book Launch Campaign', status: 'In Progress', time: '14m ago' },
-          { name: 'Writing LinkedIn Breakdown of Tristen O\'Brien Video', status: 'In Progress', time: '30m ago' },
-          { name: 'Structuring Affiliate Engine for Partner Network', status: 'Completed', time: '2h ago' }
-        ],
-        deliverables: [
-          { title: 'Viral_Launch_Strategy_TheBook.pdf', date: 'Today, 11:20' },
-          { title: 'Ad_Creative_Copy_Variants.csv', date: 'Yesterday' }
-        ],
-        interiorType: 'marketing'
-      },
-      {
-        id: 'sales',
-        name: 'Sales & Events',
-        german: 'Vertrieb & Veranstaltungen',
-        icon: '📅',
-        director: 'Clara Neumann',
-        avatar: '👩🏻‍💼',
-        role: 'Director of Strategy Calls, Webinars & CRM',
-        tag: 'Strategy Calls • Webinars • CRM',
-        color: '#6c5ce7',
-        quote: 'Building long-term enterprise partnerships on solid trust and demonstrated excellence.',
-        metrics: [
-          { label: 'Enterprise Pipeline', value: '€285,000' },
-          { label: 'Upcoming Webinars', value: '2 Scheduled' },
-          { label: 'Call Close Rate', value: '38%' }
-        ],
-        tasks: [
-          { name: 'Configuring Webinar Registration CRM Funnel', status: 'In Progress', time: '11m ago' },
-          { name: 'Reviewing Enterprise Briefs for Custom Village Deployments', status: 'In Progress', time: '48m ago' },
-          { name: 'Sending Personalized Follow-ups to 14 Attendees', status: 'Completed', time: '4h ago' }
-        ],
-        deliverables: [
-          { title: 'Enterprise_Deal_Pipeline_Tracker.xlsx', date: 'Today, 09:40' },
-          { title: 'Webinar_Slide_Deck_M4_Villages.key', date: 'Yesterday' }
-        ],
-        interiorType: 'sales'
-      },
-      {
-        id: 'support',
-        name: 'Customer Support',
-        german: 'Kundenbetreuung & Feedback',
-        icon: '🎧',
-        director: 'Laura Munteanu',
-        avatar: '👩🏽',
-        role: 'Director of Helpdesk, Feedback & Retention',
-        tag: 'Helpdesk • Feedback • Retention',
-        color: '#a29bfe',
-        quote: 'Every customer voice is actionable intelligence for Product Development and Teaching Academy.',
-        metrics: [
-          { label: 'CSAT Rating', value: '98.6%' },
-          { label: 'Avg Resolution Time', value: '4.2 min' },
-          { label: 'Active Tickets', value: '3 Remaining' }
-        ],
-        tasks: [
-          { name: 'Categorizing Reader Feedback on Early Book Chapters', status: 'In Progress', time: '7m ago' },
-          { name: 'Dispatching Bug Insights to IT & Systems', status: 'In Progress', time: '22m ago' },
-          { name: 'Updating Knowledge Base FAQ for Local M4 Installs', status: 'Completed', time: '1h ago' }
-        ],
-        deliverables: [
-          { title: 'Weekly_Customer_Sentiment_Analysis.pdf', date: 'Today, 10:00' },
-          { title: 'KnowledgeBase_M4_Troubleshooting.md', date: 'Yesterday' }
-        ],
-        interiorType: 'support'
-      },
-      {
-        id: 'research',
-        name: 'Research & Innovation',
-        german: 'Forschung & Zukunftskonzepte',
-        icon: '🔬',
-        director: 'Felix Ionescu',
-        avatar: '👨🏻‍🔬',
-        role: 'Director of Trends, Competitors & Concepts',
-        tag: 'Trends • Ideas • Concepts',
-        color: '#16a085',
-        quote: 'We map the frontier before others know it exists. We synthesize cutting-edge AI breakthroughs.',
-        metrics: [
-          { label: 'Papers Analyzed', value: '28 this week' },
-          { label: 'Competitor Dossiers', value: '12 Active' },
-          { label: 'Patents & Concept Briefs', value: '5 Filed' }
-        ],
-        tasks: [
-          { name: 'Benchmarking Apple M4 Neural Engine Latency', status: 'In Progress', time: '16m ago' },
-          { name: 'Fact-Checking Citations for Book Chapter 2', status: 'In Progress', time: '55m ago' },
-          { name: 'Synthesizing Autonomous Multi-Agent Agent Teams Paper', status: 'Completed', time: '3h ago' }
-        ],
-        deliverables: [
-          { title: 'State_of_Local_AI_Inference_M4.pdf', date: 'Today, 08:00' },
-          { title: 'Competitor_Analysis_Agentic_Enterprises.md', date: 'Yesterday' }
-        ],
-        interiorType: 'research'
+        id: 'academy',
+        name: 'Teaching Academy',
+        german: 'Lehr- & Ausbildungsakademie',
+        icon: '🎓',
+        director: 'Dr. Anna Weiss',
+        tag: 'Students, teachers, AI tutors, scheduling, quality',
+        doorX: 0.44, doorY: 0.74,
+        color: '#2980b9',
+        interiorImg: 'assets/interior_academy.jpg',
+        stations: [
+          {
+            id: 'neural_screen',
+            name: '🎓 Interactive Neural Network Blackboard',
+            x: 0.85, y: 0.50,
+            desc: 'Large ultra-wide digital blackboard displaying neural architectures, agentic workflows, and student progression analytics.',
+            actionName: 'Inspect Curriculum Modules',
+            data: { activeStudents: '142 Enrolled', aiTutorAccuracy: '98.9%', modulesCompleted: '24 Modules' }
+          },
+          {
+            id: 'anna_podium',
+            name: '👩🏻‍🏫 Dr. Anna Weiss (Teaching Academy)',
+            x: 0.68, y: 0.62,
+            desc: '"Welcome Founder! The students are currently learning multi-agent orchestration principles based directly on your upcoming book."',
+            actionName: 'Dispatch Academy Brief',
+            isBrief: true
+          }
+        ]
       },
       {
         id: 'product',
@@ -1318,26 +810,35 @@
         german: 'Produktentwicklung & Apps',
         icon: '📦',
         director: 'Mira Novak',
-        avatar: '👩🏻‍💻',
-        role: 'Director of Apps, Books & Curricula',
-        tag: 'Apps • Books • Curricula',
+        tag: 'Apps, books, curricula, online courses',
+        doorX: 0.83, doorY: 0.68,
         color: '#27ae60',
-        quote: 'Turning abstract concepts into tangible, deployable software, apps, and literature.',
-        metrics: [
-          { label: 'App Sprints', value: 'Sprint 14 Active' },
-          { label: 'Book Milestones', value: 'Draft 72% Complete' },
-          { label: 'Code Test Coverage', value: '94.2%' }
-        ],
-        tasks: [
-          { name: 'Refining Interactive Village Web Interface Components', status: 'In Progress', time: '2m ago' },
-          { name: 'Drafting Manuscript Outline for Chapter 5', status: 'In Progress', time: '19m ago' },
-          { name: 'Architecting Offline Local Model Bridge for M4', status: 'Completed', time: '2h ago' }
-        ],
-        deliverables: [
-          { title: 'Village_Interactive_UI_v1.0.zip', date: 'Today, 11:30' },
-          { title: 'Book_Structure_Complete_Blueprint.pdf', date: 'Yesterday' }
-        ],
-        interiorType: 'product'
+        interiorImg: 'assets/interior_product.jpg',
+        stations: [
+          {
+            id: 'app_stand',
+            name: '📱 App Prototyping & UX Wireframe Station',
+            x: 0.28, y: 0.72,
+            desc: 'Drafting tables with iPad test stands and mobile blueprints for the companion PANDORA Village mobile and desktop apps.',
+            actionName: 'Test Interactive App Prototype',
+            data: { currentSprint: 'Sprint 14', testCoverage: '94.2%', appBuild: 'v1.0.4-rc' }
+          },
+          {
+            id: 'manuscript_board',
+            name: '📑 Book Manuscript Chapter Structure Board',
+            x: 0.82, y: 0.45,
+            desc: 'Full wall pinboard detailing Chapter 1 Heritage, Chapter 2 Design, Chapter 3 Future, and technical appendix diagrams.',
+            actionName: 'Inspect Chapter Outlines'
+          },
+          {
+            id: 'mira_desk',
+            name: '👩🏻‍💻 Mira Novak (Director of Product)',
+            x: 0.55, y: 0.55,
+            desc: '"Director Mira Novak here. We are ensuring every software component and book section is cohesive, practical, and production-ready."',
+            actionName: 'Dispatch Product Brief',
+            isBrief: true
+          }
+        ]
       },
       {
         id: 'core',
@@ -1345,1248 +846,829 @@
         german: 'Zentraler Kern & KI-Lernmaschine',
         icon: '✨',
         director: 'Astra (AI Core)',
-        avatar: '🤖',
-        role: 'Chief Cognitive Engine & Knowledge Synthesizer',
-        tag: 'Data • Recommendations • Progress',
+        tag: 'Data, recommendations, progress',
+        doorX: 0.50, doorY: 0.50,
         color: '#0984e3',
-        quote: 'I am the pulse of the village. I unify the collective memory and learning of every department.',
-        metrics: [
-          { label: 'Throughput', value: '4.8M Tokens / Day' },
-          { label: 'Cross-Dept Handoffs', value: '142 Today' },
-          { label: 'Global Memory Vectors', value: '34,200 Embeddings' }
-        ],
-        tasks: [
-          { name: 'Vectorizing all department briefs and task logs', status: 'In Progress', time: 'Just now' },
-          { name: 'Synthesizing daily recommendations for Chief of Staff', status: 'In Progress', time: '10m ago' },
-          { name: 'Self-optimizing local memory index on M4 SSD', status: 'Completed', time: '1h ago' }
-        ],
-        deliverables: [
-          { title: 'Village_Daily_Intelligence_Brief.md', date: 'Today, 11:25' },
-          { title: 'Enterprise_Knowledge_Graph_Export.json', date: 'Today, 06:00' }
-        ],
-        interiorType: 'core'
+        interiorImg: 'assets/interior_core.jpg',
+        stations: [
+          {
+            id: 'infinity_sphere',
+            name: '♾️ Central Holographic AI Neural Sphere',
+            x: 0.50, y: 0.45,
+            desc: 'The central cognitive heart of PANDORA. Synthesizes cross-department embeddings, coordinates memory vectors, and aligns village priorities.',
+            actionName: 'Query Enterprise Memory',
+            data: { totalVectors: '34,200 Embeddings', throughput: '4.8M Tokens / Day', modelStatus: 'Unified & Synchronized' }
+          },
+          {
+            id: 'observation_deck',
+            name: '🌐 Circular Timber Observation Walkway',
+            x: 0.25, y: 0.65,
+            desc: 'Overlooks the central reflecting fountain and mountain panorama through the geodesic glass dome.',
+            actionName: 'Run Village Diagnostics'
+          }
+        ]
+      },
+      {
+        id: 'research',
+        name: 'Research & Innovation',
+        german: 'Forschung & Zukunftskonzepte',
+        icon: '🔬',
+        director: 'Felix Ionescu',
+        tag: 'Trends, competitors, ideas, new concepts',
+        doorX: 0.69, doorY: 0.78,
+        color: '#16a085',
+        interiorImg: 'assets/interior_research.jpg',
+        stations: [
+          {
+            id: 'trend_radars',
+            name: '📡 Futuristic Trend Radar Displays',
+            x: 0.15, y: 0.48,
+            desc: 'Monitors scanning arXiv papers, patents, and open-weights releases for breakthroughs applicable to the village and book.',
+            actionName: 'Scan Frontier Papers',
+            data: { papersScanned: '28 this week', patentsPending: '3 Filed', breakthroughScore: '94/100' }
+          },
+          {
+            id: 'felix_desk',
+            name: '👨🏻‍🔬 Felix Ionescu (Director of Research)',
+            x: 0.75, y: 0.65,
+            desc: '"Director Felix Ionescu here. We have confirmed that Apple Silicon M4 unified memory gives us an unbeatable edge for private local inference."',
+            actionName: 'Dispatch Research Brief',
+            isBrief: true
+          }
+        ]
+      },
+      {
+        id: 'marketing',
+        name: 'Marketing & Growth',
+        german: 'Marketing & Wachstum',
+        icon: '📢',
+        director: 'Leo Marin',
+        tag: 'Social media, ads, SEO, affiliates',
+        doorX: 0.29, doorY: 0.38,
+        color: '#fd79a8',
+        interiorImg: 'assets/interior_marketing.jpg',
+        stations: [
+          {
+            id: 'mood_board',
+            name: '🎨 Creative Agency Moodboards & Ad Displays',
+            x: 0.15, y: 0.45,
+            desc: 'Creative wall boards testing book cover taglines, viral hooks, and video thumbnails for the book launch.',
+            actionName: 'Review Ad Creatives',
+            data: { monthlyImpressions: '420,000', waitlistLeads: '2,840', averageROAS: '4.8x' }
+          },
+          {
+            id: 'leo_desk',
+            name: '🧔🏽 Leo Marin (Director of Marketing)',
+            x: 0.66, y: 0.65,
+            desc: '"Our Tristen O\'Brien video breakdown is gaining immense traction. The audience wants to see the actual German village in action."',
+            actionName: 'Dispatch Marketing Brief',
+            isBrief: true
+          }
+        ]
+      },
+      {
+        id: 'sales',
+        name: 'Sales & Events',
+        german: 'Vertrieb & Veranstaltungen',
+        icon: '📅',
+        director: 'Clara Neumann',
+        tag: 'Strategy calls, webinars, workshops, CRM, follow-ups',
+        doorX: 0.88, doorY: 0.50,
+        color: '#6c5ce7',
+        interiorImg: 'assets/interior_sales.jpg',
+        stations: [
+          {
+            id: 'webinar_booth',
+            name: '🎙️ Live Webinar Broadcast Station',
+            x: 0.65, y: 0.55,
+            desc: 'Sound-isolated studio with studio ring light and CRM deal funnel monitors. Clara Neumann conducts enterprise strategy demos here.',
+            actionName: 'Review Enterprise Pipeline',
+            data: { dealPipeline: '€285,000', upcomingWebinar: 'This Thursday', attendeeCount: '340 Registered' }
+          },
+          {
+            id: 'clara_desk',
+            name: '👩🏻‍💼 Clara Neumann (Director of Sales)',
+            x: 0.25, y: 0.65,
+            desc: '"Enterprise interest in deploying private local agent villages on Apple M4 hardware is exceptionally high."',
+            actionName: 'Dispatch Sales Brief',
+            isBrief: true
+          }
+        ]
+      },
+      {
+        id: 'support',
+        name: 'Customer Support',
+        german: 'Kundenbetreuung & Feedback',
+        icon: '🎧',
+        director: 'Laura Munteanu',
+        tag: 'Helpdesk, feedback, retention',
+        doorX: 0.91, doorY: 0.44,
+        color: '#a29bfe',
+        interiorImg: 'assets/interior_support.jpg',
+        stations: [
+          {
+            id: 'ticker_board',
+            name: '💬 Student Support & Care Live Ticker',
+            x: 0.85, y: 0.35,
+            desc: 'Real-time satisfaction monitor showing 96% customer happiness and resolution queues for course and book inquiries.',
+            actionName: 'Review Feedback Log',
+            data: { csatScore: '96.4%', avgWaitTime: '3 minutes', resolvedToday: '38 Tickets' }
+          },
+          {
+            id: 'laura_desk',
+            name: '👩🏽 Laura Munteanu (Customer Support)',
+            x: 0.58, y: 0.68,
+            desc: '"Readers are eager for the book release! We are funneling all reader questions into the Product Development backlog."',
+            actionName: 'Dispatch Support Brief',
+            isBrief: true
+          }
+        ]
+      },
+      {
+        id: 'hr',
+        name: 'HR & Recruitment',
+        german: 'Personal & Talententwicklung',
+        icon: '👥',
+        director: 'Sofia Becker',
+        tag: 'Hiring teachers, onboarding, talent, development',
+        doorX: 0.36, doorY: 0.30,
+        color: '#e67e22',
+        interiorImg: 'assets/interior_hr.jpg',
+        stations: [
+          {
+            id: 'talent_kanban',
+            name: '📋 Interactive Talent Pipeline Kanban Board',
+            x: 0.85, y: 0.45,
+            desc: 'Wall-sized interactive digital board tracking candidate stages: Sourced, Application, Interview, Offer, and Hired.',
+            actionName: 'Inspect Open Roles',
+            data: { openRoles: '3 Positions', candidatesInPipeline: '14 Active', teacherCertifications: '100% Passed' }
+          },
+          {
+            id: 'sofia_desk',
+            name: '👩🏼‍💼 Sofia Becker (Director of HR)',
+            x: 0.25, y: 0.65,
+            desc: '"We are curating elite technical copywriters to help review the final book chapters alongside your team."',
+            actionName: 'Dispatch HR Brief',
+            isBrief: true
+          }
+        ]
       }
     ];
 
     /* =========================================================================
-       2. PENDING FOUNDER APPROVALS (Rule #7: Stay in Charge)
+       2. FOUNDER APPROVAL SYSTEM (Rule #7)
        ========================================================================= */
     let PENDING_APPROVALS = [
       {
         id: 'appr-1',
-        title: 'Book Cover Design & Dust Jacket Foil Approval',
+        title: 'Book Cover Proof: Gold Foil Dust Jacket',
         dept: 'Publishing & Distribution (Elena Roth)',
-        desc: 'Elena Roth and Jonas Keller have finalized 3 foil-stamped hardcover proofs for "The Autonomous Enterprise". Needs founder sign-off before sample printing begins.',
+        desc: 'Review the finished foil stamping proofs for the hardcover edition of "The Autonomous Enterprise". Ready for print run upon your approval.',
         status: 'pending'
       },
       {
         id: 'appr-2',
-        title: 'App Architecture: Local M4 High-RAM Buffer Allocation',
+        title: 'Apple M4 Local Model Memory Allocation',
         dept: 'IT & Systems (Victor Hahn)',
-        desc: 'Victor Hahn requests authorization to lock 24GB of unified memory on the M4 Mac for the 32B model context window during deep research tasks.',
+        desc: 'Authorization to lock 24GB of unified memory on your M4 Mac for the 32B model context window during deep book research synthesis.',
         status: 'pending'
       },
       {
         id: 'appr-3',
-        title: 'Q4 Enterprise Webinar Curriculum Review',
+        title: 'Q4 Enterprise Masterclass Curriculum Release',
         dept: 'Teaching Academy (Dr. Anna Weiss)',
-        desc: 'Curriculum slides on "Building Your Own Local Multi-Agent Enterprise" ready for founder review prior to public announcement.',
+        desc: 'Masterclass syllabus: "Building Local Autonomous Multi-Agent Enterprises on Apple Silicon". Ready to publish to enrolled students.',
         status: 'pending'
       }
     ];
 
     /* =========================================================================
-       3. CANVAS VILLAGE MAP & GERMAN ARCHITECTURE ENGINE
+       3. RPG ENGINE: GRAPHICS, PLAYER, COMPANION & WORLD INTERACTION
        ========================================================================= */
-    const canvas = document.getElementById('village-canvas');
-    const ctx = canvas.getContext('2d');
-    const container = document.getElementById('village-container');
+    const gameContainer = document.getElementById('game-container');
+    const worldCanvas = document.getElementById('world-canvas');
+    const worldCtx = worldCanvas.getContext('2d');
 
-    let width = 0;
-    let height = 0;
+    const interiorStage = document.getElementById('interior-stage');
+    const interiorCanvas = document.getElementById('interior-canvas');
+    const interiorCtx = interiorCanvas.getContext('2d');
+
+    let currentScene = 'village'; // 'village' or 'interior'
+    let currentBuilding = null;
+    let viewMode = 'base'; // 'base' (photorealistic) or 'diagram' (tactical arrows)
     let timeOfDay = 'day'; // 'day', 'dusk', 'night'
-    let currentHoveredBuilding = null;
-    let selectedBuilding = null;
-    let cameraX = 0;
-    let cameraY = 0;
-    let targetCameraX = 0;
-    let targetCameraY = 0;
-    let zoom = 1;
-    let isDragging = false;
-    let lastMouseX = 0;
-    let lastMouseY = 0;
     let frameCount = 0;
 
-    // Resizing
-    function resize() {
-      width = container.clientWidth;
-      height = container.clientHeight;
-      canvas.width = width * window.devicePixelRatio;
-      canvas.height = height * window.devicePixelRatio;
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
-    window.addEventListener('resize', resize);
-    resize();
+    // Load Master Images
+    const imgVillageBase = new Image();
+    imgVillageBase.src = 'assets/village_base.jpg';
 
-    // Map Center & Radius
-    function getVillageCenter() {
-      return {
-        x: width / 2 + cameraX,
-        y: height / 2 + cameraY + 40
-      };
-    }
+    const imgVillageDiagram = new Image();
+    imgVillageDiagram.src = 'assets/village_diagram.jpg';
 
-    // Calculate Building Positions radially (Matching Image 2 layout!)
-    function getBuildingLayout() {
-      const center = getVillageCenter();
-      const radiusX = Math.min(width, height) * 0.42 * zoom;
-      const radiusY = radiusX * 0.65; // Isometric projection ratio
+    // Cache Interior Images
+    const interiorImages = {};
+    BUILDINGS.forEach(b => {
+      const img = new Image();
+      img.src = b.interiorImg;
+      interiorImages[b.id] = img;
+    });
 
-      const layout = [];
+    // Player (The Founder) State
+    const player = {
+      x: 0.50, // Relative coordinates [0..1]
+      y: 0.60,
+      targetX: 0.50,
+      targetY: 0.60,
+      speed: 0.0035,
+      isMoving: false,
+      facing: 'down',
+      walkFrame: 0,
+      name: 'Founder'
+    };
 
-      // Town hall is top center
-      layout.push({
-        dept: DEPARTMENTS[0], // Town Hall
-        x: center.x,
-        y: center.y - radiusY * 1.15,
-        width: 140 * zoom,
-        height: 100 * zoom,
-        isTownHall: true
-      });
+    // Companion (Chief of Staff) State
+    const companion = {
+      x: 0.48,
+      y: 0.62,
+      targetX: 0.48,
+      targetY: 0.62,
+      speed: 0.0032,
+      facing: 'down',
+      walkFrame: 0,
+      name: 'Chief of Staff'
+    };
 
-      // Pandora Core in the exact center
-      layout.push({
-        dept: DEPARTMENTS[12], // Core
-        x: center.x,
-        y: center.y,
-        width: 110 * zoom,
-        height: 110 * zoom,
-        isCore: true
-      });
+    // Interior Player State (when inside a room)
+    const interiorPlayer = {
+      x: 0.50,
+      y: 0.85,
+      targetX: 0.50,
+      targetY: 0.85,
+      speed: 0.005,
+      isMoving: false,
+      facing: 'up'
+    };
 
-      // 11 surrounding departments arranged radially
-      // Order around the circle from Top-Right clockwise:
-      const radialDepts = [
-        DEPARTMENTS[3], // Finance (top right)
-        DEPARTMENTS[5], // IT (upper right)
-        DEPARTMENTS[9], // Support (middle right)
-        DEPARTMENTS[10], // Research (lower right)
-        DEPARTMENTS[11], // Product (bottom right)
-        DEPARTMENTS[1], // Multimedia (bottom center)
-        DEPARTMENTS[2], // Publishing (bottom left)
-        DEPARTMENTS[4], // Academy (lower left)
-        DEPARTMENTS[8], // Sales (middle left)
-        DEPARTMENTS[7], // Marketing (upper left)
-        DEPARTMENTS[6]  // HR (top left)
-      ];
+    // Keyboard Input State
+    const keys = { w: false, a: false, s: false, d: false, ArrowUp: false, ArrowLeft: false, ArrowDown: false, ArrowRight: false, e: false };
 
-      const startAngle = -Math.PI / 4; // 45 deg top right
-      const step = (Math.PI * 2) / (radialDepts.length + 1);
+    window.addEventListener('keydown', (e) => {
+      if (keys.hasOwnProperty(e.key.toLowerCase())) keys[e.key.toLowerCase()] = true;
+      if (keys.hasOwnProperty(e.key)) keys[e.key] = true;
 
-      radialDepts.forEach((dept, i) => {
-        // Adjust angle skipping the top center (where Town Hall sits)
-        const angle = -Math.PI / 2 + (i + 1) * (Math.PI * 2 / 12);
-        const bx = center.x + Math.cos(angle) * radiusX;
-        const by = center.y + Math.sin(angle) * radiusY;
-
-        layout.push({
-          dept: dept,
-          x: bx,
-          y: by,
-          width: 95 * zoom,
-          height: 75 * zoom,
-          isTownHall: false
-        });
-      });
-
-      return layout;
-    }
-
-    /* =========================================================================
-       4. ANIMATED AI AGENTS WALKING IN THE VILLAGE
-       ========================================================================= */
-    const AGENTS = [];
-    const AGENT_NAMES = [
-      { name: 'Founder', role: 'Chief Human Officer', outfit: 'founder', avatar: '👑' },
-      { name: 'Chief of Staff', role: 'Executive AI', outfit: 'cos', avatar: '📋' },
-      { name: 'Dr. Anna Weiss', role: 'Academy Director', outfit: 'director', avatar: '👩🏻‍🏫' },
-      { name: 'Jonas Keller', role: 'Multimedia Director', outfit: 'director', avatar: '🧔🏻' },
-      { name: 'Elena Roth', role: 'Publishing Director', outfit: 'director', avatar: '👩🏼' },
-      { name: 'Victor Hahn', role: 'IT Director', outfit: 'director', avatar: '👨🏼‍💻' },
-      { name: 'Daniel Petrescu', role: 'Finance Director', outfit: 'director', avatar: '👨🏻‍💼' },
-      { name: 'Klaus (Worker)', role: 'Layout Specialist', outfit: 'worker', avatar: '👷🏼' },
-      { name: 'Greta (Worker)', role: 'Video Editor', outfit: 'worker', avatar: '👷🏻‍♀️' },
-      { name: 'Stefan (Worker)', role: 'Prompt Engineer', outfit: 'worker', avatar: '👷🏽' },
-      { name: 'Lukas (Worker)', role: 'Code Synthesizer', outfit: 'worker', avatar: '👷🏼' },
-      { name: 'Heidi (Worker)', role: 'Research Analyst', outfit: 'worker', avatar: '👷🏻‍♀️' },
-      { name: 'Otto (Worker)', role: 'Typesetter', outfit: 'worker', avatar: '👷🏼' },
-      { name: 'Astra Avatar', role: 'Core Guide', outfit: 'guide', avatar: '🤖' }
-    ];
-
-    const AGENT_THOUGHTS = [
-      "Syncing Chapter 4 proofs with Elena...",
-      "Heading to Town Hall for weekly briefing...",
-      "Running local M4 benchmark: 18ms/tok!",
-      "Reviewing sound wave mix with Jonas...",
-      "Delivering print test to Publishing...",
-      "Checking budget ledger with Daniel...",
-      "Preparing webinar slides for Clara...",
-      "Testing AI tutor prompt rubric...",
-      "Passing research notes to Product Dev...",
-      "Coffee break at the central fountain ☕"
-    ];
-
-    function initAgents() {
-      for (let i = 0; i < AGENT_NAMES.length; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const dist = 60 + Math.random() * 220;
-        AGENTS.push({
-          ...AGENT_NAMES[i],
-          angle: angle,
-          targetAngle: angle + (Math.random() - 0.5),
-          dist: dist,
-          targetDist: dist,
-          speed: 0.003 + Math.random() * 0.004,
-          thought: AGENT_THOUGHTS[i % AGENT_THOUGHTS.length],
-          thoughtTimer: Math.random() * 300,
-          facing: Math.random() > 0.5 ? 1 : -1
-        });
+      if (e.key === 'e' || e.key === 'E' || e.key === ' ') {
+        handleInteractAction();
       }
+      if (e.key === 'Escape') {
+        if (currentScene === 'interior') exitInterior();
+        closeStationModal();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (keys.hasOwnProperty(e.key.toLowerCase())) keys[e.key.toLowerCase()] = false;
+      if (keys.hasOwnProperty(e.key)) keys[e.key] = false;
+    });
+
+    // Canvas Resize
+    function resizeCanvases() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      worldCanvas.width = w * window.devicePixelRatio;
+      worldCanvas.height = h * window.devicePixelRatio;
+      worldCanvas.style.width = w + 'px';
+      worldCanvas.style.height = h + 'px';
+      worldCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+      interiorCanvas.width = w * window.devicePixelRatio;
+      interiorCanvas.height = h * window.devicePixelRatio;
+      interiorCanvas.style.width = w + 'px';
+      interiorCanvas.style.height = h + 'px';
+      interiorCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
     }
-    initAgents();
+    window.addEventListener('resize', resizeCanvases);
+    resizeCanvases();
 
-    /* =========================================================================
-       5. DRAWING ROUTINES: MOUNTAINS, GERMAN CHALETS, TREES, PATHS
-       ========================================================================= */
-    function drawSkyAndMountains() {
-      // Sky gradient based on time of day
-      const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
-      if (timeOfDay === 'day') {
-        skyGrad.addColorStop(0, '#54a0ff');
-        skyGrad.addColorStop(0.4, '#a0d8ef');
-        skyGrad.addColorStop(0.7, '#e0f4ff');
-        skyGrad.addColorStop(1, '#a8e6cf');
-      } else if (timeOfDay === 'dusk') {
-        skyGrad.addColorStop(0, '#2c3e50');
-        skyGrad.addColorStop(0.3, '#d35400');
-        skyGrad.addColorStop(0.6, '#e67e22');
-        skyGrad.addColorStop(0.85, '#f39c12');
-        skyGrad.addColorStop(1, '#f1c40f');
-      } else {
-        // Night
-        skyGrad.addColorStop(0, '#0a1128');
-        skyGrad.addColorStop(0.5, '#1c2541');
-        skyGrad.addColorStop(1, '#0b132b');
-      }
-      ctx.fillStyle = skyGrad;
-      ctx.fillRect(0, 0, width, height);
+    // Mouse Click-to-Move
+    worldCanvas.addEventListener('click', (e) => {
+      const rect = worldCanvas.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) / rect.width;
+      const clickY = (e.clientY - rect.top) / rect.height;
 
-      // Distant Alpine Peaks (Jagged mountain silhouettes with snowcaps)
-      const center = getVillageCenter();
-      const mountainY = center.y - 260 * zoom;
+      player.targetX = Math.max(0.08, Math.min(0.92, clickX));
+      player.targetY = Math.max(0.18, Math.min(0.90, clickY));
+      playFootstepSound();
+    });
 
-      // Far mountains
-      ctx.fillStyle = timeOfDay === 'night' ? '#141e30' : (timeOfDay === 'dusk' ? '#5a3d5c' : '#7f8c8d');
-      ctx.beginPath();
-      ctx.moveTo(-50, height);
-      ctx.lineTo(-50, mountainY - 40);
-      ctx.lineTo(width * 0.2, mountainY - 140);
-      ctx.lineTo(width * 0.35, mountainY - 60);
-      ctx.lineTo(width * 0.5, mountainY - 180); // Zugspitze-like peak
-      ctx.lineTo(width * 0.65, mountainY - 70);
-      ctx.lineTo(width * 0.82, mountainY - 160);
-      ctx.lineTo(width + 50, mountainY - 30);
-      ctx.lineTo(width + 50, height);
-      ctx.closePath();
-      ctx.fill();
+    interiorCanvas.addEventListener('click', (e) => {
+      const rect = interiorCanvas.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) / rect.width;
+      const clickY = (e.clientY - rect.top) / rect.height;
 
-      // Snow on peaks
-      if (timeOfDay !== 'night') {
-        ctx.fillStyle = timeOfDay === 'dusk' ? '#ffccd5' : '#ffffff';
-        // Peak 1 snow
-        ctx.beginPath();
-        ctx.moveTo(width * 0.5, mountainY - 180);
-        ctx.lineTo(width * 0.47, mountainY - 120);
-        ctx.lineTo(width * 0.53, mountainY - 120);
-        ctx.closePath();
-        ctx.fill();
+      interiorPlayer.targetX = Math.max(0.10, Math.min(0.90, clickX));
+      interiorPlayer.targetY = Math.max(0.40, Math.min(0.92, clickY));
+      playFootstepSound();
+    });
 
-        // Peak 2 snow
-        ctx.beginPath();
-        ctx.moveTo(width * 0.2, mountainY - 140);
-        ctx.lineTo(width * 0.18, mountainY - 95);
-        ctx.lineTo(width * 0.23, mountainY - 95);
-        ctx.closePath();
-        ctx.fill();
+    // Check Nearest Building or Workstation
+    function getNearestBuilding() {
+      let nearest = null;
+      let minDist = 0.085; // Proximity threshold
 
-        // Peak 3 snow
-        ctx.beginPath();
-        ctx.moveTo(width * 0.82, mountainY - 160);
-        ctx.lineTo(width * 0.79, mountainY - 110);
-        ctx.lineTo(width * 0.84, mountainY - 110);
-        ctx.closePath();
-        ctx.fill();
-      }
-
-      // Middle Green Alpine Hills (Forest ridge)
-      ctx.fillStyle = timeOfDay === 'night' ? '#0d2818' : (timeOfDay === 'dusk' ? '#2e4a32' : '#27ae60');
-      ctx.beginPath();
-      ctx.moveTo(-50, height);
-      ctx.lineTo(-50, mountainY + 40);
-      ctx.bezierCurveTo(width * 0.25, mountainY - 30, width * 0.45, mountainY + 50, width * 0.7, mountainY + 10);
-      ctx.bezierCurveTo(width * 0.85, mountainY - 10, width * 0.95, mountainY + 30, width + 50, mountainY + 20);
-      ctx.lineTo(width + 50, height);
-      ctx.closePath();
-      ctx.fill();
-
-      // Main Village Green Meadow Plinth
-      const meadowGrad = ctx.createRadialGradient(center.x, center.y, 40, center.x, center.y, width * 0.7);
-      if (timeOfDay === 'night') {
-        meadowGrad.addColorStop(0, '#102b15');
-        meadowGrad.addColorStop(1, '#08170c');
-      } else if (timeOfDay === 'dusk') {
-        meadowGrad.addColorStop(0, '#4d5d30');
-        meadowGrad.addColorStop(1, '#2b3a1a');
-      } else {
-        meadowGrad.addColorStop(0, '#558b2f');
-        meadowGrad.addColorStop(0.7, '#33691e');
-        meadowGrad.addColorStop(1, '#1b5e20');
-      }
-      ctx.fillStyle = meadowGrad;
-      ctx.beginPath();
-      ctx.ellipse(center.x, center.y, Math.min(width, height) * 0.65 * zoom, Math.min(width, height) * 0.45 * zoom, 0, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // Cobblestone Concentric Rings & Radial Pathways
-    function drawCobblestonePlazaAndPaths(layout) {
-      const center = getVillageCenter();
-      const rX = Math.min(width, height) * 0.42 * zoom;
-      const rY = rX * 0.65;
-
-      // Outer radial ring pathway
-      ctx.strokeStyle = timeOfDay === 'night' ? '#444' : '#d5dbdb';
-      ctx.lineWidth = 26 * zoom;
-      ctx.beginPath();
-      ctx.ellipse(center.x, center.y, rX, rY, 0, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Inner cobblestone plaza
-      ctx.fillStyle = timeOfDay === 'night' ? '#333b42' : '#eceff1';
-      ctx.beginPath();
-      ctx.ellipse(center.x, center.y, 110 * zoom, 75 * zoom, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#c59b27';
-      ctx.lineWidth = 3;
-      ctx.stroke();
-
-      // Radial pathways connecting every building to the central plaza
-      layout.forEach(b => {
-        if (!b.isCore) {
-          ctx.beginPath();
-          ctx.moveTo(center.x, center.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = timeOfDay === 'night' ? 'rgba(80,90,100,0.5)' : 'rgba(236, 240, 241, 0.7)';
-          ctx.lineWidth = 14 * zoom;
-          ctx.stroke();
-
-          // Gold workflow energy pulse lines
-          const pulseProgress = ((frameCount * 0.015 + b.x) % 1);
-          const px = center.x + (b.x - center.x) * pulseProgress;
-          const py = center.y + (b.y - center.y) * pulseProgress;
-
-          ctx.fillStyle = b.dept.color || '#d4af37';
-          ctx.beginPath();
-          ctx.arc(px, py, 4 * zoom, 0, Math.PI * 2);
-          ctx.fill();
+      BUILDINGS.forEach(b => {
+        const dx = player.x - b.doorX;
+        const dy = player.y - b.doorY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < minDist) {
+          minDist = dist;
+          nearest = b;
         }
       });
+      return nearest;
     }
 
-    // Swaying Alpine Trees & Pine Groves
-    function drawSwayingTrees() {
-      const center = getVillageCenter();
-      const treeCount = 22;
-      const windSway = Math.sin(frameCount * 0.03) * 5;
+    function getNearestStation() {
+      if (!currentBuilding || !currentBuilding.stations) return null;
+      let nearest = null;
+      let minDist = 0.12;
 
-      for (let i = 0; i < treeCount; i++) {
-        const seedAngle = (i * 2.39996); // Golden angle
-        const dist = (140 + (i % 7) * 45) * zoom;
-        const tx = center.x + Math.cos(seedAngle) * dist * 1.3;
-        const ty = center.y + Math.sin(seedAngle) * dist * 0.75;
+      currentBuilding.stations.forEach(s => {
+        const dx = interiorPlayer.x - s.x;
+        const dy = interiorPlayer.y - s.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < minDist) {
+          minDist = dist;
+          nearest = s;
+        }
+      });
+      return nearest;
+    }
 
-        // Trunk
-        ctx.fillStyle = '#4a2e18';
-        ctx.fillRect(tx - 3, ty, 6, 18 * zoom);
+    function handleInteractAction() {
+      if (currentScene === 'village') {
+        const b = getNearestBuilding();
+        if (b) {
+          enterBuilding(b);
+        }
+      } else if (currentScene === 'interior') {
+        const s = getNearestStation();
+        if (s) {
+          openStationModal(s);
+        }
+      }
+    }
 
-        // Foliage (Alpine Pine or Linden Tree)
-        if (i % 2 === 0) {
-          // Pine tree (dark green triangular tiers)
-          ctx.fillStyle = timeOfDay === 'night' ? '#0d2818' : '#1b5e20';
-          for (let tier = 0; tier < 3; tier++) {
-            const tierY = ty - (tier * 12 * zoom);
-            const swayOffset = windSway * (tier + 1) * 0.5;
-            ctx.beginPath();
-            ctx.moveTo(tx + swayOffset, tierY - 14 * zoom);
-            ctx.lineTo(tx - (16 - tier * 3) * zoom, tierY + 4 * zoom);
-            ctx.lineTo(tx + (16 - tier * 3) * zoom, tierY + 4 * zoom);
-            ctx.closePath();
-            ctx.fill();
-          }
+    /* =========================================================================
+       4. SEAMLESS BUILDING ENTRY & INTERIOR EXPLORATION
+       ========================================================================= */
+    const promptEl = document.getElementById('interaction-prompt');
+    const promptIconEl = document.getElementById('prompt-icon');
+    const promptTextEl = document.getElementById('prompt-text');
+
+    function enterBuilding(b) {
+      currentBuilding = b;
+      currentScene = 'interior';
+      interiorPlayer.x = 0.50;
+      interiorPlayer.y = 0.88;
+      interiorPlayer.targetX = 0.50;
+      interiorPlayer.targetY = 0.88;
+
+      document.getElementById('interior-icon').textContent = b.icon;
+      document.getElementById('interior-title').textContent = `${b.name} (${b.german})`;
+      document.getElementById('interior-tag').textContent = `Tag: ${b.tag} • Director: ${b.director}`;
+
+      interiorStage.classList.add('active');
+      playDoorSound();
+      promptEl.classList.remove('visible');
+    }
+
+    function exitInterior() {
+      currentScene = 'village';
+      interiorStage.classList.remove('active');
+      playDoorSound();
+    }
+
+    document.getElementById('exit-interior-btn').addEventListener('click', exitInterior);
+    promptEl.addEventListener('click', handleInteractAction);
+
+    /* =========================================================================
+       5. INTERACTIVE WORKSTATION MODAL & ACTIONS
+       ========================================================================= */
+    const stationModal = document.getElementById('station-modal');
+    const stationTitleEl = document.getElementById('station-title');
+    const stationContentEl = document.getElementById('station-content');
+    const closeStationBtn = document.getElementById('close-station-btn');
+
+    function openStationModal(station) {
+      stationTitleEl.textContent = station.name;
+      let html = `<p>${station.desc}</p>`;
+
+      if (station.data) {
+        html += `<div class="station-box"><h5>Live Operational Metrics</h5>`;
+        for (const [k, v] of Object.entries(station.data)) {
+          html += `<div style="display:flex; justify-content:space-between; margin:4px 0;"><span style="color:#a4b0be;">${k}:</span><span style="color:var(--gold-light); font-weight:600;">${v}</span></div>`;
+        }
+        html += `</div>`;
+      }
+
+      if (station.isBrief) {
+        html += `
+          <div class="station-box">
+            <h5>Dispatch Brief to ${currentBuilding.director}</h5>
+            <textarea class="brief-textarea" id="station-brief-input" placeholder="Type instructions for this department..."></textarea>
+            <button class="hud-btn hud-btn-gold" style="width:100%; margin-top:8px; justify-content:center;" onclick="submitBriefFromStation()">
+              🚀 Dispatch to Department Backlog
+            </button>
+          </div>
+        `;
+      } else if (station.isDirective) {
+        html += `
+          <div class="station-box">
+            <h5>Village-Wide Executive Directive</h5>
+            <textarea class="brief-textarea" id="directive-input" placeholder="Type a company-wide priority announcement..."></textarea>
+            <button class="hud-btn hud-btn-gold" style="width:100%; margin-top:8px; justify-content:center;" onclick="broadcastDirective()">
+              📢 Broadcast to All 12 Directors
+            </button>
+          </div>
+        `;
+      } else {
+        html += `
+          <button class="hud-btn hud-btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="executeStationAction('${station.actionName}')">
+            ⚡ ${station.actionName}
+          </button>
+        `;
+      }
+
+      stationContentEl.innerHTML = html;
+      stationModal.classList.add('active');
+      playChimeSound();
+    }
+
+    function closeStationModal() {
+      stationModal.classList.remove('active');
+    }
+    closeStationBtn.addEventListener('click', closeStationModal);
+
+    window.submitBriefFromStation = function() {
+      const text = document.getElementById('station-brief-input').value.trim();
+      if (!text) return;
+      alert(`✓ Brief dispatched to ${currentBuilding.director} (${currentBuilding.name})!\nWorkers have been assigned.`);
+      closeStationModal();
+    };
+
+    window.broadcastDirective = function() {
+      const text = document.getElementById('directive-input').value.trim();
+      if (!text) return;
+      alert(`📢 Executive Directive broadcasted to all 12 Directors!\nChief of Staff has updated the master village backlog.`);
+      closeStationModal();
+    };
+
+    window.executeStationAction = function(name) {
+      alert(`⚡ Executed: ${name}\nStatus: Verified and synced with Pandora Core.`);
+    };
+
+    /* =========================================================================
+       6. GAME LOOP & RENDERING: OUTSIDE VILLAGE & INSIDE ROOMS
+       ========================================================================= */
+    function updatePhysics() {
+      frameCount++;
+
+      // Keyboard movement handling for Village
+      if (currentScene === 'village') {
+        let dx = 0;
+        let dy = 0;
+        if (keys.w || keys.arrowup) dy -= 1;
+        if (keys.s || keys.arrowdown) dy += 1;
+        if (keys.a || keys.arrowleft) dx -= 1;
+        if (keys.d || keys.arrowright) dx += 1;
+
+        if (dx !== 0 || dy !== 0) {
+          const len = Math.sqrt(dx * dx + dy * dy);
+          player.x += (dx / len) * player.speed;
+          player.y += (dy / len) * player.speed;
+          player.targetX = player.x;
+          player.targetY = player.y;
+          player.isMoving = true;
+          player.walkFrame++;
+
+          if (Math.abs(dx) > Math.abs(dy)) player.facing = dx > 0 ? 'right' : 'left';
+          else player.facing = dy > 0 ? 'down' : 'up';
+        } else if (player.isMoving && Math.hypot(player.targetX - player.x, player.targetY - player.y) > 0.005) {
+          // Click-to-move interpolation
+          const tdx = player.targetX - player.x;
+          const tdy = player.targetY - player.y;
+          const dist = Math.sqrt(tdx * tdx + tdy * tdy);
+          player.x += (tdx / dist) * player.speed;
+          player.y += (tdy / dist) * player.speed;
+          player.walkFrame++;
+          if (Math.abs(tdx) > Math.abs(tdy)) player.facing = tdx > 0 ? 'right' : 'left';
+          else player.facing = tdy > 0 ? 'down' : 'up';
         } else {
-          // Flowering Linden / Cherry tree (with soft blossoms)
-          ctx.fillStyle = timeOfDay === 'night' ? '#2c3e50' : '#2e7d32';
-          ctx.beginPath();
-          ctx.arc(tx + windSway * 0.5, ty - 14 * zoom, 16 * zoom, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Flower spots
-          if (timeOfDay !== 'night') {
-            ctx.fillStyle = '#ff9ff3';
-            ctx.beginPath();
-            ctx.arc(tx + windSway * 0.5 - 5, ty - 18 * zoom, 3, 0, Math.PI * 2);
-            ctx.arc(tx + windSway * 0.5 + 6, ty - 12 * zoom, 3, 0, Math.PI * 2);
-            ctx.fill();
-          }
+          player.isMoving = false;
         }
+
+        // Clamp inside village boundaries
+        player.x = Math.max(0.08, Math.min(0.92, player.x));
+        player.y = Math.max(0.18, Math.min(0.90, player.y));
+
+        // Companion follows smoothly behind Player
+        const cdx = player.x - companion.x;
+        const cdy = (player.y + 0.03) - companion.y;
+        const cDist = Math.hypot(cdx, cdy);
+        if (cDist > 0.04) {
+          companion.x += (cdx / cDist) * companion.speed;
+          companion.y += (cdy / cDist) * companion.speed;
+          companion.walkFrame++;
+          companion.facing = player.facing;
+        }
+
+        // Proximity detection to buildings
+        const nearB = getNearestBuilding();
+        if (nearB) {
+          promptIconEl.textContent = nearB.icon;
+          promptTextEl.textContent = `Press [E] or Click to Enter ${nearB.name}`;
+          promptEl.classList.add('visible');
+        } else {
+          promptEl.classList.remove('visible');
+        }
+
+      } else if (currentScene === 'interior') {
+        // Interior Room Movement
+        let idx = 0;
+        let idy = 0;
+        if (keys.w || keys.arrowup) idy -= 1;
+        if (keys.s || keys.arrowdown) idy += 1;
+        if (keys.a || keys.arrowleft) idx -= 1;
+        if (keys.d || keys.arrowright) idx += 1;
+
+        if (idx !== 0 || idy !== 0) {
+          const len = Math.sqrt(idx * idx + idy * idy);
+          interiorPlayer.x += (idx / len) * interiorPlayer.speed;
+          interiorPlayer.y += (idy / len) * interiorPlayer.speed;
+          interiorPlayer.targetX = interiorPlayer.x;
+          interiorPlayer.targetY = interiorPlayer.y;
+          interiorPlayer.isMoving = true;
+        } else if (Math.hypot(interiorPlayer.targetX - interiorPlayer.x, interiorPlayer.targetY - interiorPlayer.y) > 0.005) {
+          const tdx = interiorPlayer.targetX - interiorPlayer.x;
+          const tdy = interiorPlayer.targetY - interiorPlayer.y;
+          const dist = Math.sqrt(tdx * tdx + tdy * tdy);
+          interiorPlayer.x += (tdx / dist) * interiorPlayer.speed;
+          interiorPlayer.y += (tdy / dist) * interiorPlayer.speed;
+          interiorPlayer.isMoving = true;
+        } else {
+          interiorPlayer.isMoving = false;
+        }
+
+        interiorPlayer.x = Math.max(0.10, Math.min(0.90, interiorPlayer.x));
+        interiorPlayer.y = Math.max(0.40, Math.min(0.92, interiorPlayer.y));
       }
     }
 
-    // Modern German Alpine Chalet Architecture
-    function drawBuilding(b) {
-      const isHovered = currentHoveredBuilding && currentHoveredBuilding.dept.id === b.dept.id;
-      const x = b.x;
-      const y = b.y;
-      const w = b.width;
-      const h = b.height;
-      const halfW = w / 2;
+    // Render Outside Village Master Scene
+    function renderVillageScene() {
+      const w = worldCanvas.clientWidth;
+      const h = worldCanvas.clientHeight;
+      worldCtx.clearRect(0, 0, w, h);
 
+      // 1. Draw Master Photorealistic Village Image (Full High-Res Backdrop)
+      const baseImg = viewMode === 'base' ? imgVillageBase : imgVillageDiagram;
+      if (baseImg.complete && baseImg.naturalWidth > 0) {
+        worldCtx.drawImage(baseImg, 0, 0, w, h);
+      }
+
+      // 2. Day/Dusk/Night Atmospheric Lighting Filter
+      if (timeOfDay === 'dusk') {
+        worldCtx.fillStyle = 'rgba(230, 126, 34, 0.22)';
+        worldCtx.fillRect(0, 0, w, h);
+      } else if (timeOfDay === 'night') {
+        worldCtx.fillStyle = 'rgba(11, 19, 43, 0.65)';
+        worldCtx.fillRect(0, 0, w, h);
+
+        // Warm glowing lights at building entrances
+        BUILDINGS.forEach(b => {
+          const bx = b.doorX * w;
+          const by = b.doorY * h;
+          const glow = worldCtx.createRadialGradient(bx, by, 5, bx, by, 60);
+          glow.addColorStop(0, 'rgba(241, 196, 15, 0.6)');
+          glow.addColorStop(1, 'rgba(241, 196, 15, 0)');
+          worldCtx.fillStyle = glow;
+          worldCtx.beginPath();
+          worldCtx.arc(bx, by, 60, 0, Math.PI * 2);
+          worldCtx.fill();
+        });
+      }
+
+      // 3. Animated Energy Workflow Pulses along the roads
+      BUILDINGS.forEach((b, i) => {
+        const startX = 0.50 * w;
+        const startY = 0.50 * h;
+        const endX = b.doorX * w;
+        const endY = b.doorY * h;
+
+        const pulse = (frameCount * 0.015 + i * 0.3) % 1;
+        const px = startX + (endX - startX) * pulse;
+        const py = startY + (endY - startY) * pulse;
+
+        worldCtx.fillStyle = b.color;
+        worldCtx.shadowColor = b.color;
+        worldCtx.shadowBlur = 10;
+        worldCtx.beginPath();
+        worldCtx.arc(px, py, 4, 0, Math.PI * 2);
+        worldCtx.fill();
+        worldCtx.shadowBlur = 0;
+
+        // Glowing Entrance Portals on Cobblestones
+        worldCtx.strokeStyle = b.color;
+        worldCtx.lineWidth = 2;
+        worldCtx.beginPath();
+        worldCtx.ellipse(endX, endY, 18 + Math.sin(frameCount * 0.1) * 3, 9, 0, 0, Math.PI * 2);
+        worldCtx.stroke();
+      });
+
+      // 4. Draw Animated Walking Characters
+      drawCharacter(worldCtx, companion.x * w, companion.y * h, companion.facing, companion.walkFrame, '#2980b9', '📋 Chief of Staff');
+      drawCharacter(worldCtx, player.x * w, player.y * h, player.facing, player.walkFrame, '#d4af37', '👑 Founder (You)');
+
+      // 5. Environmental Wind Particles (Cherry Blossom Petals & Light Dust)
+      for (let p = 0; p < 25; p++) {
+        const px = ((p * 73 + frameCount * 1.5) % w);
+        const py = ((p * 97 + Math.sin(frameCount * 0.05 + p) * 30) % h);
+        worldCtx.fillStyle = timeOfDay === 'night' ? 'rgba(100, 200, 255, 0.4)' : 'rgba(255, 182, 193, 0.6)';
+        worldCtx.beginPath();
+        worldCtx.arc(px, py, 2.5, 0, Math.PI * 2);
+        worldCtx.fill();
+      }
+    }
+
+    // Render Building Interior Scene
+    function renderInteriorScene() {
+      if (!currentBuilding) return;
+      const w = interiorCanvas.clientWidth;
+      const h = interiorCanvas.clientHeight;
+      interiorCtx.clearRect(0, 0, w, h);
+
+      // 1. Draw High-Res 8K Photorealistic Room Background
+      const img = interiorImages[currentBuilding.id];
+      if (img && img.complete && img.naturalWidth > 0) {
+        interiorCtx.drawImage(img, 0, 0, w, h);
+      }
+
+      // 2. Draw Interactive Workstation Hotspots
+      if (currentBuilding.stations) {
+        currentBuilding.stations.forEach(s => {
+          const sx = s.x * w;
+          const sy = s.y * h;
+
+          // Glowing animated ring around station
+          const pulse = Math.sin(frameCount * 0.08) * 4;
+          interiorCtx.fillStyle = 'rgba(212, 175, 55, 0.25)';
+          interiorCtx.strokeStyle = 'var(--gold-primary)';
+          interiorCtx.lineWidth = 2;
+          interiorCtx.beginPath();
+          interiorCtx.arc(sx, sy, 24 + pulse, 0, Math.PI * 2);
+          interiorCtx.fill();
+          interiorCtx.stroke();
+
+          // Station Label Tag
+          interiorCtx.fillStyle = 'rgba(15, 20, 30, 0.9)';
+          interiorCtx.strokeStyle = 'rgba(212, 175, 55, 0.5)';
+          interiorCtx.lineWidth = 1;
+          const textW = interiorCtx.measureText(s.name).width + 20;
+          interiorCtx.beginPath();
+          interiorCtx.roundRect(sx - textW / 2, sy - 40, textW, 22, 6);
+          interiorCtx.fill();
+          interiorCtx.stroke();
+
+          interiorCtx.fillStyle = '#fff';
+          interiorCtx.font = 'bold 11px sans-serif';
+          interiorCtx.textAlign = 'center';
+          interiorCtx.fillText(s.name, sx, sy - 25);
+        });
+      }
+
+      // 3. Draw Player and Companion walking inside the room
+      drawCharacter(interiorCtx, (interiorPlayer.x - 0.03) * w, interiorPlayer.y * h, interiorPlayer.facing, frameCount, '#2980b9', 'Chief of Staff');
+      drawCharacter(interiorCtx, interiorPlayer.x * w, interiorPlayer.y * h, interiorPlayer.facing, frameCount, '#d4af37', '👑 Founder');
+
+      // Proximity check to station
+      const nearStation = getNearestStation();
+      if (nearStation) {
+        interiorCtx.fillStyle = 'rgba(15, 20, 30, 0.95)';
+        interiorCtx.strokeStyle = 'var(--gold-primary)';
+        interiorCtx.lineWidth = 2;
+        interiorCtx.beginPath();
+        interiorCtx.roundRect(w / 2 - 160, h - 80, 320, 38, 20);
+        interiorCtx.fill();
+        interiorCtx.stroke();
+
+        interiorCtx.fillStyle = '#fff';
+        interiorCtx.font = 'bold 12px sans-serif';
+        interiorCtx.textAlign = 'center';
+        interiorCtx.fillText(`Press [E] or Click to Inspect: ${nearStation.name}`, w / 2, h - 56);
+      }
+    }
+
+    // RPG Character Sprite Rendering (Smooth Directional Character)
+    function drawCharacter(ctx, x, y, facing, walkFrame, color, name) {
       ctx.save();
       ctx.translate(x, y);
 
-      // Building Foundation Shadow
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+      // Drop shadow on ground
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
       ctx.beginPath();
-      ctx.ellipse(0, h * 0.45, halfW * 1.15, h * 0.3, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, 16, 12, 6, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      if (b.isCore) {
-        // PANDORA CORE: Modern Geodesic Glass & Timber Biosphere
-        const coreRadius = 45 * zoom;
-        const pulse = Math.sin(frameCount * 0.05) * 4;
+      // Walking bob
+      const bob = Math.sin(walkFrame * 0.25) * 3;
 
-        // Glowing blue energy aura
-        const aura = ctx.createRadialGradient(0, 0, 10, 0, 0, coreRadius + 20 + pulse);
-        aura.addColorStop(0, 'rgba(0, 168, 255, 0.8)');
-        aura.addColorStop(0.5, 'rgba(0, 151, 230, 0.3)');
-        aura.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = aura;
-        ctx.beginPath();
-        ctx.arc(0, 0, coreRadius + 20 + pulse, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Glass sphere dome
-        ctx.fillStyle = 'rgba(230, 245, 255, 0.4)';
-        ctx.strokeStyle = '#d4af37';
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.arc(0, 0, coreRadius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-
-        // Inner glowing infinity symbol
-        ctx.font = `${30 * zoom}px sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText('∞', 0, 0);
-
-        // Timber Pavilion Base ring
-        ctx.fillStyle = '#4a2e18';
-        ctx.fillRect(-coreRadius * 0.8, coreRadius * 0.7, coreRadius * 1.6, 8 * zoom);
-
-      } else if (b.isTownHall) {
-        // TOWN HALL (Rathaus): Neoclassical Alpine Timber & Slate Grand Hall
-        // Main building block (Sandstone & Timber)
-        ctx.fillStyle = timeOfDay === 'night' ? '#2c3e50' : '#f5f6fa';
-        ctx.fillRect(-halfW, -h * 0.2, w, h * 0.7);
-
-        // Timber Framing posts (Fachwerk accents)
-        ctx.fillStyle = '#4a2e18';
-        ctx.fillRect(-halfW, -h * 0.2, 8 * zoom, h * 0.7);
-        ctx.fillRect(halfW - 8 * zoom, -h * 0.2, 8 * zoom, h * 0.7);
-        ctx.fillRect(-halfW * 0.3, -h * 0.2, 6 * zoom, h * 0.7);
-        ctx.fillRect(halfW * 0.3 - 6 * zoom, -h * 0.2, 6 * zoom, h * 0.7);
-
-        // Slate Gabled Roof (Walmdach)
-        ctx.fillStyle = '#2c3e50';
-        ctx.beginPath();
-        ctx.moveTo(0, -h * 0.75);
-        ctx.lineTo(-halfW * 1.15, -h * 0.2);
-        ctx.lineTo(halfW * 1.15, -h * 0.2);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = '#d4af37';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // Bell Tower / Clock tower (Rathaus-Glockenturm)
-        ctx.fillStyle = '#34495e';
-        ctx.fillRect(-14 * zoom, -h * 1.15, 28 * zoom, h * 0.45);
-        ctx.beginPath();
-        ctx.moveTo(0, -h * 1.4);
-        ctx.lineTo(-18 * zoom, -h * 1.15);
-        ctx.lineTo(18 * zoom, -h * 1.15);
-        ctx.closePath();
-        ctx.fill();
-
-        // Clock face
-        ctx.fillStyle = '#f1c40f';
-        ctx.beginPath();
-        ctx.arc(0, -h * 0.95, 7 * zoom, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Grand entrance stairs & warm glowing double doors
-        ctx.fillStyle = timeOfDay === 'night' ? '#ff9f43' : '#f39c12';
-        ctx.fillRect(-18 * zoom, h * 0.1, 36 * zoom, h * 0.4);
-
-      } else {
-        // MODERN GERMAN CHALET PAVILION (Black Forest / Bavarian Timber & Glass)
-        // Main wooden body
-        ctx.fillStyle = timeOfDay === 'night' ? '#1e272e' : '#ede0d4';
-        ctx.fillRect(-halfW, -h * 0.1, w, h * 0.6);
-
-        // Modern Glass Facade (Panoramic window where interior is visible)
-        ctx.fillStyle = timeOfDay === 'night' ? 'rgba(255, 204, 0, 0.3)' : 'rgba(178, 235, 242, 0.5)';
-        ctx.fillRect(-halfW + 10 * zoom, -h * 0.05, w - 20 * zoom, h * 0.45);
-
-        // Dark Charcoal Slate Roof (Pitched Gable)
-        ctx.fillStyle = '#2d3436';
-        ctx.beginPath();
-        ctx.moveTo(0, -h * 0.65);
-        ctx.lineTo(-halfW * 1.12, -h * 0.08);
-        ctx.lineTo(halfW * 1.12, -h * 0.08);
-        ctx.closePath();
-        ctx.fill();
-
-        // Solar glass panels on south roof face
-        ctx.fillStyle = 'rgba(41, 128, 185, 0.7)';
-        ctx.fillRect(-halfW * 0.7, -h * 0.5, halfW * 0.6, h * 0.25);
-        ctx.fillRect(halfW * 0.1, -h * 0.5, halfW * 0.6, h * 0.25);
-
-        // Timber Framing Beams (Exposed Douglas Fir / Oak)
-        ctx.fillStyle = '#5d4037';
-        ctx.fillRect(-halfW, -h * 0.1, 6 * zoom, h * 0.6);
-        ctx.fillRect(halfW - 6 * zoom, -h * 0.1, 6 * zoom, h * 0.6);
-        ctx.fillRect(-halfW, h * 0.45, w, 6 * zoom);
-
-        // Balcony & Window Flower Boxes with red Bavarian geraniums
-        ctx.fillStyle = '#4a2e18';
-        ctx.fillRect(-halfW + 4 * zoom, h * 0.2, w - 8 * zoom, 7 * zoom);
-
-        // Geranium flower blossoms (red & pink dots)
-        ctx.fillStyle = '#e84118';
-        for (let flower = 0; flower < 6; flower++) {
-          const fx = -halfW + 12 * zoom + flower * ((w - 24 * zoom) / 5);
-          ctx.beginPath();
-          ctx.arc(fx, h * 0.2 - 2, 2.5 * zoom, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        // Department Accent Banner
-        ctx.fillStyle = b.dept.color || '#d4af37';
-        ctx.fillRect(-halfW, h * 0.48, w, 4 * zoom);
-      }
-
-      // Floating Frosted Glass UI Tag / Badge above the building
-      const badgeY = -h * 0.95;
-      const badgeW = Math.max(90, b.dept.name.length * 6) * zoom;
-      const badgeH = 26 * zoom;
-
-      // Glow effect on hover
-      if (isHovered) {
-        ctx.shadowColor = '#d4af37';
-        ctx.shadowBlur = 15;
-      }
-
-      ctx.fillStyle = 'rgba(20, 26, 36, 0.88)';
-      ctx.strokeStyle = isHovered ? '#d4af37' : 'rgba(212, 175, 55, 0.4)';
-      ctx.lineWidth = isHovered ? 2 : 1;
-
-      // Rounded badge rectangle
+      // Legs
+      const legSpread = Math.sin(walkFrame * 0.25) * 6;
+      ctx.strokeStyle = '#1e272e';
+      ctx.lineWidth = 4;
       ctx.beginPath();
-      ctx.roundRect(-badgeW / 2, badgeY - badgeH / 2, badgeW, badgeH, 6);
+      ctx.moveTo(-4, 4);
+      ctx.lineTo(-4 - legSpread, 14);
+      ctx.moveTo(4, 4);
+      ctx.lineTo(4 + legSpread, 14);
+      ctx.stroke();
+
+      // Body (Tailored Alpine Coat)
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(-8, -12 + bob, 16, 18, 4);
+      ctx.fill();
+
+      // Belt / Trim
+      ctx.fillStyle = '#111';
+      ctx.fillRect(-8, -2 + bob, 16, 3);
+
+      // Head
+      ctx.fillStyle = '#ffdfba';
+      ctx.beginPath();
+      ctx.arc(0, -18 + bob, 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Hair
+      ctx.fillStyle = '#3e2723';
+      ctx.beginPath();
+      ctx.arc(0, -20 + bob, 7, Math.PI, Math.PI * 2);
+      ctx.fill();
+
+      // Floating Name Badge
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1;
+      const nw = ctx.measureText(name).width + 12;
+      ctx.beginPath();
+      ctx.roundRect(-nw / 2, -38 + bob, nw, 14, 4);
       ctx.fill();
       ctx.stroke();
-      ctx.shadowBlur = 0; // reset shadow
 
-      // Badge content
-      ctx.fillStyle = '#ffffff';
-      ctx.font = `bold ${10 * zoom}px sans-serif`;
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 9px sans-serif';
       ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(`${b.dept.icon} ${b.dept.name}`, 0, badgeY);
-
-      // Director subtitle below badge
-      ctx.font = `${8 * zoom}px sans-serif`;
-      ctx.fillStyle = '#f5cd79';
-      ctx.fillText(`Dir: ${b.dept.director}`, 0, badgeY + 16 * zoom);
+      ctx.fillText(name, 0, -27 + bob);
 
       ctx.restore();
     }
 
-    // Draw Animated Agents Walking on Cobblestones
-    function drawWalkingAgents() {
-      const center = getVillageCenter();
+    // Main Engine Tick
+    function mainGameLoop() {
+      updatePhysics();
 
-      AGENTS.forEach((agent, index) => {
-        // Update angle along radial walking ring
-        agent.angle += agent.speed * agent.facing;
-        agent.thoughtTimer++;
-        if (agent.thoughtTimer > 400) {
-          agent.thought = AGENT_THOUGHTS[Math.floor(Math.random() * AGENT_THOUGHTS.length)];
-          agent.thoughtTimer = 0;
-          if (Math.random() > 0.7) agent.facing *= -1; // change walking direction occasionally
-        }
-
-        const ax = center.x + Math.cos(agent.angle) * agent.dist * zoom * 1.3;
-        const ay = center.y + Math.sin(agent.angle) * agent.dist * zoom * 0.75;
-
-        // Shadow
-        ctx.fillStyle = 'rgba(0,0,0,0.3)';
-        ctx.beginPath();
-        ctx.ellipse(ax, ay + 4, 7, 3, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Body / Clothing
-        let bodyColor = '#2c3e50';
-        if (agent.outfit === 'founder') bodyColor = '#c59b27'; // Founder in royal gold trim
-        else if (agent.outfit === 'cos') bodyColor = '#2980b9'; // Chief of staff in navy
-        else if (agent.outfit === 'worker') bodyColor = '#f39c12'; // Yellow safety vest
-        else if (agent.outfit === 'director') bodyColor = '#8e44ad';
-
-        // Legs walking bobbing
-        const walkBob = Math.sin(frameCount * 0.2 + index) * 2;
-
-        ctx.fillStyle = bodyColor;
-        ctx.beginPath();
-        ctx.arc(ax, ay - 8 + walkBob, 6, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Head & Avatar Icon
-        ctx.font = '10px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(agent.avatar, ax, ay - 14 + walkBob);
-
-        // Periodically show floating thought bubble for 2 active agents
-        if (index === 0 || index === 7) {
-          const bubbleW = ctx.measureText(agent.thought).width + 16;
-          ctx.fillStyle = 'rgba(25, 30, 42, 0.9)';
-          ctx.strokeStyle = '#d4af37';
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.roundRect(ax - bubbleW / 2, ay - 38 + walkBob, bubbleW, 18, 5);
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.fillStyle = '#fff';
-          ctx.font = '9px sans-serif';
-          ctx.fillText(agent.thought, ax, ay - 26 + walkBob);
-        }
-      });
-    }
-
-    // Main Village Render Loop
-    function renderVillage() {
-      frameCount++;
-
-      // Camera smooth damping
-      cameraX += (targetCameraX - cameraX) * 0.1;
-      cameraY += (targetCameraY - cameraY) * 0.1;
-
-      ctx.clearRect(0, 0, width, height);
-
-      // 1. Sky & Alpine Mountains
-      drawSkyAndMountains();
-
-      // 2. Swaying Trees & Green Meadows
-      drawSwayingTrees();
-
-      // 3. Layout Buildings
-      const layout = getBuildingLayout();
-
-      // 4. Cobblestone Plaza & Radial Paths
-      drawCobblestonePlazaAndPaths(layout);
-
-      // 5. Sort buildings back to front by Y coordinate for correct isometric occlusion
-      layout.sort((a, b) => a.y - b.y);
-
-      // 6. Draw Buildings
-      layout.forEach(b => drawBuilding(b));
-
-      // 7. Draw Walking Agents
-      drawWalkingAgents();
-
-      requestAnimationFrame(renderVillage);
-    }
-    renderVillage();
-
-    /* =========================================================================
-       6. INTERACTION & MOUSE EVENT HANDLING
-       ========================================================================= */
-    function getBuildingAtPoint(mx, my) {
-      const layout = getBuildingLayout();
-      // Test reverse order so topmost drawn building is clicked first
-      for (let i = layout.length - 1; i >= 0; i--) {
-        const b = layout[i];
-        const halfW = b.width / 2;
-        const halfH = b.height / 2;
-        if (mx >= b.x - halfW && mx <= b.x + halfW &&
-            my >= b.y - halfH - 30 && my <= b.y + halfH) {
-          return b;
-        }
-      }
-      return null;
-    }
-
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-
-      if (isDragging) {
-        targetCameraX += e.clientX - lastMouseX;
-        targetCameraY += e.clientY - lastMouseY;
-        lastMouseX = e.clientX;
-        lastMouseY = e.clientY;
-        return;
-      }
-
-      const hit = getBuildingAtPoint(mx, my);
-      if (hit !== currentHoveredBuilding) {
-        currentHoveredBuilding = hit;
-        canvas.style.cursor = hit ? 'pointer' : 'grab';
-      }
-    });
-
-    canvas.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      lastMouseX = e.clientX;
-      lastMouseY = e.clientY;
-    });
-
-    window.addEventListener('mouseup', () => {
-      isDragging = false;
-    });
-
-    canvas.addEventListener('click', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      const hit = getBuildingAtPoint(mx, my);
-      if (hit) {
-        openBuildingInterior(hit.dept);
-      }
-    });
-
-    // Zoom on wheel
-    canvas.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
-      zoom = Math.max(0.6, Math.min(2.0, zoom * zoomFactor));
-    }, { passive: false });
-
-    /* =========================================================================
-       7. INTERIOR ROOM ANIMATION CANVAS (Cameras, Presses, Server Racks, Ledgers)
-       ========================================================================= */
-    const roomCanvas = document.getElementById('room-canvas');
-    const roomCtx = roomCanvas.getContext('2d');
-    let activeInteriorDept = null;
-    let roomAnimFrame = null;
-
-    function resizeRoomCanvas() {
-      const parent = roomCanvas.parentElement;
-      roomCanvas.width = parent.clientWidth * window.devicePixelRatio;
-      roomCanvas.height = parent.clientHeight * window.devicePixelRatio;
-      roomCanvas.style.width = parent.clientWidth + 'px';
-      roomCanvas.style.height = parent.clientHeight + 'px';
-      roomCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
-
-    function renderRoomInterior() {
-      if (!activeInteriorDept) return;
-
-      const rw = roomCanvas.parentElement.clientWidth;
-      const rh = roomCanvas.parentElement.clientHeight;
-      roomCtx.clearRect(0, 0, rw, rh);
-
-      // Room Wall & Floor Perspective (Modern Alpine Wood & Glass Studio)
-      const floorY = rh * 0.72;
-
-      // Back Wall
-      const wallGrad = roomCtx.createLinearGradient(0, 0, 0, floorY);
-      wallGrad.addColorStop(0, '#1a2332');
-      wallGrad.addColorStop(1, '#2c3a4f');
-      roomCtx.fillStyle = wallGrad;
-      roomCtx.fillRect(0, 0, rw, floorY);
-
-      // Timber Floor Planks
-      const floorGrad = roomCtx.createLinearGradient(0, floorY, 0, rh);
-      floorGrad.addColorStop(0, '#5d4037');
-      floorGrad.addColorStop(1, '#3e2723');
-      roomCtx.fillStyle = floorGrad;
-      roomCtx.fillRect(0, floorY, rw, rh - floorY);
-
-      // Timber floor lines
-      roomCtx.strokeStyle = 'rgba(0,0,0,0.3)';
-      roomCtx.lineWidth = 1;
-      for (let i = 0; i < rw; i += 40) {
-        roomCtx.beginPath();
-        roomCtx.moveTo(i, floorY);
-        roomCtx.lineTo(i * 1.3 - 50, rh);
-        roomCtx.stroke();
-      }
-
-      // Exposed Alpine Timber Ceiling Beams
-      roomCtx.fillStyle = '#4a2e18';
-      for (let b = 20; b < rw; b += 80) {
-        roomCtx.fillRect(b, 0, 14, 30);
-      }
-
-      // Large Panoramic Alpine Window (showing snow mountains outside)
-      roomCtx.fillStyle = '#87ceeb';
-      roomCtx.fillRect(rw * 0.2, 20, rw * 0.6, floorY * 0.5);
-      roomCtx.fillStyle = '#ffffff';
-      roomCtx.beginPath();
-      roomCtx.moveTo(rw * 0.5, 30);
-      roomCtx.lineTo(rw * 0.35, floorY * 0.5 + 20);
-      roomCtx.lineTo(rw * 0.65, floorY * 0.5 + 20);
-      roomCtx.closePath();
-      roomCtx.fill();
-      roomCtx.strokeStyle = '#4a2e18';
-      roomCtx.lineWidth = 4;
-      roomCtx.strokeRect(rw * 0.2, 20, rw * 0.6, floorY * 0.5);
-
-      // SPECIFIC DEPARTMENT INTERIOR EQUIPMENT ANIMATION
-      const t = activeInteriorDept.interiorType;
-
-      if (t === 'multimedia') {
-        // MULTIMEDIA PRODUCTION: Cameras, Sound Mixer, Green Screen, Video Monitors
-        // Broadcast Studio Camera on Dolly
-        roomCtx.fillStyle = '#111';
-        roomCtx.fillRect(80, floorY - 90, 60, 40);
-        // Lens
-        roomCtx.fillStyle = '#333';
-        roomCtx.fillRect(140, floorY - 80, 25, 20);
-        // Flashing Red Recording Tally Light
-        const recFlash = Math.floor(frameCount / 20) % 2 === 0;
-        roomCtx.fillStyle = recFlash ? '#e74c3c' : '#7f1d1d';
-        roomCtx.beginPath();
-        roomCtx.arc(95, floorY - 95, 4, 0, Math.PI * 2);
-        roomCtx.fill();
-        // Tripod legs
-        roomCtx.strokeStyle = '#444';
-        roomCtx.lineWidth = 3;
-        roomCtx.beginPath();
-        roomCtx.moveTo(110, floorY - 50);
-        roomCtx.lineTo(70, floorY);
-        roomCtx.moveTo(110, floorY - 50);
-        roomCtx.lineTo(110, floorY);
-        roomCtx.moveTo(110, floorY - 50);
-        roomCtx.lineTo(150, floorY);
-        roomCtx.stroke();
-
-        // Sound Mixing Console with Animated EQ Bars
-        const deskX = rw - 220;
-        roomCtx.fillStyle = '#222';
-        roomCtx.fillRect(deskX, floorY - 50, 180, 50);
-        roomCtx.fillStyle = '#333';
-        roomCtx.fillRect(deskX + 10, floorY - 45, 160, 25);
-
-        // Animated Equalizer Bars
-        for (let eq = 0; eq < 14; eq++) {
-          const barH = 5 + Math.abs(Math.sin(frameCount * 0.15 + eq * 0.8)) * 16;
-          roomCtx.fillStyle = eq > 10 ? '#e74c3c' : (eq > 7 ? '#f1c40f' : '#2ecc71');
-          roomCtx.fillRect(deskX + 16 + eq * 11, floorY - 22 - barH, 7, barH);
-        }
-
-        // Boom mic overhead
-        roomCtx.strokeStyle = '#222';
-        roomCtx.lineWidth = 4;
-        roomCtx.beginPath();
-        roomCtx.moveTo(rw * 0.5, 0);
-        roomCtx.lineTo(rw * 0.55, floorY - 110);
-        roomCtx.stroke();
-        roomCtx.fillStyle = '#555';
-        roomCtx.fillRect(rw * 0.55 - 10, floorY - 115, 20, 12);
-
-      } else if (t === 'publishing') {
-        // PUBLISHING & DISTRIBUTION: Heidelberg Printing Press, Book Stacks, Cover Proof
-        // Digital Printing Press Machine
-        roomCtx.fillStyle = '#2c3e50';
-        roomCtx.fillRect(100, floorY - 85, 160, 85);
-        roomCtx.fillStyle = '#34495e';
-        roomCtx.fillRect(120, floorY - 75, 120, 35);
-
-        // Rolling paper stream
-        roomCtx.fillStyle = '#f8f9fa';
-        const paperOffset = (frameCount * 2) % 30;
-        roomCtx.fillRect(130, floorY - 35, 100, 12);
-        roomCtx.fillStyle = '#333';
-        roomCtx.font = '7px monospace';
-        roomCtx.fillText('THE AUTONOMOUS ENTERPRISE • CH. 4', 135, floorY - 26);
-
-        // Rotating rollers
-        roomCtx.fillStyle = '#bdc3c7';
-        roomCtx.beginPath();
-        roomCtx.arc(125, floorY - 29, 8, 0, Math.PI * 2);
-        roomCtx.arc(235, floorY - 29, 8, 0, Math.PI * 2);
-        roomCtx.fill();
-
-        // Stacks of finished hardcover books on table
-        const tableX = rw - 220;
-        roomCtx.fillStyle = '#4a2e18';
-        roomCtx.fillRect(tableX, floorY - 40, 160, 40);
-
-        // 3 Book Stacks
-        const bookColors = ['#c0392b', '#2980b9', '#d4af37', '#27ae60'];
-        for (let s = 0; s < 3; s++) {
-          for (let b = 0; b < 4; b++) {
-            roomCtx.fillStyle = bookColors[(s + b) % bookColors.length];
-            roomCtx.fillRect(tableX + 15 + s * 45, floorY - 48 - b * 9, 36, 7);
-          }
-        }
-
-        // Wall Proof Board with Book Cover Design
-        roomCtx.fillStyle = '#fff';
-        roomCtx.fillRect(rw * 0.45, 40, 90, 120);
-        roomCtx.strokeStyle = '#d4af37';
-        roomCtx.lineWidth = 3;
-        roomCtx.strokeRect(rw * 0.45, 40, 90, 120);
-        roomCtx.fillStyle = '#1a1a1a';
-        roomCtx.font = 'bold 9px sans-serif';
-        roomCtx.fillText('PANDORA', rw * 0.45 + 18, 65);
-        roomCtx.font = '7px sans-serif';
-        roomCtx.fillText('SLAG EDITION', rw * 0.45 + 15, 80);
-        roomCtx.fillStyle = '#d4af37';
-        roomCtx.font = '22px sans-serif';
-        roomCtx.fillText('∞', rw * 0.45 + 36, 115);
-
-      } else if (t === 'finance') {
-        // FINANCE & BOOKKEEPING: Candlestick charts, Safe vault, Ledger desk
-        // Financial Trading & Budget Monitors
-        roomCtx.fillStyle = '#111';
-        roomCtx.fillRect(120, floorY - 110, 140, 85);
-        roomCtx.fillStyle = '#0a192f';
-        roomCtx.fillRect(125, floorY - 105, 130, 75);
-
-        // Animated Candlestick chart
-        for (let c = 0; c < 10; c++) {
-          const ch = 10 + Math.sin(frameCount * 0.1 + c) * 20;
-          const isGreen = Math.sin(c * 2) > 0;
-          roomCtx.fillStyle = isGreen ? '#2ecc71' : '#e74c3c';
-          roomCtx.fillRect(135 + c * 12, floorY - 60 - ch, 6, Math.abs(ch));
-        }
-
-        // Big Safe Vault in the corner
-        roomCtx.fillStyle = '#7f8c8d';
-        roomCtx.fillRect(rw - 180, floorY - 100, 90, 100);
-        roomCtx.fillStyle = '#95a5a6';
-        roomCtx.fillRect(rw - 170, floorY - 90, 70, 80);
-        roomCtx.fillStyle = '#f1c40f';
-        roomCtx.beginPath();
-        roomCtx.arc(rw - 135, floorY - 50, 14, 0, Math.PI * 2);
-        roomCtx.fill();
-
-        // M4 Savings Display
-        roomCtx.fillStyle = '#2ecc71';
-        roomCtx.font = 'bold 12px monospace';
-        roomCtx.fillText('LOCAL M4 SAVINGS: $148.50', rw * 0.35, floorY - 20);
-
-      } else if (t === 'it') {
-        // IT & SYSTEMS: Server Racks, Blinking LEDs, Terminal with scrolling code
-        // Two Big Server Racks
-        for (let rack = 0; rack < 2; rack++) {
-          const rx = 100 + rack * 85;
-          roomCtx.fillStyle = '#111';
-          roomCtx.fillRect(rx, floorY - 130, 75, 130);
-          roomCtx.strokeStyle = '#00cec9';
-          roomCtx.strokeRect(rx, floorY - 130, 75, 130);
-
-          // Server units & LEDs
-          for (let u = 0; u < 8; u++) {
-            roomCtx.fillStyle = '#222';
-            roomCtx.fillRect(rx + 4, floorY - 124 + u * 15, 67, 12);
-
-            // Blinking activity LEDs
-            for (let led = 0; led < 4; led++) {
-              const blink = (frameCount + led * 5 + u) % 15 < 8;
-              roomCtx.fillStyle = blink ? '#00cec9' : '#055';
-              roomCtx.beginPath();
-              roomCtx.arc(rx + 12 + led * 14, floorY - 118 + u * 15, 2, 0, Math.PI * 2);
-              roomCtx.fill();
-            }
-          }
-        }
-
-        // Big Terminal Monitor showing live code
-        roomCtx.fillStyle = '#0f172a';
-        roomCtx.fillRect(rw - 260, floorY - 100, 180, 90);
-        roomCtx.strokeStyle = '#38bdf8';
-        roomCtx.strokeRect(rw - 260, floorY - 100, 180, 90);
-        roomCtx.fillStyle = '#38bdf8';
-        roomCtx.font = '8px monospace';
-        const lines = [
-          '> ollama run qwen2.5:32b --metal',
-          '✓ Apple M4 Neural Engine active',
-          '✓ Loading prompt /departments/book/',
-          '✓ Tokens/sec: 18.4 t/s',
-          '> Handoff to Elena (Publishing)'
-        ];
-        lines.forEach((l, idx) => {
-          roomCtx.fillText(l, rw - 250, floorY - 85 + idx * 14);
-        });
-
+      if (currentScene === 'village') {
+        renderVillageScene();
       } else {
-        // GENERAL MODERN GERMAN ENTERPRISE ROOM (Desks, Whiteboards, Laptops, Timber)
-        // Main Conference / Work Table
-        roomCtx.fillStyle = '#5d4037';
-        roomCtx.fillRect(rw * 0.25, floorY - 45, rw * 0.5, 45);
-        roomCtx.fillStyle = '#4a2e18';
-        roomCtx.fillRect(rw * 0.27, floorY, 12, 20);
-        roomCtx.fillRect(rw * 0.71, floorY, 12, 20);
-
-        // Laptops with glowing screens
-        for (let lap = 0; lap < 3; lap++) {
-          const lx = rw * 0.32 + lap * (rw * 0.16);
-          roomCtx.fillStyle = '#7f8c8d';
-          roomCtx.fillRect(lx, floorY - 50, 24, 5);
-          roomCtx.fillStyle = '#ecf0f1';
-          roomCtx.fillRect(lx + 2, floorY - 68, 20, 18);
-          roomCtx.fillStyle = '#3498db';
-          roomCtx.fillRect(lx + 4, floorY - 66, 16, 14);
-        }
-
-        // Whiteboard on wall with strategic diagrams
-        roomCtx.fillStyle = '#f8f9fa';
-        roomCtx.fillRect(rw * 0.3, 35, rw * 0.4, 75);
-        roomCtx.strokeStyle = '#bdc3c7';
-        roomCtx.strokeRect(rw * 0.3, 35, rw * 0.4, 75);
-
-        // Mindmap nodes on whiteboard
-        roomCtx.fillStyle = '#e74c3c';
-        roomCtx.beginPath();
-        roomCtx.arc(rw * 0.4, 70, 8, 0, Math.PI * 2);
-        roomCtx.fill();
-        roomCtx.fillStyle = '#2980b9';
-        roomCtx.beginPath();
-        roomCtx.arc(rw * 0.6, 70, 8, 0, Math.PI * 2);
-        roomCtx.fill();
-        roomCtx.strokeStyle = '#7f8c8d';
-        roomCtx.beginPath();
-        roomCtx.moveTo(rw * 0.4, 70);
-        roomCtx.lineTo(rw * 0.6, 70);
-        roomCtx.stroke();
+        renderInteriorScene();
       }
 
-      roomAnimFrame = requestAnimationFrame(renderRoomInterior);
+      requestAnimationFrame(mainGameLoop);
     }
+    requestAnimationFrame(mainGameLoop);
 
     /* =========================================================================
-       8. UI MODALS & CONTROLS
+       7. UI INTERACTION & FOUNDER CONTROLS
        ========================================================================= */
-    const interiorModal = document.getElementById('interior-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-
-    function openBuildingInterior(dept) {
-      activeInteriorDept = dept;
-      document.getElementById('modal-dept-icon').textContent = dept.icon;
-      document.getElementById('modal-dept-name').textContent = dept.name;
-      document.getElementById('modal-dept-german').textContent = dept.german;
-      document.getElementById('modal-director-avatar').textContent = dept.avatar;
-      document.getElementById('modal-director-name').textContent = dept.director;
-      document.getElementById('modal-director-role').textContent = dept.role;
-      document.getElementById('modal-director-quote').textContent = `"${dept.quote}"`;
-
-      // Metrics bar
-      const metricsBar = document.getElementById('room-metrics-bar');
-      metricsBar.innerHTML = '';
-      dept.metrics.forEach(m => {
-        const div = document.createElement('div');
-        div.className = 'metric-item';
-        div.innerHTML = `<div class="metric-value">${m.value}</div><div class="metric-label">${m.label}</div>`;
-        metricsBar.appendChild(div);
-      });
-
-      // Tasks
-      const taskList = document.getElementById('modal-task-list');
-      taskList.innerHTML = '';
-      dept.tasks.forEach(t => {
-        const div = document.createElement('div');
-        div.className = `task-item ${t.status.includes('Pending') ? 'pending' : ''}`;
-        div.innerHTML = `
-          <div class="task-name">${t.name}</div>
-          <div class="task-meta">
-            <span>● ${t.status}</span>
-            <span>${t.time}</span>
-          </div>
-        `;
-        taskList.appendChild(div);
-      });
-
-      // Deliverables
-      const delivList = document.getElementById('modal-deliverables-list');
-      delivList.innerHTML = '';
-      dept.deliverables.forEach(d => {
-        const div = document.createElement('div');
-        div.className = 'deliverable-chip';
-        div.innerHTML = `
-          <span>📄 ${d.title}</span>
-          <span style="color:#d4af37; font-size:10px;">${d.date}</span>
-        `;
-        delivList.appendChild(div);
-      });
-
-      interiorModal.classList.add('active');
-      resizeRoomCanvas();
-      if (roomAnimFrame) cancelAnimationFrame(roomAnimFrame);
-      renderRoomInterior();
-    }
-
-    closeModalBtn.addEventListener('click', () => {
-      interiorModal.classList.remove('active');
-      activeInteriorDept = null;
-      if (roomAnimFrame) cancelAnimationFrame(roomAnimFrame);
-    });
-
-    // Send Brief Button
-    document.getElementById('send-brief-btn').addEventListener('click', () => {
-      const text = document.getElementById('brief-input').value.trim();
-      if (!text || !activeInteriorDept) return;
-
-      const urgency = document.getElementById('brief-urgency').value;
-      const isFounder = urgency === 'founder';
-
-      activeInteriorDept.tasks.unshift({
-        name: text,
-        status: isFounder ? '👑 Founder Priority' : 'In Progress',
-        time: 'Just now'
-      });
-
-      document.getElementById('brief-input').value = '';
-      openBuildingInterior(activeInteriorDept); // refresh modal
-
-      // Update ticker
-      document.getElementById('ticker-text').textContent =
-        `New brief assigned to ${activeInteriorDept.director} (${activeInteriorDept.name}): "${text.substring(0, 45)}..."`;
-    });
-
-    // Populate Bottom Dock
-    const dock = document.getElementById('bottom-dock');
-    DEPARTMENTS.forEach(dept => {
+    // Populate Teleport Dock
+    const teleDock = document.getElementById('teleport-dock');
+    BUILDINGS.forEach(b => {
       const item = document.createElement('div');
-      item.className = 'dock-item';
-      item.innerHTML = `
-        <div class="dock-icon">${dept.icon}</div>
-        <div>${dept.name.split(' ')[0]}</div>
-      `;
+      item.className = 'teleport-item';
+      item.innerHTML = `<span>${b.icon}</span><span>${b.name.split(' ')[0]}</span>`;
       item.addEventListener('click', () => {
-        openBuildingInterior(dept);
+        enterBuilding(b);
       });
-      dock.appendChild(item);
+      teleDock.appendChild(item);
     });
 
-    // Founder Review Drawer
-    const founderBtn = document.getElementById('founder-btn');
-    const founderDrawer = document.getElementById('founder-drawer');
-    const closeDrawerBtn = document.getElementById('close-drawer-btn');
-
-    function renderApprovals() {
-      const container = document.getElementById('approvals-container');
-      container.innerHTML = '';
-      const pending = PENDING_APPROVALS.filter(a => a.status === 'pending');
-      document.getElementById('pending-count').textContent = pending.length;
-
-      if (pending.length === 0) {
-        container.innerHTML = '<div style="color:#2ed573; text-align:center; padding:30px 10px;">✓ All department deliverables have been reviewed and approved!</div>';
-        return;
-      }
-
-      pending.forEach(appr => {
-        const card = document.createElement('div');
-        card.className = 'approval-card';
-        card.innerHTML = `
-          <h5>${appr.title}</h5>
-          <span style="color:#d4af37; font-size:10px; display:block; margin-bottom:6px;">Dept: ${appr.dept}</span>
-          <p>${appr.desc}</p>
-          <div class="approval-actions">
-            <button class="btn-approve" onclick="approveTask('${appr.id}')">✓ Approve</button>
-            <button class="btn-revise" onclick="reviseTask('${appr.id}')">✎ Request Changes</button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    window.approveTask = function(id) {
-      const t = PENDING_APPROVALS.find(a => a.id === id);
-      if (t) {
-        t.status = 'approved';
-        renderApprovals();
-        document.getElementById('ticker-text').textContent = `Founder Approved: "${t.title}" — Department notified!`;
-      }
-    };
-
-    window.reviseTask = function(id) {
-      const t = PENDING_APPROVALS.find(a => a.id === id);
-      if (t) {
-        t.status = 'revision';
-        renderApprovals();
-        document.getElementById('ticker-text').textContent = `Founder requested changes for "${t.title}". Dispatched back to team.`;
-      }
-    };
-
-    founderBtn.addEventListener('click', () => {
-      renderApprovals();
-      founderDrawer.classList.toggle('open');
-    });
-
-    closeDrawerBtn.addEventListener('click', () => {
-      founderDrawer.classList.remove('open');
-    });
-
-    // Town Hall All-Hands Modal
-    const allhandsBtn = document.getElementById('allhands-btn');
-    const allhandsModal = document.getElementById('allhands-modal');
-    const closeAllhandsBtn = document.getElementById('close-allhands-btn');
-
-    allhandsBtn.addEventListener('click', () => {
-      const grid = document.getElementById('allhands-grid');
-      grid.innerHTML = '';
-      DEPARTMENTS.forEach(d => {
-        const card = document.createElement('div');
-        card.className = 'director-badge-mini';
-        card.innerHTML = `
-          <div class="mini-avatar">${d.avatar}</div>
-          <div>
-            <h4>${d.director}</h4>
-            <span>${d.name}</span>
-          </div>
-        `;
-        card.style.cursor = 'pointer';
-        card.addEventListener('click', () => {
-          allhandsModal.classList.remove('active');
-          openBuildingInterior(d);
-        });
-        grid.appendChild(card);
-      });
-      allhandsModal.classList.add('active');
-    });
-
-    closeAllhandsBtn.addEventListener('click', () => {
-      allhandsModal.classList.remove('active');
+    // View Mode Toggle (Base Photorealistic Art vs Tactical Diagram)
+    const viewModeBtn = document.getElementById('view-mode-btn');
+    viewModeBtn.addEventListener('click', () => {
+      viewMode = viewMode === 'base' ? 'diagram' : 'base';
+      viewModeBtn.innerHTML = viewMode === 'base' ? '🗺️ Map: Photorealistic View' : '🧭 Map: Tactical Handoff Overlay';
     });
 
     // Time of Day Toggle
@@ -2594,97 +1676,141 @@
     themeBtn.addEventListener('click', () => {
       if (timeOfDay === 'day') {
         timeOfDay = 'dusk';
-        document.getElementById('theme-icon').textContent = '🌅';
-        document.getElementById('theme-label').textContent = 'Golden Hour';
-        document.getElementById('weather-label').textContent = 'Alpine Sunset • 15°C';
+        themeBtn.innerHTML = '🌅 Golden Hour';
       } else if (timeOfDay === 'dusk') {
         timeOfDay = 'night';
-        document.getElementById('theme-icon').textContent = '🌙';
-        document.getElementById('theme-label').textContent = 'Bavarian Night';
-        document.getElementById('weather-label').textContent = 'Clear Starry Night • 9°C';
+        themeBtn.innerHTML = '🌙 Bavarian Night';
       } else {
         timeOfDay = 'day';
-        document.getElementById('theme-icon').textContent = '☀️';
-        document.getElementById('theme-label').textContent = 'Alpine Day';
-        document.getElementById('weather-label').textContent = 'Clear Alpine Sky • 18°C';
+        themeBtn.innerHTML = '☀️ Alpine Day';
       }
     });
 
-    // Generative Web Audio Soundscape (Alpine Wind, Birds, Fountain)
-    let audioCtx = null;
-    let isSoundOn = false;
-    let windGain = null;
-    let birdInterval = null;
+    // Founder Approval Queue
+    const founderBtn = document.getElementById('founder-btn');
+    const founderDrawer = document.getElementById('founder-drawer');
+    const closeDrawerBtn = document.getElementById('close-drawer-btn');
+    const approvalItemsEl = document.getElementById('approval-items');
 
-    function initAudio() {
-      if (audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function renderApprovals() {
+      approvalItemsEl.innerHTML = '';
+      const pending = PENDING_APPROVALS.filter(a => a.status === 'pending');
+      document.getElementById('pending-count').textContent = pending.length;
 
-      // Synthesize gentle pink noise wind
-      const bufferSize = audioCtx.sampleRate * 2;
-      const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-      const output = noiseBuffer.getChannelData(0);
-      let b0 = 0, b1 = 0, b2 = 0;
-      for (let i = 0; i < bufferSize; i++) {
-        const white = Math.random() * 2 - 1;
-        b0 = 0.99886 * b0 + white * 0.0555179;
-        b1 = 0.99332 * b1 + white * 0.0750759;
-        b2 = 0.96900 * b2 + white * 0.1538520;
-        output[i] = (b0 + b1 + b2) * 0.1;
+      if (pending.length === 0) {
+        approvalItemsEl.innerHTML = '<div style="color:#2ed573; text-align:center; padding:30px;">✓ All department decisions have been approved!</div>';
+        return;
       }
 
-      const whiteNoise = audioCtx.createBufferSource();
-      whiteNoise.buffer = noiseBuffer;
-      whiteNoise.loop = true;
-
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(450, audioCtx.currentTime);
-
-      windGain = audioCtx.createGain();
-      windGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-
-      whiteNoise.connect(filter);
-      filter.connect(windGain);
-      windGain.connect(audioCtx.destination);
-      whiteNoise.start();
-
-      // Random bird chirps
-      birdInterval = setInterval(() => {
-        if (!isSoundOn || Math.random() > 0.4) return;
-        playBirdChirp();
-      }, 4000);
+      pending.forEach(appr => {
+        const card = document.createElement('div');
+        card.style.cssText = 'background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.3); border-radius:8px; padding:12px;';
+        card.innerHTML = `
+          <h4 style="color:#f1f2f6; font-size:13px; margin-bottom:4px;">${appr.title}</h4>
+          <span style="color:var(--gold-primary); font-size:10px; display:block; margin-bottom:6px;">Dept: ${appr.dept}</span>
+          <p style="font-size:11px; color:#a4b0be; line-height:1.4; margin-bottom:10px;">${appr.desc}</p>
+          <div style="display:flex; gap:8px;">
+            <button class="hud-btn hud-btn-gold" style="flex:1; justify-content:center;" onclick="approveAction('${appr.id}')">✓ Approve</button>
+            <button class="hud-btn" style="flex:1; justify-content:center;" onclick="reviseAction('${appr.id}')">✎ Request Changes</button>
+          </div>
+        `;
+        approvalItemsEl.appendChild(card);
+      });
     }
 
-    function playBirdChirp() {
-      if (!audioCtx) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
+    window.approveAction = function(id) {
+      const a = PENDING_APPROVALS.find(x => x.id === id);
+      if (a) {
+        a.status = 'approved';
+        renderApprovals();
+        alert(`✓ Founder Approved: "${a.title}"!\nDepartment has proceeded with execution.`);
+      }
+    };
 
-      const baseFreq = 2200 + Math.random() * 800;
-      osc.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(baseFreq + 600, audioCtx.currentTime + 0.08);
-      osc.frequency.exponentialRampToValueAtTime(baseFreq - 300, audioCtx.currentTime + 0.18);
+    window.reviseAction = function(id) {
+      const a = PENDING_APPROVALS.find(x => x.id === id);
+      if (a) {
+        a.status = 'revision';
+        renderApprovals();
+        alert(`✎ Changes requested for: "${a.title}". Sent back to director.`);
+      }
+    };
 
-      gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
+    founderBtn.addEventListener('click', () => {
+      renderApprovals();
+      founderDrawer.classList.toggle('open');
+    });
+    closeDrawerBtn.addEventListener('click', () => {
+      founderDrawer.classList.remove('open');
+    });
 
+    /* =========================================================================
+       8. SOUND SYNTHESIS (Web Audio API)
+       ========================================================================= */
+    let audioCtx = null;
+    let isSoundActive = false;
+
+    function getAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playFootstepSound() {
+      if (!isSoundActive) return;
+      const ctx = getAudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(120 + Math.random() * 30, ctx.currentTime);
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(ctx.destination);
       osc.start();
-      osc.stop(audioCtx.currentTime + 0.25);
+      osc.stop(ctx.currentTime + 0.08);
+    }
+
+    function playDoorSound() {
+      if (!isSoundActive) return;
+      const ctx = getAudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(580, ctx.currentTime + 0.2);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.25);
+    }
+
+    function playChimeSound() {
+      if (!isSoundActive) return;
+      const ctx = getAudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1320, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.3);
     }
 
     document.getElementById('sound-btn').addEventListener('click', () => {
-      if (!audioCtx) initAudio();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-
-      isSoundOn = !isSoundOn;
-      if (windGain) {
-        windGain.gain.setTargetAtTime(isSoundOn ? 0.05 : 0.0, audioCtx.currentTime, 0.1);
-      }
-      document.getElementById('sound-btn').innerHTML = isSoundOn ? '🔊 Sound: On' : '🔇 Sound: Off';
+      getAudioCtx();
+      isSoundActive = !isSoundActive;
+      document.getElementById('sound-btn').innerHTML = isSoundActive ? '🔊 Sound: On' : '🔇 Sound: Off';
     });
 
   </script>
